@@ -40,7 +40,7 @@ view model =
                 , width fill
                 ]
                 [ leftColumn model.selectedColor
-                , colorList
+                , colorList model
                 ]
             ]
 
@@ -61,8 +61,8 @@ menuBar =
         ]
 
 
-colorList : Element Msg
-colorList =
+colorList : Model -> Element Msg
+colorList model =
     Element.column
         [ Font.color <| rgb 1 1 1
         , height fill
@@ -74,18 +74,20 @@ colorList =
                 |> minimum 300
             )
         ]
-        [ colorListItem "rgb255 0 133 204"
-        , colorListItem "rgb255 0 133 204"
-        , colorListItem "rgb255 0 133 204"
-        , colorListItem "rgb255 0 133 204"
-        ]
+    <|
+        List.map colorListItem model.palette
 
-colorListItem : String -> Element Msg
-colorListItem myText =
+
+colorListItem : ColorRecord -> Element Msg
+colorListItem cRecord =
     Element.row
         [ width fill ]
         [ Element.el
-            [ Background.color <| rgb 1 0 0
+            [ Background.color <|
+                rgb255
+                    cRecord.red
+                    cRecord.green
+                    cRecord.blue
             , width <| px 32
             , height fill
             ]
@@ -95,16 +97,6 @@ colorListItem myText =
             [ Font.color <| rgb 1 1 1
             , Background.color <| rgb255 0 133 204
             , Font.bold
-
-            -- , Background.gradient
-            --     { angle = pi
-            --     , steps =
-            --         [ rgb255 0 166 255
-            --         , rgb255 0 133 204
-            --         , rgb255 0 133 204
-            --         , rgb255 0 133 204
-            --         ]
-            --     }
             , paddingXY 0 8
             , Font.size 14
             , width fill
@@ -115,8 +107,15 @@ colorListItem myText =
                 , paddingXY 10 0
                 ]
             <|
-                text myText
+                text <|
+                    "rgb255 "
+                        ++ String.fromInt cRecord.red
+                        ++ " "
+                        ++ String.fromInt cRecord.green
+                        ++ " "
+                        ++ String.fromInt cRecord.blue
         ]
+
 
 leftColumn : String -> Element Msg
 leftColumn color =
@@ -319,7 +318,24 @@ port receiveData : (String -> msg) -> Sub msg
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( { selectedColor = "", palette = [] }, Cmd.none )
+    ( { selectedColor = ""
+      , palette =
+            [ { red = 200
+              , green = 100
+              , blue = 10
+              }
+            , { red = 100
+              , green = 200
+              , blue = 50
+              }
+            , { red = 47
+              , green = 83
+              , blue = 24
+              }
+            ]
+      }
+    , Cmd.none
+    )
 
 
 main : Program () Model Msg
