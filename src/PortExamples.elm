@@ -7,11 +7,12 @@ import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
 import Html exposing (Html)
-import Html.Events exposing (onClick)
 
 
 type alias Model =
-    { selectedColor : String, palette : List ColorRecord }
+    { selectedColor : String
+    , palette : List ColorRecord
+    }
 
 
 view : Model -> Html Msg
@@ -44,6 +45,7 @@ view model =
             ]
 
 
+menuBar : Element Msg
 menuBar =
     Element.row
         [ width fill
@@ -59,6 +61,7 @@ menuBar =
         ]
 
 
+colorList : Element Msg
 colorList =
     Element.column
         [ Font.color <| rgb 1 1 1
@@ -77,7 +80,7 @@ colorList =
         , colorListItem "rgb255 0 133 204"
         ]
 
-
+colorListItem : String -> Element Msg
 colorListItem myText =
     Element.row
         [ width fill ]
@@ -115,7 +118,7 @@ colorListItem myText =
                 text myText
         ]
 
-
+leftColumn : String -> Element Msg
 leftColumn color =
     Element.column
         [ padding 25
@@ -125,15 +128,15 @@ leftColumn color =
         [ Element.column
             [ spacing 20 ]
             [ colorSelectDisplay color
-            , addColorButton ( "Add Color", "" )
-            , addColorButton ( "Remove Color", "" )
-            , addColorButton ( "Add to Pallet", "" )
+            , addColorButton "Add Color"
+            , addColorButton "Remove Color"
+            , addColorButton "Add to Pallet"
             ]
         ]
 
 
-addColorButton : ( String, String ) -> Element Msg
-addColorButton ( myText, thing ) =
+addColorButton : String -> Element Msg
+addColorButton myText =
     Element.row
         [ centerX ]
         [ Element.el
@@ -300,7 +303,7 @@ update msg model =
             ( model, sendData "Hello JavaScript!" )
 
         ReceivedDataFromJS data ->
-            ( {model | selectedColor = data}, Cmd.none )
+            ( { model | selectedColor = data }, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg
