@@ -10,7 +10,7 @@ import Html exposing (Html)
 
 
 type alias Model =
-    { selectedColor : String
+    { selectedColor : ColorRecord
     , palette : List ColorRecord
     }
 
@@ -39,10 +39,65 @@ view model =
                 [ height fill
                 , width fill
                 ]
-                [ leftColumn model.selectedColor
+                [ leftColumn model model.selectedColor
                 , colorList model
+                , Element.el [ width fill, height fill, padding 25 ] <|
+                    Element.column
+                        [ padding 15
+                        , Border.rounded 15
+                        , Font.color <| rgb 1 1 1
+                        , Font.bold
+                        , spacing 15
+                        , Background.color <| rgb255 0 85 128
+                        , attrShadow
+                        ]
+                        [ Element.el
+                            [ centerX
+                            ]
+                          <|
+                            text "Light to Dark"
+                        , Element.column
+                            [ spacing 5
+                            , alignTop
+                            , centerX
+                            ]
+                            [ sampleColorBlock { red = 255, green = 0, blue = 0 }
+                            , sampleColorBlock { red = 235, green = 0, blue = 0 }
+                            , sampleColorBlock { red = 215, green = 0, blue = 0 }
+                            , sampleColorBlock { red = 195, green = 0, blue = 0 }
+                            , sampleColorBlock { red = 175, green = 0, blue = 0 }
+                            , sampleColorBlock { red = 155, green = 0, blue = 0 }
+                            , sampleColorBlock { red = 135, green = 0, blue = 0 }
+                            , sampleColorBlock { red = 115, green = 0, blue = 0 }
+                            , sampleColorBlock { red = 95, green = 0, blue = 0 }
+                            , sampleColorBlock { red = 75, green = 0, blue = 0 }
+                            , sampleColorBlock { red = 55, green = 0, blue = 0 }
+                            , sampleColorBlock { red = 35, green = 0, blue = 0 }
+                            , sampleColorBlock { red = 15, green = 0, blue = 0 }
+                            , sampleColorBlock { red = 0, green = 0, blue = 0 }
+                            ]
+                        ]
                 ]
             ]
+
+
+sampleColorBlock color =
+    Element.el
+        [ Background.color <| rgb255 color.red color.green color.blue
+        , width <| px 100
+        , height <| px 20
+        ]
+    <|
+        text " "
+
+
+hoverHighlight =
+    mouseOver
+        [ Background.gradient
+            { angle = pi
+            , steps = [ rgb255 84 130 186 ]
+            }
+        ]
 
 
 menuBar : Element Msg
@@ -50,15 +105,32 @@ menuBar =
     Element.row
         [ width fill
         , Background.color <| rgb255 0 136 204
-        , Background.gradient { angle = pi, steps = [ rgb255 0 136 204, rgb255 0 102 153 ] }
-        , paddingXY 0 5
+        , Background.gradient
+            { angle = pi
+            , steps =
+                [ rgb255 0 136 204
+                , rgb255 0 102 153
+                ]
+            }
         , Font.size 15
         , Font.color <| rgb 1 1 1
         ]
-        [ Element.el [ paddingXY 5 0 ] <| text "File"
-        , Element.el [ paddingXY 5 0 ] <| text "Edit"
-        , Element.el [ paddingXY 5 0 ] <| text "View"
+    <|
+        List.map
+            menuBarItem
+            [ "File"
+            , "Edit"
+            , "View"
+            ]
+
+
+menuBarItem myText =
+    Input.button
+        [ hoverHighlight
+        , paddingXY 5 5
+        , height fill
         ]
+        { label = text myText, onPress = Nothing }
 
 
 colorList : Model -> Element Msg
@@ -81,7 +153,7 @@ colorList model =
 colorListItem : ColorRecord -> Element Msg
 colorListItem cRecord =
     Element.row
-        [ width fill ]
+        [ centerX, width fill ]
         [ Element.el
             [ Background.color <|
                 rgb255
@@ -114,11 +186,51 @@ colorListItem cRecord =
                         ++ String.fromInt cRecord.green
                         ++ " "
                         ++ String.fromInt cRecord.blue
+        , Element.row
+            [ spacing 3
+            , height fill
+            , padding 5
+            , Background.color <| rgb255 0 133 204
+            ]
+            [ copyButton
+            , selectForm
+            ]
         ]
 
 
-leftColumn : String -> Element Msg
-leftColumn color =
+copyButton =
+    Element.el
+        [ Background.color <| rgb255 58 106 167
+        , height fill
+        , Font.size 12
+        , Border.rounded 3
+        ]
+    <|
+        Element.el
+            [ centerY
+            , paddingXY 5 0
+            ]
+        <|
+            text "Copy"
+
+
+selectForm =
+    Element.el
+        [ Background.color <| rgb255 58 106 167
+        , height fill
+        , Font.size 12
+        , Border.rounded 3
+        ]
+    <|
+        Element.el
+            [ centerY
+            , paddingXY 5 0
+            ]
+        <|
+            text "Form"
+
+
+leftColumn model color =
     Element.column
         [ padding 25
         , height fill
@@ -127,44 +239,55 @@ leftColumn color =
         [ Element.column
             [ spacing 20 ]
             [ colorSelectDisplay color
-            , addColorButton "Add Color"
-            , addColorButton "Remove Color"
-            , addColorButton "Add to Pallet"
+            , addColorButton model "Add to Pallet"
+            , addColorButton model "Remove Color"
             ]
         ]
 
 
-addColorButton : String -> Element Msg
-addColorButton myText =
-    Element.row
-        [ centerX ]
-        [ Element.el
-            [ Background.color <| rgb255 0 133 204
-            , Font.color <| rgb 1 1 1
-            , width <| px 220
-            , Font.size 15
-            , Font.bold
-            , centerX
-            , Background.gradient
-                { angle = pi
-                , steps =
-                    [ rgb255 0 133 204
-                    , rgb255 0 85 128
-                    ]
-                }
-            , Border.rounded 5
-            , Border.shadow
-                { blur = 10
-                , size = 1
-                , color = rgb 0 0 0
-                , offset = ( 4, 4 )
-                }
-            , padding 10
-            ]
-          <|
-            Element.el [ centerX ] <|
-                text myText
+attrShadow =
+    Border.shadow
+        { blur = 10
+        , size = 1
+        , color = rgb 0 0 0
+        , offset = ( 4, 4 )
+        }
+
+
+addColorButton model myText =
+    Input.button
+        [ centerX
+        , hoverHighlight
         ]
+        { onPress = Just <| AddColorToPalette model.selectedColor
+        , label =
+            Element.el
+                [ Background.color <| rgb255 0 133 204
+                , Font.color <| rgb 1 1 1
+                , width <| px 220
+                , Font.size 15
+                , Font.bold
+                , centerX
+                , Background.gradient
+                    { angle = pi
+                    , steps =
+                        [ rgb255 0 133 204
+                        , rgb255 0 85 128
+                        ]
+                    }
+                , Border.rounded 5
+                , Border.shadow
+                    { blur = 10
+                    , size = 1
+                    , color = rgb 0 0 0
+                    , offset = ( 4, 4 )
+                    }
+                , padding 10
+                ]
+            <|
+                Element.el [ centerX ] <|
+                    text myText
+        }
 
 
 type alias ColorRecord =
@@ -242,28 +365,24 @@ hexToColor hex =
     }
 
 
-colorSelectDisplay : String -> Element Msg
 colorSelectDisplay color =
     let
         squareSize =
             256
 
-        colorRecord =
-            hexToColor color
-
         bkgColor =
             rgb255
-                colorRecord.red
-                colorRecord.green
-                colorRecord.blue
+                color.red
+                color.green
+                color.blue
 
         myRgb =
             "rgb255 "
-                ++ String.fromInt colorRecord.red
+                ++ String.fromInt color.red
                 ++ " "
-                ++ String.fromInt colorRecord.green
+                ++ String.fromInt color.green
                 ++ " "
-                ++ String.fromInt colorRecord.blue
+                ++ String.fromInt color.blue
                 ++ " "
     in
     Input.button
@@ -293,6 +412,7 @@ colorSelectDisplay color =
 type Msg
     = SendDataToJS
     | ReceivedDataFromJS String
+    | AddColorToPalette ColorRecord
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -302,7 +422,10 @@ update msg model =
             ( model, sendData "Hello JavaScript!" )
 
         ReceivedDataFromJS data ->
-            ( { model | selectedColor = data }, Cmd.none )
+            ( { model | selectedColor = hexToColor data }, Cmd.none )
+
+        AddColorToPalette color ->
+            ( { model | palette = color :: model.palette }, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg
@@ -318,21 +441,9 @@ port receiveData : (String -> msg) -> Sub msg
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( { selectedColor = ""
+    ( { selectedColor = { red = 0, green = 255, blue = 0 }
       , palette =
-            [ { red = 200
-              , green = 100
-              , blue = 10
-              }
-            , { red = 100
-              , green = 200
-              , blue = 50
-              }
-            , { red = 47
-              , green = 83
-              , blue = 24
-              }
-            ]
+            []
       }
     , Cmd.none
     )
