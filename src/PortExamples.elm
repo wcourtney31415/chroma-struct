@@ -136,18 +136,25 @@ menuBarItem myText =
 colorList : Model -> Element Msg
 colorList model =
     Element.column
-        [ Font.color <| rgb 1 1 1
-        , height fill
-        , Background.color <| rgb255 0 85 128
-        , spacing 2
-        , width
-            (fill
-                |> maximum 300
-                |> minimum 300
-            )
+        [ height fill
+        , Background.color <| rgb255 0 50 77
+        , Font.color <| rgb 1 1 1
         ]
-    <|
-        List.map colorListItem model.palette
+        [ Element.el [centerX, padding 6, Font.size 16] <| text "Palette"
+        , Element.column
+            [ Font.color <| rgb 1 1 1
+            , height fill
+            , Background.color <| rgb255 0 85 128
+            , spacing 2
+            , width
+                (fill
+                    |> maximum 300
+                    |> minimum 300
+                )
+            ]
+          <|
+            List.map colorListItem model.palette
+        ]
 
 
 colorListItem : ColorRecord -> Element Msg
