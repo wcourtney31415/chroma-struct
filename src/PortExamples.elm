@@ -41,44 +41,75 @@ view model =
                 ]
                 [ leftColumn model model.selectedColor
                 , colorList model
-                , Element.el [ width fill, height fill, padding 25 ] <|
-                    Element.column
-                        [ padding 15
-                        , Border.rounded 15
-                        , Font.color <| rgb 1 1 1
-                        , Font.bold
-                        , spacing 15
-                        , Background.color <| rgb255 0 85 128
-                        , attrShadow
-                        ]
-                        [ Element.el
-                            [ centerX
-                            ]
-                          <|
-                            text "Light to Dark"
-                        , Element.column
-                            [ spacing 5
-                            , alignTop
-                            , centerX
-                            ]
-                            [ sampleColorBlock { red = 255, green = 0, blue = 0 }
-                            , sampleColorBlock { red = 235, green = 0, blue = 0 }
-                            , sampleColorBlock { red = 215, green = 0, blue = 0 }
-                            , sampleColorBlock { red = 195, green = 0, blue = 0 }
-                            , sampleColorBlock { red = 175, green = 0, blue = 0 }
-                            , sampleColorBlock { red = 155, green = 0, blue = 0 }
-                            , sampleColorBlock { red = 135, green = 0, blue = 0 }
-                            , sampleColorBlock { red = 115, green = 0, blue = 0 }
-                            , sampleColorBlock { red = 95, green = 0, blue = 0 }
-                            , sampleColorBlock { red = 75, green = 0, blue = 0 }
-                            , sampleColorBlock { red = 55, green = 0, blue = 0 }
-                            , sampleColorBlock { red = 35, green = 0, blue = 0 }
-                            , sampleColorBlock { red = 15, green = 0, blue = 0 }
-                            , sampleColorBlock { red = 0, green = 0, blue = 0 }
-                            ]
-                        ]
+                , rightColumn
                 ]
             ]
+
+
+rightColumn =
+    Element.column
+        [ height fill
+        , Background.color <| rgb255 0 50 77
+        , Font.color <| rgb 1 1 1
+        , Border.color <| rgb 0 0 0
+        , width fill
+        , Border.widthEach
+            { top = 0
+            , bottom = 0
+            , left = 1
+            , right = 1
+            }
+        ]
+        [ Element.el
+            [ centerX
+            , padding 6
+            , Font.size 16
+            ]
+          <|
+            text "Color Variants"
+        , Element.el
+            [ width fill
+            , Background.color <| rgb255 0 37 57
+            , height fill
+            , padding 25
+            ]
+          <|
+            Element.column
+                [ padding 15
+                , Border.rounded 15
+                , Font.color <| rgb 1 1 1
+                , Font.bold
+                , spacing 15
+                , Background.color <| rgb255 0 85 128
+                , attrShadow
+                ]
+                [ Element.el
+                    [ centerX
+                    ]
+                  <|
+                    text "Light to Dark"
+                , Element.column
+                    [ spacing 5
+                    , alignTop
+                    , centerX
+                    ]
+                    [ sampleColorBlock { red = 255, green = 0, blue = 0 }
+                    , sampleColorBlock { red = 235, green = 0, blue = 0 }
+                    , sampleColorBlock { red = 215, green = 0, blue = 0 }
+                    , sampleColorBlock { red = 195, green = 0, blue = 0 }
+                    , sampleColorBlock { red = 175, green = 0, blue = 0 }
+                    , sampleColorBlock { red = 155, green = 0, blue = 0 }
+                    , sampleColorBlock { red = 135, green = 0, blue = 0 }
+                    , sampleColorBlock { red = 115, green = 0, blue = 0 }
+                    , sampleColorBlock { red = 95, green = 0, blue = 0 }
+                    , sampleColorBlock { red = 75, green = 0, blue = 0 }
+                    , sampleColorBlock { red = 55, green = 0, blue = 0 }
+                    , sampleColorBlock { red = 35, green = 0, blue = 0 }
+                    , sampleColorBlock { red = 15, green = 0, blue = 0 }
+                    , sampleColorBlock { red = 0, green = 0, blue = 0 }
+                    ]
+                ]
+        ]
 
 
 sampleColorBlock color =
@@ -260,7 +291,7 @@ leftColumn model color =
             , right = 1
             }
         ]
-        [ Element.el [ centerX, padding 6, Font.size 16 ] <| text "Color Select"
+        [ Element.el [ centerX, padding 6, Font.size 16 ] <| text "Color Selection"
         , Element.column
             [ paddingXY 20 5
             , height fill

@@ -2,9 +2,7 @@
 <html>
   <body>
     <div id="elm-code-is-loaded-here"></div>
-    <div>test</div>
     <script src="elm.js"></script>
-    <div>another test</div>
     <script>
       var app = Elm.PortExamples.init({
         node: document.getElementById('elm-code-is-loaded-here'),
@@ -16,13 +14,10 @@
         eyeDropper
           .open()
           .then((result) => {
-            console.log('got the result')
             console.log(result.sRGBHex)
             app.ports.receiveData.send(result.sRGBHex)
-            console.log('Did something with the result')
           })
           .catch((e) => {
-            console.log('Got Caught: '.e)
             resultElement.textContent = e
           })
       })
