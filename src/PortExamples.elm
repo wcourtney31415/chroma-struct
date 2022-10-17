@@ -140,7 +140,13 @@ colorList model =
         , Background.color <| rgb255 0 50 77
         , Font.color <| rgb 1 1 1
         ]
-        [ Element.el [centerX, padding 6, Font.size 16] <| text "Palette"
+        [ Element.el
+            [ centerX
+            , padding 6
+            , Font.size 16
+            ]
+          <|
+            text "Palette"
         , Element.column
             [ Font.color <| rgb 1 1 1
             , height fill
@@ -160,7 +166,11 @@ colorList model =
 colorListItem : ColorRecord -> Element Msg
 colorListItem cRecord =
     Element.row
-        [ centerX, width fill ]
+        [ centerX
+        , width fill
+        , Border.widthXY 0 1
+        , Border.color <| rgb 0 0 0
+        ]
         [ Element.el
             [ Background.color <|
                 rgb255
@@ -239,12 +249,28 @@ selectForm =
 
 leftColumn model color =
     Element.column
-        [ padding 25
-        , height fill
-        , Background.color <| rgb255 0 66 102
+        [ height fill
+        , Background.color <| rgb255 0 50 77
+        , Font.color <| rgb 1 1 1
+        , Border.color <| rgb 0 0 0
+        , Border.widthEach
+            { top = 0
+            , bottom = 0
+            , left = 0
+            , right = 1
+            }
         ]
-        [ Element.column
-            [ spacing 20 ]
+        [ Element.el [ centerX, padding 6, Font.size 16 ] <| text "Color Select"
+        , Element.column
+            [ paddingXY 20 5
+            , height fill
+            , Background.color <| rgb255 0 37 57
+
+            -- , spaceEvenly
+            , spacing 20
+
+            -- , Element.explain Debug.todo
+            ]
             [ colorSelectDisplay color
             , addColorButton model "Add to Pallet"
             , addColorButton model "Remove Color"
@@ -395,7 +421,8 @@ colorSelectDisplay color =
     Input.button
         [ Background.color bkgColor
         , width <| px squareSize
-        , alignTop
+
+        -- , alignTop
         , Border.shadow
             { blur = 10
             , size = 1
