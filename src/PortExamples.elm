@@ -35,15 +35,19 @@ view model =
             , spacing 2
             ]
             [ menuBar
-            , Element.row
-                [ height fill
-                , width fill
-                ]
-                [ leftColumn model model.selectedColor
-                , colorList model
-                , rightColumn
-                ]
+            , body model
             ]
+
+
+body model =
+    Element.row
+        [ height fill
+        , width fill
+        ]
+        [ leftColumn model model.selectedColor
+        , colorList model
+        , rightColumn
+        ]
 
 
 rightColumn =
@@ -296,11 +300,7 @@ leftColumn model color =
             [ paddingXY 20 5
             , height fill
             , Background.color <| rgb255 0 37 57
-
-            -- , spaceEvenly
             , spacing 20
-
-            -- , Element.explain Debug.todo
             ]
             [ colorSelectDisplay color
             , addColorButton model "Add to Pallet"
@@ -452,8 +452,6 @@ colorSelectDisplay color =
     Input.button
         [ Background.color bkgColor
         , width <| px squareSize
-
-        -- , alignTop
         , Border.shadow
             { blur = 10
             , size = 1
