@@ -7,6 +7,7 @@ import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
 import Html exposing (Html)
+import String exposing (toInt)
 
 
 type alias Model =
@@ -97,23 +98,85 @@ rightColumn =
                     , alignTop
                     , centerX
                     ]
-                    [ sampleColorBlock { red = 255, green = 0, blue = 0 }
-                    , sampleColorBlock { red = 235, green = 0, blue = 0 }
-                    , sampleColorBlock { red = 215, green = 0, blue = 0 }
-                    , sampleColorBlock { red = 195, green = 0, blue = 0 }
-                    , sampleColorBlock { red = 175, green = 0, blue = 0 }
-                    , sampleColorBlock { red = 155, green = 0, blue = 0 }
-                    , sampleColorBlock { red = 135, green = 0, blue = 0 }
-                    , sampleColorBlock { red = 115, green = 0, blue = 0 }
-                    , sampleColorBlock { red = 95, green = 0, blue = 0 }
-                    , sampleColorBlock { red = 75, green = 0, blue = 0 }
-                    , sampleColorBlock { red = 55, green = 0, blue = 0 }
-                    , sampleColorBlock { red = 35, green = 0, blue = 0 }
-                    , sampleColorBlock { red = 15, green = 0, blue = 0 }
-                    , sampleColorBlock { red = 0, green = 0, blue = 0 }
+                    <| List.map (\x->sampleColorBlock <| hslToRgb 200 1 x)
+                    [ 1
+                    , 0.95
+                    , 0.9
+                    , 0.85
+                    , 0.8
+                    , 0.75
+                    , 0.7
+                    , 0.65
+                    , 0.6
+                    , 0.55
+                    , 0.5
+                    , 0.45
+                    , 0.4
+                    , 0.35
+                    , 0.3
+                    , 0.25
+                    , 0.2
+                    , 0.15
+                    , 0.1
+                    , 0
                     ]
                 ]
         ]
+
+hslToRgb : Int -> Float -> Float ->  { blue : Int, green : Int, red : Int }
+hslToRgb hue sat light =
+    let
+        h =
+            toFloat hue / 60
+
+        t2 =
+            if light <= 0.5 then
+                light * (sat + 1)
+
+            else
+                light + sat - (light * sat)
+
+        t1 =
+            light * 2 - t2
+
+        hueToRgb tOne tTwo tHue =
+            let
+                hh =
+                    if tHue < 0 then
+                        tHue + 6
+
+                    else if tHue >= 6 then
+                        tHue - 6
+
+                    else
+                        tHue
+
+                ret =
+                    if hh < 1 then
+                        (tTwo - tOne) * hh + tOne
+
+                    else if hh < 3 then
+                        tTwo
+
+                    else if hh < 4 then
+                        (tTwo - tOne) * (4 - hh) + tOne
+
+                    else
+                        tOne
+            in
+            ret
+
+        r =
+            hueToRgb t1 t2 (h + 2) * 255
+
+        g =
+            hueToRgb t1 t2 h * 255
+
+        b =
+            hueToRgb t1 t2 (h - 2) * 255
+    in
+    { red = round r, green = round g, blue = round b }
+
 
 
 sampleColorBlock color =
