@@ -98,32 +98,34 @@ rightColumn =
                     , alignTop
                     , centerX
                     ]
-                    <| List.map (\x->sampleColorBlock <| hslToRgb 200 1 x)
-                    [ 1
-                    , 0.95
-                    , 0.9
-                    , 0.85
-                    , 0.8
-                    , 0.75
-                    , 0.7
-                    , 0.65
-                    , 0.6
-                    , 0.55
-                    , 0.5
-                    , 0.45
-                    , 0.4
-                    , 0.35
-                    , 0.3
-                    , 0.25
-                    , 0.2
-                    , 0.15
-                    , 0.1
-                    , 0
-                    ]
+                  <|
+                    List.map (\x -> sampleColorBlock <| hslToRgb 200 1 x)
+                        [ 1
+                        , 0.95
+                        , 0.9
+                        , 0.85
+                        , 0.8
+                        , 0.75
+                        , 0.7
+                        , 0.65
+                        , 0.6
+                        , 0.55
+                        , 0.5
+                        , 0.45
+                        , 0.4
+                        , 0.35
+                        , 0.3
+                        , 0.25
+                        , 0.2
+                        , 0.15
+                        , 0.1
+                        , 0
+                        ]
                 ]
         ]
 
-hslToRgb : Int -> Float -> Float ->  { blue : Int, green : Int, red : Int }
+
+hslToRgb : Int -> Float -> Float -> { blue : Int, green : Int, red : Int }
 hslToRgb hue sat light =
     let
         h =
@@ -176,7 +178,6 @@ hslToRgb hue sat light =
             hueToRgb t1 t2 (h - 2) * 255
     in
     { red = round r, green = round g, blue = round b }
-
 
 
 sampleColorBlock color =
@@ -368,6 +369,32 @@ leftColumn model color =
             [ colorSelectDisplay color
             , addColorButton model "Add to Pallet"
             , addColorButton model "Remove Color"
+            , Input.slider
+                [ Element.height (Element.px 30)
+
+                -- Here is where we're creating/styling the "track"
+                , Element.behindContent
+                    (Element.el
+                        [ Element.width Element.fill
+                        , Element.height (Element.px 2)
+                        , Element.centerY
+                        , Background.color <| rgb255 150 150 150
+                        , Border.rounded 2
+                        ]
+                        Element.none
+                    )
+                ]
+                { onChange = \y -> AddColorToPalette {red = 200, green = 200, blue = 200}
+                , label =
+                    Input.labelAbove []
+                        (text "My Slider Value")
+                , min = 0
+                , max = 75
+                , step = Nothing
+                , value = 5
+                , thumb =
+                    Input.defaultThumb
+                }
             ]
         ]
 
