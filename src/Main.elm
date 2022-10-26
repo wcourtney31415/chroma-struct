@@ -1,4 +1,4 @@
-port module PortExamples exposing (main)
+port module Main exposing (main)
 
 import Browser
 import Element exposing (..)
