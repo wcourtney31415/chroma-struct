@@ -1,4 +1,4 @@
-port module Main exposing (main)
+module Main exposing (main)
 
 import Browser
 import Element exposing (..)
@@ -8,12 +8,12 @@ import Element.Font as Font
 import Element.Input as Input
 import Html exposing (Html)
 import String exposing (toInt)
-
-
-type alias Model =
-    { selectedColor : ColorRecord
-    , palette : List ColorRecord
-    }
+import LeftColumn exposing (..)
+import Update exposing (..)
+import ColorRecord exposing (..)
+import Messages exposing (..)
+import Model exposing (..)
+import Subscriptions exposing (..)
 
 
 view : Model -> Html Msg
@@ -98,32 +98,34 @@ rightColumn =
                     , alignTop
                     , centerX
                     ]
-                    <| List.map (\x->sampleColorBlock <| hslToRgb 200 1 x)
-                    [ 1
-                    , 0.95
-                    , 0.9
-                    , 0.85
-                    , 0.8
-                    , 0.75
-                    , 0.7
-                    , 0.65
-                    , 0.6
-                    , 0.55
-                    , 0.5
-                    , 0.45
-                    , 0.4
-                    , 0.35
-                    , 0.3
-                    , 0.25
-                    , 0.2
-                    , 0.15
-                    , 0.1
-                    , 0
-                    ]
+                  <|
+                    List.map (\x -> sampleColorBlock <| hslToRgb 200 1 x)
+                        [ 1
+                        , 0.95
+                        , 0.9
+                        , 0.85
+                        , 0.8
+                        , 0.75
+                        , 0.7
+                        , 0.65
+                        , 0.6
+                        , 0.55
+                        , 0.5
+                        , 0.45
+                        , 0.4
+                        , 0.35
+                        , 0.3
+                        , 0.25
+                        , 0.2
+                        , 0.15
+                        , 0.1
+                        , 0
+                        ]
                 ]
         ]
 
-hslToRgb : Int -> Float -> Float ->  { blue : Int, green : Int, red : Int }
+
+hslToRgb : Int -> Float -> Float -> { blue : Int, green : Int, red : Int }
 hslToRgb hue sat light =
     let
         h =
@@ -176,7 +178,6 @@ hslToRgb hue sat light =
             hueToRgb t1 t2 (h - 2) * 255
     in
     { red = round r, green = round g, blue = round b }
-
 
 
 sampleColorBlock color =
@@ -345,33 +346,6 @@ selectForm =
             text "Form"
 
 
-leftColumn model color =
-    Element.column
-        [ height fill
-        , Background.color <| rgb255 0 50 77
-        , Font.color <| rgb 1 1 1
-        , Border.color <| rgb 0 0 0
-        , Border.widthEach
-            { top = 0
-            , bottom = 0
-            , left = 0
-            , right = 1
-            }
-        ]
-        [ Element.el [ centerX, padding 6, Font.size 16 ] <| text "Color Selection"
-        , Element.column
-            [ paddingXY 20 5
-            , height fill
-            , Background.color <| rgb255 0 37 57
-            , spacing 20
-            ]
-            [ colorSelectDisplay color
-            , addColorButton model "Add to Pallet"
-            , addColorButton model "Remove Color"
-            ]
-        ]
-
-
 attrShadow =
     Border.shadow
         { blur = 10
@@ -381,188 +355,9 @@ attrShadow =
         }
 
 
-addColorButton model myText =
-    Input.button
-        [ centerX
-        , hoverHighlight
-        ]
-        { onPress = Just <| AddColorToPalette model.selectedColor
-        , label =
-            Element.el
-                [ Background.color <| rgb255 0 133 204
-                , Font.color <| rgb 1 1 1
-                , width <| px 220
-                , Font.size 15
-                , Font.bold
-                , centerX
-                , Background.gradient
-                    { angle = pi
-                    , steps =
-                        [ rgb255 0 133 204
-                        , rgb255 0 85 128
-                        ]
-                    }
-                , Border.rounded 5
-                , Border.shadow
-                    { blur = 10
-                    , size = 1
-                    , color = rgb 0 0 0
-                    , offset = ( 4, 4 )
-                    }
-                , padding 10
-                ]
-            <|
-                Element.el [ centerX ] <|
-                    text myText
-        }
 
 
-type alias ColorRecord =
-    { red : Int
-    , green : Int
-    , blue : Int
-    }
 
-
-hexToColor : String -> ColorRecord
-hexToColor hex =
-    let
-        characterToHex char =
-            case char of
-                "a" ->
-                    10
-
-                "b" ->
-                    11
-
-                "c" ->
-                    12
-
-                "d" ->
-                    13
-
-                "e" ->
-                    14
-
-                "f" ->
-                    15
-
-                _ ->
-                    Maybe.withDefault -1000 <| String.toInt char
-
-        charAt i str =
-            String.slice i (i + 1) str
-
-        ra =
-            characterToHex <| charAt 1 hex
-
-        rb =
-            characterToHex <| charAt 2 hex
-
-        ga =
-            characterToHex <| charAt 3 hex
-
-        gb =
-            characterToHex <| charAt 4 hex
-
-        ba =
-            characterToHex <| charAt 5 hex
-
-        bb =
-            characterToHex <| charAt 6 hex
-
-        myRed =
-            ra
-                * 16
-                + rb
-
-        myGreen =
-            ga
-                * 16
-                + gb
-
-        myBlue =
-            ba
-                * 16
-                + bb
-    in
-    { red = myRed
-    , green = myGreen
-    , blue = myBlue
-    }
-
-
-colorSelectDisplay color =
-    let
-        squareSize =
-            256
-
-        bkgColor =
-            rgb255
-                color.red
-                color.green
-                color.blue
-
-        myRgb =
-            "rgb255 "
-                ++ String.fromInt color.red
-                ++ " "
-                ++ String.fromInt color.green
-                ++ " "
-                ++ String.fromInt color.blue
-                ++ " "
-    in
-    Input.button
-        [ Background.color bkgColor
-        , width <| px squareSize
-        , Border.shadow
-            { blur = 10
-            , size = 1
-            , color = rgb 0 0 0
-            , offset = ( 4, 4 )
-            }
-        , height <| px squareSize
-        ]
-        { label =
-            Element.el
-                [ centerX
-                , centerY
-                ]
-            <|
-                text <|
-                    myRgb
-        , onPress = Maybe.Just SendDataToJS
-        }
-
-
-type Msg
-    = SendDataToJS
-    | ReceivedDataFromJS String
-    | AddColorToPalette ColorRecord
-
-
-update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
-    case msg of
-        SendDataToJS ->
-            ( model, sendData "Hello JavaScript!" )
-
-        ReceivedDataFromJS data ->
-            ( { model | selectedColor = hexToColor data }, Cmd.none )
-
-        AddColorToPalette color ->
-            ( { model | palette = color :: model.palette }, Cmd.none )
-
-
-subscriptions : Model -> Sub Msg
-subscriptions _ =
-    receiveData ReceivedDataFromJS
-
-
-port sendData : String -> Cmd msg
-
-
-port receiveData : (String -> msg) -> Sub msg
 
 
 init : () -> ( Model, Cmd Msg )
