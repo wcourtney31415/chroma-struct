@@ -1,4 +1,4 @@
-module ColorRecord exposing (..)
+module ColorRecord exposing (ColorRecord)
 
 
 type alias ColorRecord =

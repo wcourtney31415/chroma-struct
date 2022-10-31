@@ -1,4 +1,4 @@
-module Conversions exposing (..)
+module Conversions exposing (hexToColor)
 
 
 

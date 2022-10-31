@@ -1,9 +1,7 @@
-module GlobalAttributes exposing (..)
+module GlobalAttributes exposing (hoverHighlight)
 
 import Element exposing (..)
 import Element.Background as Background
-import Html exposing (Html)
-import String exposing (toInt)
 import Messages exposing (..)
 
 

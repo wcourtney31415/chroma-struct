@@ -7,7 +7,6 @@ import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
 import Html exposing (Html)
-import String exposing (toInt)
 import LeftColumn exposing (..)
 import Update exposing (..)
 import ColorRecord exposing (..)
