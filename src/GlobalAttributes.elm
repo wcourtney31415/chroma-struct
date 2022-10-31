@@ -1,8 +1,7 @@
 module GlobalAttributes exposing (hoverHighlight)
 
-import Element exposing (..)
+import Element exposing (mouseOver, rgb255)
 import Element.Background as Background
-import Messages exposing (..)
 
 
 

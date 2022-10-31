@@ -1,4 +1,4 @@
-port module Ports exposing (..)
+port module Ports exposing (sendData,receiveData)
 
 import Element exposing (..)
 import GlobalAttributes exposing (..)

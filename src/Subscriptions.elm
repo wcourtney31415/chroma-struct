@@ -1,5 +1,5 @@
 
-module Subscriptions exposing (..)
+module Subscriptions exposing (subscriptions)
 
 import Element exposing (..)
 import Messages exposing (Msg)

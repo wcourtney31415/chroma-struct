@@ -1,12 +1,12 @@
-module LeftColumn exposing (..)
+module LeftColumn exposing (leftColumn)
 
-import Element exposing (..)
+import Element exposing (rgb255, width, px,rgb, height, centerX, centerY, text, padding, fill, paddingXY, spacing)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
-import GlobalAttributes exposing (..)
-import Messages exposing (..)
+import GlobalAttributes exposing (hoverHighlight)
+import Messages
 
 
 leftColumn model color =
@@ -41,7 +41,7 @@ addColorButton model myText =
         [ centerX
         , hoverHighlight
         ]
-        { onPress = Just <| AddColorToPalette model.selectedColor
+        { onPress = Just <| Messages.AddColorToPalette model.selectedColor
         , label =
             Element.el
                 [ Background.color <| rgb255 0 133 204
@@ -111,5 +111,5 @@ colorSelectDisplay color =
             <|
                 text <|
                     myRgb
-        , onPress = Maybe.Just SendDataToJS
+        , onPress = Maybe.Just Messages.SendDataToJS
         }

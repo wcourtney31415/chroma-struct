@@ -1,4 +1,4 @@
-module Model exposing (..)
+module Model exposing (Model)
 
 import Element exposing (..)
 import GlobalAttributes exposing (..)
