@@ -1,0 +1,1 @@
+xdg-open ./target/index.html
