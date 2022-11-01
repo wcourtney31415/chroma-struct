@@ -4,7 +4,6 @@ import Element exposing (mouseOver, rgb255)
 import Element.Background as Background
 
 
-
 hoverHighlight : Element.Attribute msg
 hoverHighlight =
     mouseOver
@@ -13,4 +12,3 @@ hoverHighlight =
             , steps = [ rgb255 84 130 186 ]
             }
         ]
-

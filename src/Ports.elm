@@ -1,4 +1,4 @@
-port module Ports exposing (sendData,receiveData)
+port module Ports exposing (receiveData, sendData)
 
 
 port sendData : String -> Cmd msg

@@ -1,9 +1,9 @@
 module Update exposing (update)
 
-import Model exposing (Model)
-import Messages exposing (Msg(..))
-import Ports exposing (sendData)
 import Conversions exposing (hexToColor)
+import Messages exposing (Msg(..))
+import Model exposing (Model)
+import Ports exposing (sendData)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -17,4 +17,5 @@ update msg model =
 
         AddColorToPalette color ->
             ( { model | palette = color :: model.palette }, Cmd.none )
-
+        ChangeColor myColor ->
+            ({model | selectedColor = myColor }, Cmd.none)

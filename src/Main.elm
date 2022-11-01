@@ -1,18 +1,18 @@
 module Main exposing (main)
 
 import Browser
-import Element exposing ( rgb, rgb255, height, fill, centerY, paddingXY, text, centerX, width, Element, px, spacing, padding, maximum, minimum, mouseOver, alignTop, layoutWith, focusStyle)
+import ColorRecord exposing (ColorRecord)
+import Element exposing (Element, alignTop, centerX, centerY, fill, focusStyle, height, layoutWith, maximum, minimum, mouseOver, padding, paddingXY, px, rgb, rgb255, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
 import Html exposing (Html)
 import LeftColumn exposing (leftColumn)
-import Update exposing (update)
-import ColorRecord exposing (ColorRecord)
 import Messages exposing (Msg(..))
 import Model exposing (Model)
 import Subscriptions exposing (subscriptions)
+import Update exposing (update)
 
 
 view : Model -> Html Msg
@@ -360,11 +360,6 @@ attrShadow =
         , color = rgb 0 0 0
         , offset = ( 4, 4 )
         }
-
-
-
-
-
 
 
 init : () -> ( Model, Cmd Msg )

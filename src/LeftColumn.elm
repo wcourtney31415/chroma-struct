@@ -1,6 +1,7 @@
 module LeftColumn exposing (leftColumn)
 
-import Element exposing (rgb255, width, px,rgb, height, centerX, centerY, text, padding, fill, paddingXY, spacing)
+import ColorRecord exposing (ColorRecord)
+import Element exposing (centerX, centerY, fill, height, padding, paddingXY, px, rgb, rgb255, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -8,7 +9,7 @@ import Element.Input as Input
 import GlobalAttributes exposing (hoverHighlight)
 import Messages exposing (Msg(..))
 import Model exposing (Model)
-import ColorRecord exposing (ColorRecord)
+import SliderBar exposing (sliderBar)
 
 
 leftColumn : Model -> ColorRecord -> Element.Element Msg
@@ -35,6 +36,7 @@ leftColumn model color =
             [ colorSelectDisplay color
             , addColorButton model "Add to Pallet"
             , addColorButton model "Remove Color"
+            , sliderBar model
             ]
         ]
 

@@ -7,3 +7,4 @@ type Msg
     = SendDataToJS
     | ReceivedDataFromJS String
     | AddColorToPalette ColorRecord
+    | ChangeColor ColorRecord

@@ -1,10 +1,6 @@
 module Conversions exposing (hexToColor)
 
-
-
-
 import ColorRecord exposing (ColorRecord)
-
 
 
 hexToColor : String -> ColorRecord
@@ -73,4 +69,3 @@ hexToColor hex =
     , green = myGreen
     , blue = myBlue
     }
-
