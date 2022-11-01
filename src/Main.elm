@@ -1,18 +1,18 @@
 module Main exposing (main)
 
 import Browser
-import Element exposing (..)
+import Element exposing ( rgb, rgb255, height, fill, centerY, paddingXY, text, centerX, width, Element, px, spacing, padding, maximum, minimum, mouseOver, alignTop, layoutWith, focusStyle)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
 import Html exposing (Html)
-import LeftColumn exposing (..)
-import Update exposing (..)
-import ColorRecord exposing (..)
-import Messages exposing (..)
-import Model exposing (..)
-import Subscriptions exposing (..)
+import LeftColumn exposing (leftColumn)
+import Update exposing (update)
+import ColorRecord exposing (ColorRecord)
+import Messages exposing (Msg(..))
+import Model exposing (Model)
+import Subscriptions exposing (subscriptions)
 
 
 view : Model -> Html Msg
@@ -39,6 +39,7 @@ view model =
             ]
 
 
+body : Model -> Element Msg
 body model =
     Element.row
         [ height fill
@@ -50,6 +51,7 @@ body model =
         ]
 
 
+rightColumn : Element msg
 rightColumn =
     Element.column
         [ height fill
@@ -179,6 +181,7 @@ hslToRgb hue sat light =
     { red = round r, green = round g, blue = round b }
 
 
+sampleColorBlock : ColorRecord -> Element msg
 sampleColorBlock color =
     Element.el
         [ Background.color <| rgb255 color.red color.green color.blue
@@ -189,6 +192,7 @@ sampleColorBlock color =
         text " "
 
 
+hoverHighlight : Element.Attribute msg
 hoverHighlight =
     mouseOver
         [ Background.gradient
@@ -222,6 +226,7 @@ menuBar =
             ]
 
 
+menuBarItem : String -> Element a
 menuBarItem myText =
     Input.button
         [ hoverHighlight
@@ -313,6 +318,7 @@ colorListItem cRecord =
         ]
 
 
+copyButton : Element msg
 copyButton =
     Element.el
         [ Background.color <| rgb255 58 106 167
@@ -329,6 +335,7 @@ copyButton =
             text "Copy"
 
 
+selectForm : Element msg
 selectForm =
     Element.el
         [ Background.color <| rgb255 58 106 167
@@ -345,6 +352,7 @@ selectForm =
             text "Form"
 
 
+attrShadow : Element.Attr decorative msg
 attrShadow =
     Border.shadow
         { blur = 10

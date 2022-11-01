@@ -1,9 +1,6 @@
 module Model exposing (Model)
 
-import Element exposing (..)
-import GlobalAttributes exposing (..)
-import Messages exposing (..)
-import ColorRecord exposing (..)
+import ColorRecord exposing (ColorRecord)
 
 
 type alias Model =

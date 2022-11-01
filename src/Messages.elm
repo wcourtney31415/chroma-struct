@@ -1,6 +1,6 @@
-module Messages exposing (..)
+module Messages exposing (Msg(..))
 
-import ColorRecord exposing (..)
+import ColorRecord exposing (ColorRecord)
 
 
 type Msg

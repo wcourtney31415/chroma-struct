@@ -5,6 +5,7 @@ import Element.Background as Background
 
 
 
+hoverHighlight : Element.Attribute msg
 hoverHighlight =
     mouseOver
         [ Background.gradient

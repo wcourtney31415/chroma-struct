@@ -1,10 +1,9 @@
 
 module Subscriptions exposing (subscriptions)
 
-import Element exposing (..)
 import Messages exposing (Msg)
-import Ports exposing (..)
-import Model exposing (..)
+import Ports exposing ( receiveData)
+import Model exposing (Model)
 
 
 subscriptions : Model -> Sub Msg

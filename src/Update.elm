@@ -1,10 +1,9 @@
 module Update exposing (update)
 
-import Model exposing (..)
-import Messages exposing (..)
-import Element exposing (..)
-import Ports exposing (..)
-import Conversions exposing (..)
+import Model exposing (Model)
+import Messages exposing (Msg(..))
+import Ports exposing (sendData)
+import Conversions exposing (hexToColor)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )

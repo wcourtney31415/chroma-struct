@@ -6,9 +6,12 @@ import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
 import GlobalAttributes exposing (hoverHighlight)
-import Messages
+import Messages exposing (Msg(..))
+import Model exposing (Model)
+import ColorRecord exposing (ColorRecord)
 
 
+leftColumn : Model -> ColorRecord -> Element.Element Msg
 leftColumn model color =
     Element.column
         [ height fill
@@ -36,12 +39,13 @@ leftColumn model color =
         ]
 
 
+addColorButton : Model -> String -> Element.Element Msg
 addColorButton model myText =
     Input.button
         [ centerX
         , hoverHighlight
         ]
-        { onPress = Just <| Messages.AddColorToPalette model.selectedColor
+        { onPress = Just <| AddColorToPalette model.selectedColor
         , label =
             Element.el
                 [ Background.color <| rgb255 0 133 204
@@ -72,6 +76,7 @@ addColorButton model myText =
         }
 
 
+colorSelectDisplay : ColorRecord -> Element.Element Msg
 colorSelectDisplay color =
     let
         squareSize =
@@ -111,5 +116,5 @@ colorSelectDisplay color =
             <|
                 text <|
                     myRgb
-        , onPress = Maybe.Just Messages.SendDataToJS
+        , onPress = Maybe.Just SendDataToJS
         }
