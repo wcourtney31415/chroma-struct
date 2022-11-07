@@ -36,7 +36,7 @@ leftColumn model color =
             ]
             [ colorSelectDisplay color
             , addColorButton model "Dropper Tool"
-            , addColorButton model "Add to Pallet"
+            , addColorButton model "Add to Palette"
             , RGBSliderPanel.sliderPanel model.selectedColor
             , HSLSliderPanel.sliderPanel model.selectedColor
             ]
