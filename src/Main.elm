@@ -238,7 +238,7 @@ menuBarItem myText =
         { label = text myText, onPress = Nothing }
 
 
-colorList pallette =
+colorList palette =
     Element.column
         [ height fill
         , Background.color <| rgb255 0 50 77
@@ -264,7 +264,7 @@ colorList pallette =
             ]
           <|
             List.map colorListItem <|
-                List.indexedMap Tuple.pair pallette
+                List.indexedMap Tuple.pair palette
         ]
 
 
