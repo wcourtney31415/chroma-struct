@@ -258,8 +258,8 @@ colorList palette =
             , spacing 2
             , width
                 (fill
-                    |> maximum 300
-                    |> minimum 300
+                    |> maximum 375
+                    |> minimum 375
                 )
             ]
           <|
