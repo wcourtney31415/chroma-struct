@@ -9,7 +9,8 @@ import Element.Input as Input
 import GlobalAttributes exposing (hoverHighlight)
 import Messages exposing (Msg(..))
 import Model exposing (Model)
-import SliderBar exposing (sliderBar)
+import RGBSliderPanel exposing (sliderPanel)
+import HSLSliderPanel exposing (sliderPanel)
 
 
 leftColumn : Model -> ColorRecord -> Element.Element Msg
@@ -28,15 +29,16 @@ leftColumn model color =
         ]
         [ Element.el [ centerX, padding 6, Font.size 16 ] <| text "Color Selection"
         , Element.column
-            [ paddingXY 20 5
+            [ paddingXY 20 20
             , height fill
             , Background.color <| rgb255 0 37 57
-            , spacing 20
+            , spacing 12
             ]
             [ colorSelectDisplay color
+            , addColorButton model "Dropper Tool"
             , addColorButton model "Add to Pallet"
-            , addColorButton model "Remove Color"
-            , sliderBar model
+            , RGBSliderPanel.sliderPanel model.selectedColor
+            , HSLSliderPanel.sliderPanel model.selectedColor
             ]
         ]
 
@@ -52,7 +54,7 @@ addColorButton model myText =
             Element.el
                 [ Background.color <| rgb255 0 133 204
                 , Font.color <| rgb 1 1 1
-                , width <| px 220
+                , width <| px 256
                 , Font.size 15
                 , Font.bold
                 , centerX

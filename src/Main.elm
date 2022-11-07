@@ -2,7 +2,7 @@ module Main exposing (main)
 
 import Browser
 import ColorRecord exposing (ColorRecord)
-import Element exposing (Element, alignTop, centerX, centerY, fill, focusStyle, height, layoutWith, maximum, minimum, mouseOver, padding, paddingXY, px, rgb, rgb255, spacing, text, width)
+import Element exposing (Color, Element, alignTop, centerX, centerY, fill, focusStyle, height, layoutWith, maximum, minimum, mouseOver, padding, paddingXY, px, rgb, rgb255, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -46,7 +46,7 @@ body model =
         , width fill
         ]
         [ leftColumn model model.selectedColor
-        , colorList model
+        , colorList model.palette
         , rightColumn
         ]
 
@@ -77,7 +77,7 @@ rightColumn =
             [ width fill
             , Background.color <| rgb255 0 37 57
             , height fill
-            , padding 25
+            , paddingXY 25 10
             ]
           <|
             Element.column
@@ -100,7 +100,7 @@ rightColumn =
                     , centerX
                     ]
                   <|
-                    List.map (\x -> sampleColorBlock <| hslToRgb 200 1 x)
+                    List.map (\x -> sampleColorBlock <| hslToRgb 200 1 x) <| 
                         [ 1
                         , 0.95
                         , 0.9
@@ -126,7 +126,7 @@ rightColumn =
         ]
 
 
-hslToRgb : Int -> Float -> Float -> { blue : Int, green : Int, red : Int }
+hslToRgb : Int -> Float -> Float -> ColorRecord
 hslToRgb hue sat light =
     let
         h =
@@ -185,8 +185,10 @@ sampleColorBlock : ColorRecord -> Element msg
 sampleColorBlock color =
     Element.el
         [ Background.color <| rgb255 color.red color.green color.blue
-        , width <| px 100
-        , height <| px 20
+        , width <| px 200
+        , height <| px 30
+        , Border.width 1
+        , Border.color <| rgb 0 0 0
         ]
     <|
         text " "
@@ -236,8 +238,7 @@ menuBarItem myText =
         { label = text myText, onPress = Nothing }
 
 
-colorList : Model -> Element Msg
-colorList model =
+colorList pallette =
     Element.column
         [ height fill
         , Background.color <| rgb255 0 50 77
@@ -262,12 +263,16 @@ colorList model =
                 )
             ]
           <|
-            List.map colorListItem model.palette
+            List.map colorListItem <|
+                List.indexedMap Tuple.pair pallette
         ]
 
 
-colorListItem : ColorRecord -> Element Msg
-colorListItem cRecord =
+
+-- colorListItem : ColorRecord -> Element Msg
+
+
+colorListItem ( index, cRecord ) =
     Element.row
         [ centerX
         , width fill
@@ -306,6 +311,8 @@ colorListItem cRecord =
                         ++ String.fromInt cRecord.green
                         ++ " "
                         ++ String.fromInt cRecord.blue
+                        ++ " -> "
+                        ++ String.fromInt index
         , Element.row
             [ spacing 3
             , height fill
@@ -314,6 +321,7 @@ colorListItem cRecord =
             ]
             [ copyButton
             , selectForm
+            , deleteButton index
             ]
         ]
 
@@ -333,6 +341,23 @@ copyButton =
             ]
         <|
             text "Copy"
+
+
+deleteButton index =
+    Element.el
+        [ Background.color <| rgb255 58 106 167
+        , height fill
+        , Font.size 12
+        , Border.rounded 3
+        ]
+    <|
+        Input.button
+            [ centerY
+            , paddingXY 5 0
+            ]
+            { onPress = Just <| RemoveColor index
+            , label = text "X"
+            }
 
 
 selectForm : Element msg

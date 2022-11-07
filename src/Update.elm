@@ -17,5 +17,24 @@ update msg model =
 
         AddColorToPalette color ->
             ( { model | palette = color :: model.palette }, Cmd.none )
+
         ChangeColor myColor ->
-            ({model | selectedColor = myColor }, Cmd.none)
+            ( { model | selectedColor = myColor }, Cmd.none )
+
+        RemoveColor index ->
+            ( { model | palette = removeElement model.palette index }, Cmd.none )
+
+
+removeElement : List a -> Int -> List a
+removeElement list index =
+    let
+        beforeSeperation =
+            List.take index list
+
+        afterSeperation =
+            List.drop (index + 1) list
+
+        newList =
+            List.append beforeSeperation afterSeperation
+    in
+    newList

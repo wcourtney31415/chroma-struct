@@ -8,3 +8,4 @@ type Msg
     | ReceivedDataFromJS String
     | AddColorToPalette ColorRecord
     | ChangeColor ColorRecord
+    | RemoveColor Int
