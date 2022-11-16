@@ -1,9 +1,9 @@
 module Update exposing (update)
 
-import Conversions exposing (hexToColor)
 import Messages exposing (Msg(..))
 import Model exposing (Model)
 import Ports exposing (sendData)
+import Conversions exposing (dropperStringToColorRecord)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -13,7 +13,7 @@ update msg model =
             ( model, sendData "Hello JavaScript!" )
 
         ReceivedDataFromJS data ->
-            ( { model | selectedColor = hexToColor data }, Cmd.none )
+            ( { model | selectedColor = dropperStringToColorRecord data }, Cmd.none )
 
         AddColorToPalette color ->
             ( { model | palette = color :: model.palette }, Cmd.none )

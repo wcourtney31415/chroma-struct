@@ -1,6 +1,15 @@
-module Conversions exposing (hexToColor)
+module Conversions exposing (dropperStringToColorRecord)
 
+import Array
 import ColorRecord exposing (ColorRecord)
+
+
+dropperStringToColorRecord str =
+    if String.startsWith "rgb(" str then
+        rgbToColor str
+
+    else
+        hexToColor str
 
 
 hexToColor : String -> ColorRecord
@@ -68,4 +77,34 @@ hexToColor hex =
     { red = myRed
     , green = myGreen
     , blue = myBlue
+    }
+
+
+rgbToColor : String -> ColorRecord
+rgbToColor rgb =
+    let
+        commaDelimitedList =
+            String.split "," rgb
+
+        stripAlphaChars t =
+            String.filter Char.isDigit t
+
+        rgbArray =
+            Array.fromList <| List.map stripAlphaChars commaDelimitedList
+
+        getAtIndex i arr =
+            Maybe.withDefault 0 (String.toInt <| Maybe.withDefault "" (Array.get i arr))
+
+        red =
+            getAtIndex 0 rgbArray
+
+        green =
+            getAtIndex 1 rgbArray
+
+        blue =
+            getAtIndex 2 rgbArray
+    in
+    { red = red
+    , green = green
+    , blue = blue
     }

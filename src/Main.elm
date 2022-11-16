@@ -13,6 +13,7 @@ import Messages exposing (Msg(..))
 import Model exposing (Model)
 import Subscriptions exposing (subscriptions)
 import Update exposing (update)
+import Conversions exposing (dropperStringToColorRecord)
 
 
 view : Model -> Html Msg
@@ -34,9 +35,36 @@ view model =
             , height fill
             , spacing 2
             ]
-            [ menuBar
+            [ colorTest
+            , menuBar
             , body model
             ]
+
+
+colorRecordAsString x =
+    "Red: "
+        ++ String.fromInt x.red
+        ++ " Green: "
+        ++ String.fromInt x.green
+        ++ " Blue: "
+        ++ String.fromInt x.blue
+
+
+colorTest =
+    let
+        colorString =
+            "rgb(123,123,12)"
+
+        myColorRecord =
+            dropperStringToColorRecord colorString
+    in
+    Element.el
+        [ Font.color <|
+            rgb255 255 255 255
+        ]
+    <|
+        text <|
+            colorRecordAsString myColorRecord
 
 
 body : Model -> Element Msg
@@ -100,7 +128,7 @@ rightColumn =
                     , centerX
                     ]
                   <|
-                    List.map (\x -> sampleColorBlock <| hslToRgb 200 1 x) <| 
+                    List.map (\x -> sampleColorBlock <| hslToRgb 200 1 x) <|
                         [ 1
                         , 0.95
                         , 0.9

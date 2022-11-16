@@ -7,10 +7,10 @@ import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
 import GlobalAttributes exposing (hoverHighlight)
+import HSLSliderPanel exposing (sliderPanel)
 import Messages exposing (Msg(..))
 import Model exposing (Model)
 import RGBSliderPanel exposing (sliderPanel)
-import HSLSliderPanel exposing (sliderPanel)
 
 
 leftColumn : Model -> ColorRecord -> Element.Element Msg
