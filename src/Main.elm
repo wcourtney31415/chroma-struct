@@ -1,8 +1,9 @@
-module Main exposing (main)
+module Main exposing (colorTest, main)
 
 import Browser
 import ColorRecord exposing (ColorRecord)
-import Element exposing (Color, Element, alignTop, centerX, centerY, fill, focusStyle, height, layoutWith, maximum, minimum, mouseOver, padding, paddingXY, px, rgb, rgb255, spacing, text, width)
+import Conversions exposing (dropperStringToColorRecord)
+import Element exposing (Element, alignTop, centerX, centerY, fill, focusStyle, height, layoutWith, maximum, minimum, mouseOver, padding, paddingXY, px, rgb, rgb255, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -13,7 +14,6 @@ import Messages exposing (Msg(..))
 import Model exposing (Model)
 import Subscriptions exposing (subscriptions)
 import Update exposing (update)
-import Conversions exposing (dropperStringToColorRecord)
 
 
 view : Model -> Html Msg
@@ -41,6 +41,7 @@ view model =
             ]
 
 
+colorRecordAsString : ColorRecord -> String
 colorRecordAsString x =
     "Red: "
         ++ String.fromInt x.red
@@ -50,6 +51,7 @@ colorRecordAsString x =
         ++ String.fromInt x.blue
 
 
+colorTest : Element msg
 colorTest =
     let
         colorString =
@@ -266,6 +268,7 @@ menuBarItem myText =
         { label = text myText, onPress = Nothing }
 
 
+colorList : List ColorRecord -> Element Msg
 colorList palette =
     Element.column
         [ height fill
@@ -296,10 +299,7 @@ colorList palette =
         ]
 
 
-
--- colorListItem : ColorRecord -> Element Msg
-
-
+colorListItem : ( Int, ColorRecord ) -> Element Msg
 colorListItem ( index, cRecord ) =
     Element.row
         [ centerX
@@ -371,6 +371,7 @@ copyButton =
             text "Copy"
 
 
+deleteButton : Int -> Element Msg
 deleteButton index =
     Element.el
         [ Background.color <| rgb255 58 106 167

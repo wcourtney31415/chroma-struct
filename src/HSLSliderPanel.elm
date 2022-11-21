@@ -73,6 +73,7 @@ colorSlider focusColor selectedColor =
         }
 
 
+sliderBar : Element.Attribute msg
 sliderBar =
     Element.behindContent <|
         Element.el

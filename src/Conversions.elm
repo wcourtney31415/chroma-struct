@@ -4,6 +4,7 @@ import Array
 import ColorRecord exposing (ColorRecord)
 
 
+dropperStringToColorRecord : String -> ColorRecord
 dropperStringToColorRecord str =
     if String.startsWith "rgb(" str then
         rgbToColor str
