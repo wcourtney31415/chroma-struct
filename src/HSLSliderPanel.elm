@@ -1,4 +1,4 @@
-module HSLSliderPanel exposing (sliderPanel)
+module HSLSliderPanel exposing (hslSliderPanel)
 
 import ColorRecord exposing (ColorRecord)
 import Element exposing (centerX, fill, padding, px, rgb, rgb255, text, width)
@@ -8,8 +8,8 @@ import Element.Input as Input
 import Messages exposing (Msg(..))
 
 
-sliderPanel : ColorRecord -> Element.Element Msg
-sliderPanel selectedColor =
+hslSliderPanel : ColorRecord -> Element.Element Msg
+hslSliderPanel selectedColor =
     Element.el
         [ Background.color <| rgb255 0 85 128
         , padding 15

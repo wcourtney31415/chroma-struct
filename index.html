@@ -12809,7 +12809,7 @@ var $author$project$HSLSliderPanel$colorSlider = F2(
 				value: localData.value
 			});
 	});
-var $author$project$HSLSliderPanel$sliderPanel = function (selectedColor) {
+var $author$project$HSLSliderPanel$hslSliderPanel = function (selectedColor) {
 	return A2(
 		$mdgriffith$elm_ui$Element$el,
 		_List_fromArray(
@@ -13793,7 +13793,7 @@ var $author$project$RGBSliderPanel$redSlideGroup = function (selectedColor) {
 					]))
 			]));
 };
-var $author$project$RGBSliderPanel$sliderPanel = function (selectedColor) {
+var $author$project$RGBSliderPanel$rgbSliderPanel = function (selectedColor) {
 	return A2(
 		$mdgriffith$elm_ui$Element$el,
 		_List_fromArray(
@@ -13877,8 +13877,8 @@ var $author$project$LeftColumn$leftColumn = F2(
 							$author$project$LeftColumn$colorSelectDisplay(color),
 							A2($author$project$LeftColumn$addColorButton, model, 'Dropper Tool'),
 							A2($author$project$LeftColumn$addColorButton, model, 'Add to Palette'),
-							$author$project$RGBSliderPanel$sliderPanel(model.selectedColor),
-							$author$project$HSLSliderPanel$sliderPanel(model.selectedColor)
+							$author$project$HSLSliderPanel$hslSliderPanel(model.selectedColor),
+							$author$project$RGBSliderPanel$rgbSliderPanel(model.selectedColor)
 						]))
 				]));
 	});

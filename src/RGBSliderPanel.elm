@@ -1,4 +1,4 @@
-module RGBSliderPanel exposing (sliderPanel)
+module RGBSliderPanel exposing (rgbSliderPanel)
 
 import ColorRecord exposing (ColorRecord)
 import Element exposing (centerX, fill, padding, px, rgb, rgb255, text, width)
@@ -6,12 +6,11 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
-import Html exposing (select)
 import Messages exposing (Msg(..))
 
 
-sliderPanel : ColorRecord -> Element.Element Msg
-sliderPanel selectedColor =
+rgbSliderPanel : ColorRecord -> Element.Element Msg
+rgbSliderPanel selectedColor =
     Element.el
         [ Background.color <| rgb255 0 85 128
         , padding 15
