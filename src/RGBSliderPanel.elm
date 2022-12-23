@@ -1,12 +1,17 @@
 module RGBSliderPanel exposing (rgbSliderPanel)
 
 import ColorRecord exposing (ColorRecord)
-import Element exposing (centerX, fill, padding, px, rgb, rgb255, text, width)
+import Element exposing (centerX, fill, focused, padding, px, rgb, rgb255, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
+import Html.Attributes exposing (selected)
 import Messages exposing (Msg(..))
+
+
+
+--This is the panel containing the red green and blue slider groups
 
 
 rgbSliderPanel : ColorRecord -> Element.Element Msg
@@ -24,71 +29,75 @@ rgbSliderPanel selectedColor =
             [ redSlideGroup selectedColor
             , greenSlideGroup selectedColor
             , blueSlideGroup selectedColor
-
             ]
+
+
+
+--This is the group containing the textbox, the label and the slider
+
+
+sliderComponent colorFocus selectedColor =
+    let
+        inputValueToInt y =
+            Maybe.withDefault 0 <| String.toInt y
+
+        conditionalData =
+            case colorFocus of
+                Red ->
+                    { colorComponent = selectedColor.red
+                    , colorText = "Red"
+                    , updateColorComponent = \inputBoxString -> { selectedColor | red = inputValueToInt inputBoxString }
+                    }
+
+                Green ->
+                    { colorComponent = selectedColor.green
+                    , colorText = "Green"
+                    , updateColorComponent = \inputBoxString -> { selectedColor | green = inputValueToInt inputBoxString }
+                    }
+
+                Blue ->
+                    { colorComponent = selectedColor.blue
+                    , colorText = "Blue"
+                    , updateColorComponent = \inputBoxString -> { selectedColor | blue = inputValueToInt inputBoxString }
+                    }
+    in
+    Element.column []
+        [ Element.el [] <| text conditionalData.colorText
+        , Element.row []
+            [ Input.text [ Font.color <| rgb 0 0 0 ]
+                { label = Input.labelHidden ""
+                , onChange = \newValue -> ChangeColor <| conditionalData.updateColorComponent newValue
+                , placeholder = Just <| Input.placeholder [] <| text ""
+                , text = String.fromInt conditionalData.colorComponent
+                }
+            , colorSlider colorFocus selectedColor
+            ]
+        ]
 
 
 redSlideGroup : ColorRecord -> Element.Element Msg
 redSlideGroup selectedColor =
-    Element.column []
-        [ Element.el [] <| text "Red"
-        , Element.row []
-            [ Input.text [ Font.color <| rgb 0 0 0 ]
-                { label = Input.labelHidden ""
-                , onChange =
-                    \y ->
-                        ChangeColor
-                            { selectedColor | red = Maybe.withDefault 0 <| String.toInt y }
-                , placeholder = Just <| Input.placeholder [] <| text ""
-                , text = String.fromInt selectedColor.red
-                }
-            , colorSlider Red selectedColor
-            ]
-        ]
+    sliderComponent Red selectedColor
 
 
 greenSlideGroup : ColorRecord -> Element.Element Msg
 greenSlideGroup selectedColor =
-    Element.column []
-        [ Element.el [] <| text "Green"
-        , Element.row []
-            [ Input.text [ Font.color <| rgb 0 0 0 ]
-                { label = Input.labelHidden ""
-                , onChange =
-                    \y ->
-                        ChangeColor
-                            { selectedColor | green = Maybe.withDefault 0 <| String.toInt y }
-                , placeholder = Just <| Input.placeholder [] <| text ""
-                , text = String.fromInt selectedColor.green
-                }
-            , colorSlider Green selectedColor
-            ]
-        ]
+    sliderComponent Green selectedColor
 
 
 blueSlideGroup : ColorRecord -> Element.Element Msg
 blueSlideGroup selectedColor =
-    Element.column []
-        [ Element.el [] <| text "Blue"
-        , Element.row []
-            [ Input.text [ Font.color <| rgb 0 0 0 ]
-                { label = Input.labelHidden ""
-                , onChange =
-                    \y ->
-                        ChangeColor
-                            { selectedColor | blue = Maybe.withDefault 0 <| String.toInt y }
-                , placeholder = Just <| Input.placeholder [] <| text ""
-                , text = String.fromInt selectedColor.blue
-                }
-            , colorSlider Blue selectedColor
-            ]
-        ]
+    sliderComponent Blue selectedColor
 
 
 type FocusColor
     = Red
     | Green
     | Blue
+
+
+
+--This is the slider itself
 
 
 colorSlider : FocusColor -> ColorRecord -> Element.Element Msg
@@ -129,6 +138,10 @@ colorSlider focusColor selectedColor =
         , thumb =
             Input.defaultThumb
         }
+
+
+
+--This is the background bar to the slider
 
 
 sliderBar : Element.Attribute msg
