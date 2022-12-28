@@ -14,6 +14,7 @@ import Messages exposing (Msg(..))
 import Model exposing (Model)
 import Subscriptions exposing (subscriptions)
 import Update exposing (update)
+import Colors exposing (..)
 
 
 view : Model -> Html Msg
@@ -86,8 +87,8 @@ rightColumn =
     Element.column
         [ height fill
         , Background.color <| rgb255 0 50 77
-        , Font.color <| rgb 1 1 1
-        , Border.color <| rgb 0 0 0
+        , Font.color white
+        , Border.color black
         , width fill
         , Border.widthEach
             { top = 0
@@ -113,7 +114,7 @@ rightColumn =
             Element.column
                 [ padding 15
                 , Border.rounded 15
-                , Font.color <| rgb 1 1 1
+                , Font.color white
                 , Font.bold
                 , spacing 15
                 , Background.color <| rgb255 0 85 128
@@ -218,7 +219,7 @@ sampleColorBlock color =
         , width <| px 200
         , height <| px 30
         , Border.width 1
-        , Border.color <| rgb 0 0 0
+        , Border.color black
         ]
     <|
         text " "
@@ -247,7 +248,7 @@ menuBar =
                 ]
             }
         , Font.size 15
-        , Font.color <| rgb 1 1 1
+        , Font.color white
         ]
     <|
         List.map
@@ -273,7 +274,7 @@ colorList palette =
     Element.column
         [ height fill
         , Background.color <| rgb255 0 50 77
-        , Font.color <| rgb 1 1 1
+        , Font.color white
         ]
         [ Element.el
             [ centerX
@@ -283,7 +284,7 @@ colorList palette =
           <|
             text "Palette"
         , Element.column
-            [ Font.color <| rgb 1 1 1
+            [ Font.color white
             , height fill
             , Background.color <| rgb255 0 85 128
             , spacing 2
@@ -305,7 +306,7 @@ colorListItem ( index, cRecord ) =
         [ centerX
         , width fill
         , Border.widthXY 0 1
-        , Border.color <| rgb 0 0 0
+        , Border.color black
         ]
         [ Element.el
             [ Background.color <|
@@ -319,7 +320,7 @@ colorListItem ( index, cRecord ) =
           <|
             text ""
         , Element.el
-            [ Font.color <| rgb 1 1 1
+            [ Font.color white
             , Background.color <| rgb255 0 133 204
             , Font.bold
             , paddingXY 0 8
@@ -411,7 +412,7 @@ attrShadow =
     Border.shadow
         { blur = 10
         , size = 1
-        , color = rgb 0 0 0
+        , color = black
         , offset = ( 4, 4 )
         }
 

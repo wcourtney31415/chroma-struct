@@ -1,7 +1,10 @@
 module RGBSliderPanel exposing (rgbSliderPanel)
 
+-- import Element exposing (centerX, fill, focused, padding, px, rgb, rgb255, spacing, text, width)
+
 import ColorRecord exposing (ColorRecord)
-import Element exposing (centerX, fill, focused, padding, px, rgb, rgb255, text, width)
+import Colors exposing (..)
+import Element exposing (..)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -25,7 +28,9 @@ rgbSliderPanel selectedColor =
         ]
     <|
         Element.column
-            [ width fill ]
+            [ width fill
+            , spacing 5
+            ]
             [ redSlideGroup selectedColor
             , greenSlideGroup selectedColor
             , blueSlideGroup selectedColor
@@ -36,6 +41,7 @@ rgbSliderPanel selectedColor =
 --This is the group containing the textbox, the label and the slider
 
 
+sliderComponent : FocusColor -> ColorRecord -> Element Msg
 sliderComponent colorFocus selectedColor =
     let
         inputValueToInt y =
@@ -61,10 +67,27 @@ sliderComponent colorFocus selectedColor =
                     , updateColorComponent = \inputBoxString -> { selectedColor | blue = inputValueToInt inputBoxString }
                     }
     in
-    Element.column []
-        [ Element.el [] <| text conditionalData.colorText
-        , Element.row []
-            [ Input.text [ Font.color <| rgb 0 0 0 ]
+    Element.column [ width fill ]
+        [ Element.el
+            [ paddingEach
+                { top = 0
+                , right = 0
+                , left = 0
+                , bottom = 5
+                }
+            ]
+          <|
+            text conditionalData.colorText
+        , Element.row
+            [ spacing 10
+            , width fill
+            ]
+            [ Input.text
+                [ Font.color white
+                , Background.color <| rgb255 0 51 77
+                , padding 5
+                , width (fill |> maximum 55)
+                ]
                 { label = Input.labelHidden ""
                 , onChange = \newValue -> ChangeColor <| conditionalData.updateColorComponent newValue
                 , placeholder = Just <| Input.placeholder [] <| text ""
@@ -108,19 +131,25 @@ colorSlider focusColor selectedColor =
                 Red ->
                     { label = "Red"
                     , value = toFloat selectedColor.red
-                    , onChange = \sliderValue -> ChangeColor { selectedColor | red = round sliderValue }
+                    , onChange =
+                        \sliderValue ->
+                            ChangeColor { selectedColor | red = round sliderValue }
                     }
 
                 Green ->
                     { label = "Green"
                     , value = toFloat selectedColor.green
-                    , onChange = \sliderValue -> ChangeColor { selectedColor | green = round sliderValue }
+                    , onChange =
+                        \sliderValue ->
+                            ChangeColor { selectedColor | green = round sliderValue }
                     }
 
                 Blue ->
                     { label = "Blue"
                     , value = toFloat selectedColor.blue
-                    , onChange = \sliderValue -> ChangeColor { selectedColor | blue = round sliderValue }
+                    , onChange =
+                        \sliderValue ->
+                            ChangeColor { selectedColor | blue = round sliderValue }
                     }
     in
     Input.slider
@@ -129,14 +158,12 @@ colorSlider focusColor selectedColor =
         , sliderBar
         ]
         { onChange = localData.onChange
-        , label =
-            Input.labelHidden ""
+        , label = Input.labelHidden ""
         , min = 0
         , max = 255
         , step = Nothing
         , value = localData.value
-        , thumb =
-            Input.defaultThumb
+        , thumb = Input.defaultThumb
         }
 
 
@@ -150,7 +177,7 @@ sliderBar =
         Element.el
             [ Element.height (Element.px 2)
             , Element.centerY
-            , Background.color <| rgb 1 1 1
+            , Background.color white
             , Border.rounded 2
             , width fill
             ]

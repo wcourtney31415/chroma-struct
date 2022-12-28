@@ -11,6 +11,7 @@ import HSLSliderPanel exposing (hslSliderPanel)
 import Messages exposing (Msg(..))
 import Model exposing (Model)
 import RGBSliderPanel exposing (rgbSliderPanel)
+import Colors exposing (..)
 
 
 leftColumn : Model -> ColorRecord -> Element.Element Msg
@@ -18,8 +19,8 @@ leftColumn model color =
     Element.column
         [ height fill
         , Background.color <| rgb255 0 50 77
-        , Font.color <| rgb 1 1 1
-        , Border.color <| rgb 0 0 0
+        , Font.color white
+        , Border.color black
         , Border.widthEach
             { top = 0
             , bottom = 0
@@ -53,7 +54,7 @@ addColorButton model myText =
         , label =
             Element.el
                 [ Background.color <| rgb255 0 133 204
-                , Font.color <| rgb 1 1 1
+                , Font.color <| white
                 , width <| px 256
                 , Font.size 15
                 , Font.bold
@@ -69,7 +70,7 @@ addColorButton model myText =
                 , Border.shadow
                     { blur = 10
                     , size = 1
-                    , color = rgb 0 0 0
+                    , color = black
                     , offset = ( 4, 4 )
                     }
                 , padding 10
@@ -107,7 +108,7 @@ colorSelectDisplay color =
         , Border.shadow
             { blur = 10
             , size = 1
-            , color = rgb 0 0 0
+            , color = black
             , offset = ( 4, 4 )
             }
         , height <| px squareSize
