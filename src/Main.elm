@@ -1,4 +1,4 @@
-module Main exposing (colorTest, main)
+module Main exposing ( main)
 
 import Browser
 import ColorRecord exposing (ColorRecord)
@@ -37,8 +37,7 @@ view model =
             , height fill
             , spacing 2
             ]
-            [ colorTest
-            , menuBar
+            [  menuBar
             , body model
             ]
 
@@ -53,22 +52,6 @@ colorRecordAsString x =
         ++ String.fromInt x.blue
 
 
-colorTest : Element msg
-colorTest =
-    let
-        colorString =
-            "rgb(123,123,12)"
-
-        myColorRecord =
-            dropperStringToColorRecord colorString
-    in
-    Element.el
-        [ Font.color <|
-            rgb255 255 255 255
-        ]
-    <|
-        text <|
-            colorRecordAsString myColorRecord
 
 
 body : Model -> Element Msg
@@ -217,7 +200,7 @@ sampleColorBlock : ColorRecord -> Element msg
 sampleColorBlock color =
     Element.el
         [ Background.color <| rgb255 color.red color.green color.blue
-        , width <| px 200
+        , width <| px 75
         , height <| px 30
         , Border.width 1
         , Border.color black
