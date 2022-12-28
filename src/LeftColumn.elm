@@ -6,7 +6,7 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
-import GlobalAttributes exposing (hoverHighlight)
+import GlobalAttributes exposing (..)
 import HSLSliderPanel exposing (hslSliderPanel)
 import Messages exposing (Msg(..))
 import Model exposing (Model)
@@ -67,12 +67,7 @@ addColorButton model myText =
                         ]
                     }
                 , Border.rounded 5
-                , Border.shadow
-                    { blur = 10
-                    , size = 1
-                    , color = black
-                    , offset = ( 4, 4 )
-                    }
+                , borderShadow
                 , padding 10
                 ]
             <|
@@ -105,12 +100,7 @@ colorSelectDisplay color =
     Input.button
         [ Background.color bkgColor
         , width <| px squareSize
-        , Border.shadow
-            { blur = 10
-            , size = 1
-            , color = black
-            , offset = ( 4, 4 )
-            }
+        , borderShadow
         , height <| px squareSize
         ]
         { label =

@@ -11,7 +11,7 @@ import Element.Font as Font
 import Element.Input as Input
 import Html.Attributes exposing (selected)
 import Messages exposing (Msg(..))
-
+import GlobalAttributes exposing (..)
 
 
 --This is the panel containing the red green and blue slider groups
@@ -24,6 +24,7 @@ hslSliderPanel selectedColor =
         , padding 15
         , width <| px 256
         , Border.rounded 5
+        , borderShadow
         , centerX
         ]
     <|

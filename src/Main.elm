@@ -2,19 +2,20 @@ module Main exposing (colorTest, main)
 
 import Browser
 import ColorRecord exposing (ColorRecord)
+import Colors exposing (..)
 import Conversions exposing (dropperStringToColorRecord)
 import Element exposing (Element, alignTop, centerX, centerY, fill, focusStyle, height, layoutWith, maximum, minimum, mouseOver, padding, paddingXY, px, rgb, rgb255, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
+import GlobalAttributes exposing (..)
 import Html exposing (Html)
 import LeftColumn exposing (leftColumn)
 import Messages exposing (Msg(..))
 import Model exposing (Model)
 import Subscriptions exposing (subscriptions)
 import Update exposing (update)
-import Colors exposing (..)
 
 
 view : Model -> Html Msg
@@ -118,7 +119,7 @@ rightColumn =
                 , Font.bold
                 , spacing 15
                 , Background.color <| rgb255 0 85 128
-                , attrShadow
+                , borderShadow
                 ]
                 [ Element.el
                     [ centerX
@@ -405,16 +406,6 @@ selectForm =
             ]
         <|
             text "Form"
-
-
-attrShadow : Element.Attr decorative msg
-attrShadow =
-    Border.shadow
-        { blur = 10
-        , size = 1
-        , color = black
-        , offset = ( 4, 4 )
-        }
 
 
 init : () -> ( Model, Cmd Msg )
