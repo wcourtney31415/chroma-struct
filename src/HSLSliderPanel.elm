@@ -87,10 +87,7 @@ sliderComponent colorFocus selectedColor =
                 [ Font.color white
                 , Background.color <| rgb255 0 51 77
                 , padding 5
-                , width
-                    (fill
-                        |> maximum 55
-                    )
+                , width <| maximum 55 <| fill
                 ]
                 { label = Input.labelHidden ""
                 , onChange = \newValue -> ChangeColor <| conditionalData.updateColorComponent newValue

@@ -5650,6 +5650,18 @@ var $mdgriffith$elm_ui$Element$Font$color = function (fontColor) {
 			'color',
 			fontColor));
 };
+var $mdgriffith$elm_ui$Internal$Model$Rgba = F4(
+	function (a, b, c, d) {
+		return {$: 'Rgba', a: a, b: b, c: c, d: d};
+	});
+var $mdgriffith$elm_ui$Element$rgb255 = F3(
+	function (red, green, blue) {
+		return A4($mdgriffith$elm_ui$Internal$Model$Rgba, red / 255, green / 255, blue / 255, 1);
+	});
+var $author$project$Colors$grey = function (x) {
+	return A3($mdgriffith$elm_ui$Element$rgb255, x, x, x);
+};
+var $author$project$Colors$black = $author$project$Colors$grey(0);
 var $mdgriffith$elm_ui$Internal$Model$Class = F2(
 	function (a, b) {
 		return {$: 'Class', a: a, b: b};
@@ -11309,14 +11321,6 @@ var $mdgriffith$elm_ui$Element$paddingXY = F2(
 					xFloat));
 		}
 	});
-var $mdgriffith$elm_ui$Internal$Model$Rgba = F4(
-	function (a, b, c, d) {
-		return {$: 'Rgba', a: a, b: b, c: c, d: d};
-	});
-var $mdgriffith$elm_ui$Element$rgb255 = F3(
-	function (red, green, blue) {
-		return A4($mdgriffith$elm_ui$Internal$Model$Rgba, red / 255, green / 255, blue / 255, 1);
-	});
 var $mdgriffith$elm_ui$Internal$Flag$borderRound = $mdgriffith$elm_ui$Internal$Flag$flag(17);
 var $mdgriffith$elm_ui$Element$Border$rounded = function (radius) {
 	return A2(
@@ -11565,10 +11569,6 @@ var $mdgriffith$elm_ui$Internal$Model$Px = function (a) {
 	return {$: 'Px', a: a};
 };
 var $mdgriffith$elm_ui$Element$px = $mdgriffith$elm_ui$Internal$Model$Px;
-var $mdgriffith$elm_ui$Element$rgb = F3(
-	function (r, g, b) {
-		return A4($mdgriffith$elm_ui$Internal$Model$Rgba, r, g, b, 1);
-	});
 var $mdgriffith$elm_ui$Internal$Model$AsRow = {$: 'AsRow'};
 var $mdgriffith$elm_ui$Internal$Model$asRow = $mdgriffith$elm_ui$Internal$Model$AsRow;
 var $mdgriffith$elm_ui$Element$row = F2(
@@ -11626,6 +11626,7 @@ var $mdgriffith$elm_ui$Element$spacing = function (x) {
 			x,
 			x));
 };
+var $author$project$Colors$white = $author$project$Colors$grey(255);
 var $mdgriffith$elm_ui$Internal$Model$BorderWidth = F5(
 	function (a, b, c, d, e) {
 		return {$: 'BorderWidth', a: a, b: b, c: c, d: d, e: e};
@@ -11653,8 +11654,7 @@ var $author$project$Main$colorListItem = function (_v0) {
 				$mdgriffith$elm_ui$Element$centerX,
 				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
 				A2($mdgriffith$elm_ui$Element$Border$widthXY, 0, 1),
-				$mdgriffith$elm_ui$Element$Border$color(
-				A3($mdgriffith$elm_ui$Element$rgb, 0, 0, 0))
+				$mdgriffith$elm_ui$Element$Border$color($author$project$Colors$black)
 			]),
 		_List_fromArray(
 			[
@@ -11673,8 +11673,7 @@ var $author$project$Main$colorListItem = function (_v0) {
 				$mdgriffith$elm_ui$Element$el,
 				_List_fromArray(
 					[
-						$mdgriffith$elm_ui$Element$Font$color(
-						A3($mdgriffith$elm_ui$Element$rgb, 1, 1, 1)),
+						$mdgriffith$elm_ui$Element$Font$color($author$project$Colors$white),
 						$mdgriffith$elm_ui$Element$Background$color(
 						A3($mdgriffith$elm_ui$Element$rgb255, 0, 133, 204)),
 						$mdgriffith$elm_ui$Element$Font$bold,
@@ -11757,8 +11756,7 @@ var $author$project$Main$colorList = function (palette) {
 				$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
 				$mdgriffith$elm_ui$Element$Background$color(
 				A3($mdgriffith$elm_ui$Element$rgb255, 0, 50, 77)),
-				$mdgriffith$elm_ui$Element$Font$color(
-				A3($mdgriffith$elm_ui$Element$rgb, 1, 1, 1))
+				$mdgriffith$elm_ui$Element$Font$color($author$project$Colors$white)
 			]),
 		_List_fromArray(
 			[
@@ -11775,8 +11773,7 @@ var $author$project$Main$colorList = function (palette) {
 				$mdgriffith$elm_ui$Element$column,
 				_List_fromArray(
 					[
-						$mdgriffith$elm_ui$Element$Font$color(
-						A3($mdgriffith$elm_ui$Element$rgb, 1, 1, 1)),
+						$mdgriffith$elm_ui$Element$Font$color($author$project$Colors$white),
 						$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
 						$mdgriffith$elm_ui$Element$Background$color(
 						A3($mdgriffith$elm_ui$Element$rgb255, 0, 85, 128)),
@@ -11796,6 +11793,37 @@ var $author$project$Main$colorList = function (palette) {
 var $author$project$Messages$AddColorToPalette = function (a) {
 	return {$: 'AddColorToPalette', a: a};
 };
+var $mdgriffith$elm_ui$Internal$Model$boxShadowClass = function (shadow) {
+	return $elm$core$String$concat(
+		_List_fromArray(
+			[
+				shadow.inset ? 'box-inset' : 'box-',
+				$mdgriffith$elm_ui$Internal$Model$floatClass(shadow.offset.a) + 'px',
+				$mdgriffith$elm_ui$Internal$Model$floatClass(shadow.offset.b) + 'px',
+				$mdgriffith$elm_ui$Internal$Model$floatClass(shadow.blur) + 'px',
+				$mdgriffith$elm_ui$Internal$Model$floatClass(shadow.size) + 'px',
+				$mdgriffith$elm_ui$Internal$Model$formatColorClass(shadow.color)
+			]));
+};
+var $mdgriffith$elm_ui$Internal$Flag$shadows = $mdgriffith$elm_ui$Internal$Flag$flag(19);
+var $mdgriffith$elm_ui$Element$Border$shadow = function (almostShade) {
+	var shade = {blur: almostShade.blur, color: almostShade.color, inset: false, offset: almostShade.offset, size: almostShade.size};
+	return A2(
+		$mdgriffith$elm_ui$Internal$Model$StyleClass,
+		$mdgriffith$elm_ui$Internal$Flag$shadows,
+		A3(
+			$mdgriffith$elm_ui$Internal$Model$Single,
+			$mdgriffith$elm_ui$Internal$Model$boxShadowClass(shade),
+			'box-shadow',
+			$mdgriffith$elm_ui$Internal$Model$formatBoxShadow(shade)));
+};
+var $author$project$GlobalAttributes$borderShadow = $mdgriffith$elm_ui$Element$Border$shadow(
+	{
+		blur: 10,
+		color: $author$project$Colors$black,
+		offset: _Utils_Tuple2(4, 2),
+		size: 1
+	});
 var $mdgriffith$elm_ui$Internal$Flag$bgGradient = $mdgriffith$elm_ui$Internal$Flag$flag(10);
 var $mdgriffith$elm_ui$Element$Background$gradient = function (_v0) {
 	var angle = _v0.angle;
@@ -11988,30 +12016,6 @@ var $author$project$GlobalAttributes$hoverHighlight = $mdgriffith$elm_ui$Element
 					])
 			})
 		]));
-var $mdgriffith$elm_ui$Internal$Model$boxShadowClass = function (shadow) {
-	return $elm$core$String$concat(
-		_List_fromArray(
-			[
-				shadow.inset ? 'box-inset' : 'box-',
-				$mdgriffith$elm_ui$Internal$Model$floatClass(shadow.offset.a) + 'px',
-				$mdgriffith$elm_ui$Internal$Model$floatClass(shadow.offset.b) + 'px',
-				$mdgriffith$elm_ui$Internal$Model$floatClass(shadow.blur) + 'px',
-				$mdgriffith$elm_ui$Internal$Model$floatClass(shadow.size) + 'px',
-				$mdgriffith$elm_ui$Internal$Model$formatColorClass(shadow.color)
-			]));
-};
-var $mdgriffith$elm_ui$Internal$Flag$shadows = $mdgriffith$elm_ui$Internal$Flag$flag(19);
-var $mdgriffith$elm_ui$Element$Border$shadow = function (almostShade) {
-	var shade = {blur: almostShade.blur, color: almostShade.color, inset: false, offset: almostShade.offset, size: almostShade.size};
-	return A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$shadows,
-		A3(
-			$mdgriffith$elm_ui$Internal$Model$Single,
-			$mdgriffith$elm_ui$Internal$Model$boxShadowClass(shade),
-			'box-shadow',
-			$mdgriffith$elm_ui$Internal$Model$formatBoxShadow(shade)));
-};
 var $author$project$LeftColumn$addColorButton = F2(
 	function (model, myText) {
 		return A2(
@@ -12025,8 +12029,7 @@ var $author$project$LeftColumn$addColorButton = F2(
 						[
 							$mdgriffith$elm_ui$Element$Background$color(
 							A3($mdgriffith$elm_ui$Element$rgb255, 0, 133, 204)),
-							$mdgriffith$elm_ui$Element$Font$color(
-							A3($mdgriffith$elm_ui$Element$rgb, 1, 1, 1)),
+							$mdgriffith$elm_ui$Element$Font$color($author$project$Colors$white),
 							$mdgriffith$elm_ui$Element$width(
 							$mdgriffith$elm_ui$Element$px(256)),
 							$mdgriffith$elm_ui$Element$Font$size(15),
@@ -12042,13 +12045,7 @@ var $author$project$LeftColumn$addColorButton = F2(
 									])
 							}),
 							$mdgriffith$elm_ui$Element$Border$rounded(5),
-							$mdgriffith$elm_ui$Element$Border$shadow(
-							{
-								blur: 10,
-								color: A3($mdgriffith$elm_ui$Element$rgb, 0, 0, 0),
-								offset: _Utils_Tuple2(4, 4),
-								size: 1
-							}),
+							$author$project$GlobalAttributes$borderShadow,
 							$mdgriffith$elm_ui$Element$padding(10)
 						]),
 					A2(
@@ -12072,13 +12069,7 @@ var $author$project$LeftColumn$colorSelectDisplay = function (color) {
 				$mdgriffith$elm_ui$Element$Background$color(bkgColor),
 				$mdgriffith$elm_ui$Element$width(
 				$mdgriffith$elm_ui$Element$px(squareSize)),
-				$mdgriffith$elm_ui$Element$Border$shadow(
-				{
-					blur: 10,
-					color: A3($mdgriffith$elm_ui$Element$rgb, 0, 0, 0),
-					offset: _Utils_Tuple2(4, 4),
-					size: 1
-				}),
+				$author$project$GlobalAttributes$borderShadow,
 				$mdgriffith$elm_ui$Element$height(
 				$mdgriffith$elm_ui$Element$px(squareSize))
 			]),
@@ -12091,15 +12082,17 @@ var $author$project$LeftColumn$colorSelectDisplay = function (color) {
 			onPress: $elm$core$Maybe$Just($author$project$Messages$SendDataToJS)
 		});
 };
-var $author$project$HSLSliderPanel$Hue = {$: 'Hue'};
-var $author$project$HSLSliderPanel$Lumination = {$: 'Lumination'};
-var $author$project$HSLSliderPanel$Saturation = {$: 'Saturation'};
+var $author$project$HSLSliderPanel$Red = {$: 'Red'};
 var $author$project$Messages$ChangeColor = function (a) {
 	return {$: 'ChangeColor', a: a};
 };
 var $mdgriffith$elm_ui$Element$Input$Thumb = function (a) {
 	return {$: 'Thumb', a: a};
 };
+var $mdgriffith$elm_ui$Element$rgb = F3(
+	function (r, g, b) {
+		return A4($mdgriffith$elm_ui$Internal$Model$Rgba, r, g, b, 1);
+	});
 var $mdgriffith$elm_ui$Element$Border$width = function (v) {
 	return A2(
 		$mdgriffith$elm_ui$Internal$Model$StyleClass,
@@ -12126,12 +12119,10 @@ var $mdgriffith$elm_ui$Element$Input$defaultThumb = $mdgriffith$elm_ui$Element$I
 			$mdgriffith$elm_ui$Element$Background$color(
 			A3($mdgriffith$elm_ui$Element$rgb, 1, 1, 1))
 		]));
-var $mdgriffith$elm_ui$Element$Input$Above = {$: 'Above'};
-var $mdgriffith$elm_ui$Element$Input$Label = F3(
-	function (a, b, c) {
-		return {$: 'Label', a: a, b: b, c: c};
-	});
-var $mdgriffith$elm_ui$Element$Input$labelAbove = $mdgriffith$elm_ui$Element$Input$Label($mdgriffith$elm_ui$Element$Input$Above);
+var $mdgriffith$elm_ui$Element$Input$HiddenLabel = function (a) {
+	return {$: 'HiddenLabel', a: a};
+};
+var $mdgriffith$elm_ui$Element$Input$labelHidden = $mdgriffith$elm_ui$Element$Input$HiddenLabel;
 var $mdgriffith$elm_ui$Internal$Flag$active = $mdgriffith$elm_ui$Internal$Flag$flag(32);
 var $mdgriffith$elm_ui$Internal$Model$LivePolite = {$: 'LivePolite'};
 var $mdgriffith$elm_ui$Element$Region$announce = $mdgriffith$elm_ui$Internal$Model$Describe($mdgriffith$elm_ui$Internal$Model$LivePolite);
@@ -12736,125 +12727,12 @@ var $author$project$HSLSliderPanel$sliderBar = $mdgriffith$elm_ui$Element$behind
 				$mdgriffith$elm_ui$Element$height(
 				$mdgriffith$elm_ui$Element$px(2)),
 				$mdgriffith$elm_ui$Element$centerY,
-				$mdgriffith$elm_ui$Element$Background$color(
-				A3($mdgriffith$elm_ui$Element$rgb, 1, 1, 1)),
+				$mdgriffith$elm_ui$Element$Background$color($author$project$Colors$white),
 				$mdgriffith$elm_ui$Element$Border$rounded(2),
 				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
 			]),
 		$mdgriffith$elm_ui$Element$none));
 var $author$project$HSLSliderPanel$colorSlider = F2(
-	function (focusColor, selectedColor) {
-		var localData = function () {
-			switch (focusColor.$) {
-				case 'Hue':
-					return {
-						label: 'Hue',
-						onChange: function (sliderValue) {
-							return $author$project$Messages$ChangeColor(
-								_Utils_update(
-									selectedColor,
-									{
-										red: $elm$core$Basics$round(sliderValue)
-									}));
-						},
-						value: selectedColor.red
-					};
-				case 'Saturation':
-					return {
-						label: 'Saturation',
-						onChange: function (sliderValue) {
-							return $author$project$Messages$ChangeColor(
-								_Utils_update(
-									selectedColor,
-									{
-										green: $elm$core$Basics$round(sliderValue)
-									}));
-						},
-						value: selectedColor.green
-					};
-				default:
-					return {
-						label: 'Lumination',
-						onChange: function (sliderValue) {
-							return $author$project$Messages$ChangeColor(
-								_Utils_update(
-									selectedColor,
-									{
-										blue: $elm$core$Basics$round(sliderValue)
-									}));
-						},
-						value: selectedColor.blue
-					};
-			}
-		}();
-		return A2(
-			$mdgriffith$elm_ui$Element$Input$slider,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$height(
-					$mdgriffith$elm_ui$Element$px(30)),
-					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-					$author$project$HSLSliderPanel$sliderBar
-				]),
-			{
-				label: A2(
-					$mdgriffith$elm_ui$Element$Input$labelAbove,
-					_List_Nil,
-					$mdgriffith$elm_ui$Element$text(localData.label)),
-				max: 255,
-				min: 0,
-				onChange: localData.onChange,
-				step: $elm$core$Maybe$Nothing,
-				thumb: $mdgriffith$elm_ui$Element$Input$defaultThumb,
-				value: localData.value
-			});
-	});
-var $author$project$HSLSliderPanel$hslSliderPanel = function (selectedColor) {
-	return A2(
-		$mdgriffith$elm_ui$Element$el,
-		_List_fromArray(
-			[
-				$mdgriffith$elm_ui$Element$Background$color(
-				A3($mdgriffith$elm_ui$Element$rgb255, 0, 85, 128)),
-				$mdgriffith$elm_ui$Element$padding(15),
-				$mdgriffith$elm_ui$Element$width(
-				$mdgriffith$elm_ui$Element$px(256)),
-				$mdgriffith$elm_ui$Element$Border$rounded(5),
-				$mdgriffith$elm_ui$Element$centerX
-			]),
-		A2(
-			$mdgriffith$elm_ui$Element$column,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
-				]),
-			_List_fromArray(
-				[
-					A2($author$project$HSLSliderPanel$colorSlider, $author$project$HSLSliderPanel$Hue, selectedColor),
-					A2($author$project$HSLSliderPanel$colorSlider, $author$project$HSLSliderPanel$Saturation, selectedColor),
-					A2($author$project$HSLSliderPanel$colorSlider, $author$project$HSLSliderPanel$Lumination, selectedColor)
-				])));
-};
-var $author$project$RGBSliderPanel$Blue = {$: 'Blue'};
-var $mdgriffith$elm_ui$Element$Input$HiddenLabel = function (a) {
-	return {$: 'HiddenLabel', a: a};
-};
-var $mdgriffith$elm_ui$Element$Input$labelHidden = $mdgriffith$elm_ui$Element$Input$HiddenLabel;
-var $author$project$RGBSliderPanel$sliderBar = $mdgriffith$elm_ui$Element$behindContent(
-	A2(
-		$mdgriffith$elm_ui$Element$el,
-		_List_fromArray(
-			[
-				$mdgriffith$elm_ui$Element$height(
-				$mdgriffith$elm_ui$Element$px(2)),
-				$mdgriffith$elm_ui$Element$centerY,
-				$mdgriffith$elm_ui$Element$Background$color(
-				A3($mdgriffith$elm_ui$Element$rgb, 1, 1, 1)),
-				$mdgriffith$elm_ui$Element$Border$rounded(2),
-				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
-			]),
-		$mdgriffith$elm_ui$Element$none));
-var $author$project$RGBSliderPanel$colorSlider = F2(
 	function (focusColor, selectedColor) {
 		var localData = function () {
 			switch (focusColor.$) {
@@ -12906,7 +12784,7 @@ var $author$project$RGBSliderPanel$colorSlider = F2(
 					$mdgriffith$elm_ui$Element$height(
 					$mdgriffith$elm_ui$Element$px(30)),
 					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-					$author$project$RGBSliderPanel$sliderBar
+					$author$project$HSLSliderPanel$sliderBar
 				]),
 			{
 				label: $mdgriffith$elm_ui$Element$Input$labelHidden(''),
@@ -12918,6 +12796,40 @@ var $author$project$RGBSliderPanel$colorSlider = F2(
 				value: localData.value
 			});
 	});
+var $mdgriffith$elm_ui$Internal$Model$paddingName = F4(
+	function (top, right, bottom, left) {
+		return 'pad-' + ($elm$core$String$fromInt(top) + ('-' + ($elm$core$String$fromInt(right) + ('-' + ($elm$core$String$fromInt(bottom) + ('-' + $elm$core$String$fromInt(left)))))));
+	});
+var $mdgriffith$elm_ui$Element$paddingEach = function (_v0) {
+	var top = _v0.top;
+	var right = _v0.right;
+	var bottom = _v0.bottom;
+	var left = _v0.left;
+	if (_Utils_eq(top, right) && (_Utils_eq(top, bottom) && _Utils_eq(top, left))) {
+		var topFloat = top;
+		return A2(
+			$mdgriffith$elm_ui$Internal$Model$StyleClass,
+			$mdgriffith$elm_ui$Internal$Flag$padding,
+			A5(
+				$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
+				'p-' + $elm$core$String$fromInt(top),
+				topFloat,
+				topFloat,
+				topFloat,
+				topFloat));
+	} else {
+		return A2(
+			$mdgriffith$elm_ui$Internal$Model$StyleClass,
+			$mdgriffith$elm_ui$Internal$Flag$padding,
+			A5(
+				$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
+				A4($mdgriffith$elm_ui$Internal$Model$paddingName, top, right, bottom, left),
+				top,
+				right,
+				bottom,
+				left));
+	}
+};
 var $mdgriffith$elm_ui$Element$Input$Placeholder = F2(
 	function (a, b) {
 		return {$: 'Placeholder', a: a, b: b};
@@ -13043,40 +12955,6 @@ var $mdgriffith$elm_ui$Element$Input$isStacked = function (label) {
 };
 var $mdgriffith$elm_ui$Element$Input$negateBox = function (box) {
 	return {bottom: -box.bottom, left: -box.left, right: -box.right, top: -box.top};
-};
-var $mdgriffith$elm_ui$Internal$Model$paddingName = F4(
-	function (top, right, bottom, left) {
-		return 'pad-' + ($elm$core$String$fromInt(top) + ('-' + ($elm$core$String$fromInt(right) + ('-' + ($elm$core$String$fromInt(bottom) + ('-' + $elm$core$String$fromInt(left)))))));
-	});
-var $mdgriffith$elm_ui$Element$paddingEach = function (_v0) {
-	var top = _v0.top;
-	var right = _v0.right;
-	var bottom = _v0.bottom;
-	var left = _v0.left;
-	if (_Utils_eq(top, right) && (_Utils_eq(top, bottom) && _Utils_eq(top, left))) {
-		var topFloat = top;
-		return A2(
-			$mdgriffith$elm_ui$Internal$Model$StyleClass,
-			$mdgriffith$elm_ui$Internal$Flag$padding,
-			A5(
-				$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
-				'p-' + $elm$core$String$fromInt(top),
-				topFloat,
-				topFloat,
-				topFloat,
-				topFloat));
-	} else {
-		return A2(
-			$mdgriffith$elm_ui$Internal$Model$StyleClass,
-			$mdgriffith$elm_ui$Internal$Flag$padding,
-			A5(
-				$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
-				A4($mdgriffith$elm_ui$Internal$Model$paddingName, top, right, bottom, left),
-				top,
-				right,
-				bottom,
-				left));
-	}
 };
 var $mdgriffith$elm_ui$Element$htmlAttribute = $mdgriffith$elm_ui$Internal$Model$Attr;
 var $mdgriffith$elm_ui$Element$Input$isFill = function (len) {
@@ -13653,145 +13531,335 @@ var $mdgriffith$elm_ui$Element$Input$text = $mdgriffith$elm_ui$Element$Input$tex
 		spellchecked: false,
 		type_: $mdgriffith$elm_ui$Element$Input$TextInputNode('text')
 	});
-var $author$project$RGBSliderPanel$blueSlideGroup = function (selectedColor) {
+var $author$project$HSLSliderPanel$sliderComponent = F2(
+	function (colorFocus, selectedColor) {
+		var inputValueToInt = function (y) {
+			return A2(
+				$elm$core$Maybe$withDefault,
+				0,
+				$elm$core$String$toInt(y));
+		};
+		var conditionalData = function () {
+			switch (colorFocus.$) {
+				case 'Red':
+					return {
+						colorComponent: selectedColor.red,
+						colorText: 'Hue',
+						updateColorComponent: function (inputBoxString) {
+							return _Utils_update(
+								selectedColor,
+								{
+									red: inputValueToInt(inputBoxString)
+								});
+						}
+					};
+				case 'Green':
+					return {
+						colorComponent: selectedColor.green,
+						colorText: 'Saturation',
+						updateColorComponent: function (inputBoxString) {
+							return _Utils_update(
+								selectedColor,
+								{
+									green: inputValueToInt(inputBoxString)
+								});
+						}
+					};
+				default:
+					return {
+						colorComponent: selectedColor.blue,
+						colorText: 'Lumination',
+						updateColorComponent: function (inputBoxString) {
+							return _Utils_update(
+								selectedColor,
+								{
+									blue: inputValueToInt(inputBoxString)
+								});
+						}
+					};
+			}
+		}();
+		return A2(
+			$mdgriffith$elm_ui$Element$column,
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+				]),
+			_List_fromArray(
+				[
+					A2(
+					$mdgriffith$elm_ui$Element$el,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$paddingEach(
+							{bottom: 5, left: 0, right: 0, top: 0})
+						]),
+					$mdgriffith$elm_ui$Element$text(conditionalData.colorText)),
+					A2(
+					$mdgriffith$elm_ui$Element$row,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$spacing(10),
+							$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$mdgriffith$elm_ui$Element$Input$text,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$Font$color($author$project$Colors$white),
+									$mdgriffith$elm_ui$Element$Background$color(
+									A3($mdgriffith$elm_ui$Element$rgb255, 0, 51, 77)),
+									$mdgriffith$elm_ui$Element$padding(5),
+									$mdgriffith$elm_ui$Element$width(
+									A2($mdgriffith$elm_ui$Element$maximum, 55, $mdgriffith$elm_ui$Element$fill))
+								]),
+							{
+								label: $mdgriffith$elm_ui$Element$Input$labelHidden(''),
+								onChange: function (newValue) {
+									return $author$project$Messages$ChangeColor(
+										conditionalData.updateColorComponent(newValue));
+								},
+								placeholder: $elm$core$Maybe$Just(
+									A2(
+										$mdgriffith$elm_ui$Element$Input$placeholder,
+										_List_Nil,
+										$mdgriffith$elm_ui$Element$text(''))),
+								text: $elm$core$String$fromInt(conditionalData.colorComponent)
+							}),
+							A2($author$project$HSLSliderPanel$colorSlider, colorFocus, selectedColor)
+						]))
+				]));
+	});
+var $author$project$HSLSliderPanel$hueSlideGroup = function (selectedColor) {
+	return A2($author$project$HSLSliderPanel$sliderComponent, $author$project$HSLSliderPanel$Red, selectedColor);
+};
+var $author$project$HSLSliderPanel$Blue = {$: 'Blue'};
+var $author$project$HSLSliderPanel$luminationSlideGroup = function (selectedColor) {
+	return A2($author$project$HSLSliderPanel$sliderComponent, $author$project$HSLSliderPanel$Blue, selectedColor);
+};
+var $author$project$HSLSliderPanel$Green = {$: 'Green'};
+var $author$project$HSLSliderPanel$saturationSlideGroup = function (selectedColor) {
+	return A2($author$project$HSLSliderPanel$sliderComponent, $author$project$HSLSliderPanel$Green, selectedColor);
+};
+var $author$project$HSLSliderPanel$hslSliderPanel = function (selectedColor) {
 	return A2(
-		$mdgriffith$elm_ui$Element$column,
-		_List_Nil,
+		$mdgriffith$elm_ui$Element$el,
 		_List_fromArray(
 			[
-				A2(
-				$mdgriffith$elm_ui$Element$el,
-				_List_Nil,
-				$mdgriffith$elm_ui$Element$text('Blue')),
-				A2(
-				$mdgriffith$elm_ui$Element$row,
-				_List_Nil,
-				_List_fromArray(
-					[
-						A2(
-						$mdgriffith$elm_ui$Element$Input$text,
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$Font$color(
-								A3($mdgriffith$elm_ui$Element$rgb, 0, 0, 0))
-							]),
-						{
-							label: $mdgriffith$elm_ui$Element$Input$labelHidden(''),
-							onChange: function (y) {
-								return $author$project$Messages$ChangeColor(
-									_Utils_update(
-										selectedColor,
-										{
-											blue: A2(
-												$elm$core$Maybe$withDefault,
-												0,
-												$elm$core$String$toInt(y))
-										}));
-							},
-							placeholder: $elm$core$Maybe$Just(
-								A2(
-									$mdgriffith$elm_ui$Element$Input$placeholder,
-									_List_Nil,
-									$mdgriffith$elm_ui$Element$text(''))),
-							text: $elm$core$String$fromInt(selectedColor.blue)
-						}),
-						A2($author$project$RGBSliderPanel$colorSlider, $author$project$RGBSliderPanel$Blue, selectedColor)
-					]))
-			]));
+				$mdgriffith$elm_ui$Element$Background$color(
+				A3($mdgriffith$elm_ui$Element$rgb255, 0, 85, 128)),
+				$mdgriffith$elm_ui$Element$padding(15),
+				$mdgriffith$elm_ui$Element$width(
+				$mdgriffith$elm_ui$Element$px(256)),
+				$mdgriffith$elm_ui$Element$Border$rounded(5),
+				$author$project$GlobalAttributes$borderShadow,
+				$mdgriffith$elm_ui$Element$centerX
+			]),
+		A2(
+			$mdgriffith$elm_ui$Element$column,
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+					$mdgriffith$elm_ui$Element$spacing(5)
+				]),
+			_List_fromArray(
+				[
+					$author$project$HSLSliderPanel$hueSlideGroup(selectedColor),
+					$author$project$HSLSliderPanel$saturationSlideGroup(selectedColor),
+					$author$project$HSLSliderPanel$luminationSlideGroup(selectedColor)
+				])));
+};
+var $author$project$RGBSliderPanel$Blue = {$: 'Blue'};
+var $author$project$RGBSliderPanel$sliderBar = $mdgriffith$elm_ui$Element$behindContent(
+	A2(
+		$mdgriffith$elm_ui$Element$el,
+		_List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$height(
+				$mdgriffith$elm_ui$Element$px(2)),
+				$mdgriffith$elm_ui$Element$centerY,
+				$mdgriffith$elm_ui$Element$Background$color($author$project$Colors$white),
+				$mdgriffith$elm_ui$Element$Border$rounded(2),
+				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+			]),
+		$mdgriffith$elm_ui$Element$none));
+var $author$project$RGBSliderPanel$colorSlider = F2(
+	function (focusColor, selectedColor) {
+		var localData = function () {
+			switch (focusColor.$) {
+				case 'Red':
+					return {
+						label: 'Red',
+						onChange: function (sliderValue) {
+							return $author$project$Messages$ChangeColor(
+								_Utils_update(
+									selectedColor,
+									{
+										red: $elm$core$Basics$round(sliderValue)
+									}));
+						},
+						value: selectedColor.red
+					};
+				case 'Green':
+					return {
+						label: 'Green',
+						onChange: function (sliderValue) {
+							return $author$project$Messages$ChangeColor(
+								_Utils_update(
+									selectedColor,
+									{
+										green: $elm$core$Basics$round(sliderValue)
+									}));
+						},
+						value: selectedColor.green
+					};
+				default:
+					return {
+						label: 'Blue',
+						onChange: function (sliderValue) {
+							return $author$project$Messages$ChangeColor(
+								_Utils_update(
+									selectedColor,
+									{
+										blue: $elm$core$Basics$round(sliderValue)
+									}));
+						},
+						value: selectedColor.blue
+					};
+			}
+		}();
+		return A2(
+			$mdgriffith$elm_ui$Element$Input$slider,
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$height(
+					$mdgriffith$elm_ui$Element$px(30)),
+					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+					$author$project$RGBSliderPanel$sliderBar
+				]),
+			{
+				label: $mdgriffith$elm_ui$Element$Input$labelHidden(''),
+				max: 255,
+				min: 0,
+				onChange: localData.onChange,
+				step: $elm$core$Maybe$Nothing,
+				thumb: $mdgriffith$elm_ui$Element$Input$defaultThumb,
+				value: localData.value
+			});
+	});
+var $author$project$RGBSliderPanel$sliderComponent = F2(
+	function (colorFocus, selectedColor) {
+		var inputValueToInt = function (y) {
+			return A2(
+				$elm$core$Maybe$withDefault,
+				0,
+				$elm$core$String$toInt(y));
+		};
+		var conditionalData = function () {
+			switch (colorFocus.$) {
+				case 'Red':
+					return {
+						colorComponent: selectedColor.red,
+						colorText: 'Red',
+						updateColorComponent: function (inputBoxString) {
+							return _Utils_update(
+								selectedColor,
+								{
+									red: inputValueToInt(inputBoxString)
+								});
+						}
+					};
+				case 'Green':
+					return {
+						colorComponent: selectedColor.green,
+						colorText: 'Green',
+						updateColorComponent: function (inputBoxString) {
+							return _Utils_update(
+								selectedColor,
+								{
+									green: inputValueToInt(inputBoxString)
+								});
+						}
+					};
+				default:
+					return {
+						colorComponent: selectedColor.blue,
+						colorText: 'Blue',
+						updateColorComponent: function (inputBoxString) {
+							return _Utils_update(
+								selectedColor,
+								{
+									blue: inputValueToInt(inputBoxString)
+								});
+						}
+					};
+			}
+		}();
+		return A2(
+			$mdgriffith$elm_ui$Element$column,
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+				]),
+			_List_fromArray(
+				[
+					A2(
+					$mdgriffith$elm_ui$Element$el,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$paddingEach(
+							{bottom: 5, left: 0, right: 0, top: 0})
+						]),
+					$mdgriffith$elm_ui$Element$text(conditionalData.colorText)),
+					A2(
+					$mdgriffith$elm_ui$Element$row,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$spacing(10),
+							$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$mdgriffith$elm_ui$Element$Input$text,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$Font$color($author$project$Colors$white),
+									$mdgriffith$elm_ui$Element$Background$color(
+									A3($mdgriffith$elm_ui$Element$rgb255, 0, 51, 77)),
+									$mdgriffith$elm_ui$Element$padding(5),
+									$mdgriffith$elm_ui$Element$width(
+									A2($mdgriffith$elm_ui$Element$maximum, 55, $mdgriffith$elm_ui$Element$fill))
+								]),
+							{
+								label: $mdgriffith$elm_ui$Element$Input$labelHidden(''),
+								onChange: function (newValue) {
+									return $author$project$Messages$ChangeColor(
+										conditionalData.updateColorComponent(newValue));
+								},
+								placeholder: $elm$core$Maybe$Just(
+									A2(
+										$mdgriffith$elm_ui$Element$Input$placeholder,
+										_List_Nil,
+										$mdgriffith$elm_ui$Element$text(''))),
+								text: $elm$core$String$fromInt(conditionalData.colorComponent)
+							}),
+							A2($author$project$RGBSliderPanel$colorSlider, colorFocus, selectedColor)
+						]))
+				]));
+	});
+var $author$project$RGBSliderPanel$blueSlideGroup = function (selectedColor) {
+	return A2($author$project$RGBSliderPanel$sliderComponent, $author$project$RGBSliderPanel$Blue, selectedColor);
 };
 var $author$project$RGBSliderPanel$Green = {$: 'Green'};
 var $author$project$RGBSliderPanel$greenSlideGroup = function (selectedColor) {
-	return A2(
-		$mdgriffith$elm_ui$Element$column,
-		_List_Nil,
-		_List_fromArray(
-			[
-				A2(
-				$mdgriffith$elm_ui$Element$el,
-				_List_Nil,
-				$mdgriffith$elm_ui$Element$text('Green')),
-				A2(
-				$mdgriffith$elm_ui$Element$row,
-				_List_Nil,
-				_List_fromArray(
-					[
-						A2(
-						$mdgriffith$elm_ui$Element$Input$text,
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$Font$color(
-								A3($mdgriffith$elm_ui$Element$rgb, 0, 0, 0))
-							]),
-						{
-							label: $mdgriffith$elm_ui$Element$Input$labelHidden(''),
-							onChange: function (y) {
-								return $author$project$Messages$ChangeColor(
-									_Utils_update(
-										selectedColor,
-										{
-											green: A2(
-												$elm$core$Maybe$withDefault,
-												0,
-												$elm$core$String$toInt(y))
-										}));
-							},
-							placeholder: $elm$core$Maybe$Just(
-								A2(
-									$mdgriffith$elm_ui$Element$Input$placeholder,
-									_List_Nil,
-									$mdgriffith$elm_ui$Element$text(''))),
-							text: $elm$core$String$fromInt(selectedColor.green)
-						}),
-						A2($author$project$RGBSliderPanel$colorSlider, $author$project$RGBSliderPanel$Green, selectedColor)
-					]))
-			]));
+	return A2($author$project$RGBSliderPanel$sliderComponent, $author$project$RGBSliderPanel$Green, selectedColor);
 };
 var $author$project$RGBSliderPanel$Red = {$: 'Red'};
 var $author$project$RGBSliderPanel$redSlideGroup = function (selectedColor) {
-	return A2(
-		$mdgriffith$elm_ui$Element$column,
-		_List_Nil,
-		_List_fromArray(
-			[
-				A2(
-				$mdgriffith$elm_ui$Element$el,
-				_List_Nil,
-				$mdgriffith$elm_ui$Element$text('Red')),
-				A2(
-				$mdgriffith$elm_ui$Element$row,
-				_List_Nil,
-				_List_fromArray(
-					[
-						A2(
-						$mdgriffith$elm_ui$Element$Input$text,
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$Font$color(
-								A3($mdgriffith$elm_ui$Element$rgb, 0, 0, 0))
-							]),
-						{
-							label: $mdgriffith$elm_ui$Element$Input$labelHidden(''),
-							onChange: function (y) {
-								return $author$project$Messages$ChangeColor(
-									_Utils_update(
-										selectedColor,
-										{
-											red: A2(
-												$elm$core$Maybe$withDefault,
-												0,
-												$elm$core$String$toInt(y))
-										}));
-							},
-							placeholder: $elm$core$Maybe$Just(
-								A2(
-									$mdgriffith$elm_ui$Element$Input$placeholder,
-									_List_Nil,
-									$mdgriffith$elm_ui$Element$text(''))),
-							text: $elm$core$String$fromInt(selectedColor.red)
-						}),
-						A2($author$project$RGBSliderPanel$colorSlider, $author$project$RGBSliderPanel$Red, selectedColor)
-					]))
-			]));
+	return A2($author$project$RGBSliderPanel$sliderComponent, $author$project$RGBSliderPanel$Red, selectedColor);
 };
 var $author$project$RGBSliderPanel$rgbSliderPanel = function (selectedColor) {
 	return A2(
@@ -13804,13 +13872,15 @@ var $author$project$RGBSliderPanel$rgbSliderPanel = function (selectedColor) {
 				$mdgriffith$elm_ui$Element$width(
 				$mdgriffith$elm_ui$Element$px(256)),
 				$mdgriffith$elm_ui$Element$Border$rounded(5),
+				$author$project$GlobalAttributes$borderShadow,
 				$mdgriffith$elm_ui$Element$centerX
 			]),
 		A2(
 			$mdgriffith$elm_ui$Element$column,
 			_List_fromArray(
 				[
-					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+					$mdgriffith$elm_ui$Element$spacing(5)
 				]),
 			_List_fromArray(
 				[
@@ -13844,10 +13914,8 @@ var $author$project$LeftColumn$leftColumn = F2(
 					$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
 					$mdgriffith$elm_ui$Element$Background$color(
 					A3($mdgriffith$elm_ui$Element$rgb255, 0, 50, 77)),
-					$mdgriffith$elm_ui$Element$Font$color(
-					A3($mdgriffith$elm_ui$Element$rgb, 1, 1, 1)),
-					$mdgriffith$elm_ui$Element$Border$color(
-					A3($mdgriffith$elm_ui$Element$rgb, 0, 0, 0)),
+					$mdgriffith$elm_ui$Element$Font$color($author$project$Colors$white),
+					$mdgriffith$elm_ui$Element$Border$color($author$project$Colors$black),
 					$mdgriffith$elm_ui$Element$Border$widthEach(
 					{bottom: 0, left: 0, right: 1, top: 0})
 				]),
@@ -13884,13 +13952,6 @@ var $author$project$LeftColumn$leftColumn = F2(
 	});
 var $mdgriffith$elm_ui$Internal$Model$Top = {$: 'Top'};
 var $mdgriffith$elm_ui$Element$alignTop = $mdgriffith$elm_ui$Internal$Model$AlignY($mdgriffith$elm_ui$Internal$Model$Top);
-var $author$project$Main$attrShadow = $mdgriffith$elm_ui$Element$Border$shadow(
-	{
-		blur: 10,
-		color: A3($mdgriffith$elm_ui$Element$rgb, 0, 0, 0),
-		offset: _Utils_Tuple2(4, 4),
-		size: 1
-	});
 var $author$project$Main$hslToRgb = F3(
 	function (hue, sat, light) {
 		var t2 = (light <= 0.5) ? (light * (sat + 1)) : ((light + sat) - (light * sat));
@@ -13919,15 +13980,98 @@ var $author$project$Main$sampleColorBlock = function (color) {
 				$mdgriffith$elm_ui$Element$Background$color(
 				A3($mdgriffith$elm_ui$Element$rgb255, color.red, color.green, color.blue)),
 				$mdgriffith$elm_ui$Element$width(
-				$mdgriffith$elm_ui$Element$px(200)),
+				$mdgriffith$elm_ui$Element$px(32)),
 				$mdgriffith$elm_ui$Element$height(
-				$mdgriffith$elm_ui$Element$px(30)),
+				$mdgriffith$elm_ui$Element$px(32)),
 				$mdgriffith$elm_ui$Element$Border$width(1),
-				$mdgriffith$elm_ui$Element$Border$color(
-				A3($mdgriffith$elm_ui$Element$rgb, 0, 0, 0))
+				$mdgriffith$elm_ui$Element$Border$color($author$project$Colors$black)
 			]),
 		$mdgriffith$elm_ui$Element$text(' '));
 };
+var $author$project$Main$luminationScale = A2(
+	$mdgriffith$elm_ui$Element$el,
+	_List_fromArray(
+		[
+			$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+			$mdgriffith$elm_ui$Element$Background$color(
+			A3($mdgriffith$elm_ui$Element$rgb255, 0, 37, 57)),
+			$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
+			A2($mdgriffith$elm_ui$Element$paddingXY, 25, 10)
+		]),
+	A2(
+		$mdgriffith$elm_ui$Element$row,
+		_List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$padding(15),
+				$mdgriffith$elm_ui$Element$Border$rounded(15),
+				$mdgriffith$elm_ui$Element$Font$color($author$project$Colors$white),
+				$mdgriffith$elm_ui$Element$Font$bold,
+				$mdgriffith$elm_ui$Element$spacing(10),
+				$mdgriffith$elm_ui$Element$Background$color(
+				A3($mdgriffith$elm_ui$Element$rgb255, 0, 85, 128)),
+				$author$project$GlobalAttributes$borderShadow
+			]),
+		_List_fromArray(
+			[
+				A2(
+				$mdgriffith$elm_ui$Element$column,
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$spacing(5),
+						$mdgriffith$elm_ui$Element$alignTop,
+						$mdgriffith$elm_ui$Element$centerX
+					]),
+				A2(
+					$elm$core$List$map,
+					function (x) {
+						return $author$project$Main$sampleColorBlock(
+							A3($author$project$Main$hslToRgb, 200, 1, x));
+					},
+					_List_fromArray(
+						[1, 0.95, 0.9, 0.85, 0.8, 0.75, 0.7, 0.65, 0.6, 0.55, 0.5, 0.45, 0.4, 0.35, 0.3, 0.25, 0.2, 0.15, 0.1, 0])))
+			])));
+var $author$project$Main$saturationScale = A2(
+	$mdgriffith$elm_ui$Element$el,
+	_List_fromArray(
+		[
+			$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+			$mdgriffith$elm_ui$Element$Background$color(
+			A3($mdgriffith$elm_ui$Element$rgb255, 0, 37, 57)),
+			$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
+			A2($mdgriffith$elm_ui$Element$paddingXY, 25, 10)
+		]),
+	A2(
+		$mdgriffith$elm_ui$Element$row,
+		_List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$padding(15),
+				$mdgriffith$elm_ui$Element$Border$rounded(15),
+				$mdgriffith$elm_ui$Element$Font$color($author$project$Colors$white),
+				$mdgriffith$elm_ui$Element$Font$bold,
+				$mdgriffith$elm_ui$Element$spacing(10),
+				$mdgriffith$elm_ui$Element$Background$color(
+				A3($mdgriffith$elm_ui$Element$rgb255, 0, 85, 128)),
+				$author$project$GlobalAttributes$borderShadow
+			]),
+		_List_fromArray(
+			[
+				A2(
+				$mdgriffith$elm_ui$Element$column,
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$spacing(5),
+						$mdgriffith$elm_ui$Element$alignTop,
+						$mdgriffith$elm_ui$Element$centerX
+					]),
+				A2(
+					$elm$core$List$map,
+					function (x) {
+						return $author$project$Main$sampleColorBlock(
+							A3($author$project$Main$hslToRgb, 200, x, 1));
+					},
+					_List_fromArray(
+						[1, 0.95, 0.9, 0.85, 0.8, 0.75, 0.7, 0.65, 0.6, 0.55, 0.5, 0.45, 0.4, 0.35, 0.3, 0.25, 0.2, 0.15, 0.1, 0])))
+			])));
 var $author$project$Main$rightColumn = A2(
 	$mdgriffith$elm_ui$Element$column,
 	_List_fromArray(
@@ -13935,10 +14079,8 @@ var $author$project$Main$rightColumn = A2(
 			$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
 			$mdgriffith$elm_ui$Element$Background$color(
 			A3($mdgriffith$elm_ui$Element$rgb255, 0, 50, 77)),
-			$mdgriffith$elm_ui$Element$Font$color(
-			A3($mdgriffith$elm_ui$Element$rgb, 1, 1, 1)),
-			$mdgriffith$elm_ui$Element$Border$color(
-			A3($mdgriffith$elm_ui$Element$rgb, 0, 0, 0)),
+			$mdgriffith$elm_ui$Element$Font$color($author$project$Colors$white),
+			$mdgriffith$elm_ui$Element$Border$color($author$project$Colors$black),
 			$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
 			$mdgriffith$elm_ui$Element$Border$widthEach(
 			{bottom: 0, left: 1, right: 1, top: 0})
@@ -13955,53 +14097,10 @@ var $author$project$Main$rightColumn = A2(
 				]),
 			$mdgriffith$elm_ui$Element$text('Color Variants')),
 			A2(
-			$mdgriffith$elm_ui$Element$el,
+			$mdgriffith$elm_ui$Element$row,
+			_List_Nil,
 			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-					$mdgriffith$elm_ui$Element$Background$color(
-					A3($mdgriffith$elm_ui$Element$rgb255, 0, 37, 57)),
-					$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
-					A2($mdgriffith$elm_ui$Element$paddingXY, 25, 10)
-				]),
-			A2(
-				$mdgriffith$elm_ui$Element$column,
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$padding(15),
-						$mdgriffith$elm_ui$Element$Border$rounded(15),
-						$mdgriffith$elm_ui$Element$Font$color(
-						A3($mdgriffith$elm_ui$Element$rgb, 1, 1, 1)),
-						$mdgriffith$elm_ui$Element$Font$bold,
-						$mdgriffith$elm_ui$Element$spacing(15),
-						$mdgriffith$elm_ui$Element$Background$color(
-						A3($mdgriffith$elm_ui$Element$rgb255, 0, 85, 128)),
-						$author$project$Main$attrShadow
-					]),
-				_List_fromArray(
-					[
-						A2(
-						$mdgriffith$elm_ui$Element$el,
-						_List_fromArray(
-							[$mdgriffith$elm_ui$Element$centerX]),
-						$mdgriffith$elm_ui$Element$text('Light to Dark')),
-						A2(
-						$mdgriffith$elm_ui$Element$column,
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$spacing(5),
-								$mdgriffith$elm_ui$Element$alignTop,
-								$mdgriffith$elm_ui$Element$centerX
-							]),
-						A2(
-							$elm$core$List$map,
-							function (x) {
-								return $author$project$Main$sampleColorBlock(
-									A3($author$project$Main$hslToRgb, 200, 1, x));
-							},
-							_List_fromArray(
-								[1, 0.95, 0.9, 0.85, 0.8, 0.75, 0.7, 0.65, 0.6, 0.55, 0.5, 0.45, 0.4, 0.35, 0.3, 0.25, 0.2, 0.15, 0.1, 0])))
-					])))
+				[$author$project$Main$luminationScale, $author$project$Main$saturationScale]))
 		]));
 var $author$project$Main$body = function (model) {
 	return A2(
@@ -14018,22 +14117,6 @@ var $author$project$Main$body = function (model) {
 				$author$project$Main$rightColumn
 			]));
 };
-var $author$project$Main$colorRecordAsString = function (x) {
-	return 'Red: ' + ($elm$core$String$fromInt(x.red) + (' Green: ' + ($elm$core$String$fromInt(x.green) + (' Blue: ' + $elm$core$String$fromInt(x.blue)))));
-};
-var $author$project$Main$colorTest = function () {
-	var colorString = 'rgb(123,123,12)';
-	var myColorRecord = $author$project$Conversions$dropperStringToColorRecord(colorString);
-	return A2(
-		$mdgriffith$elm_ui$Element$el,
-		_List_fromArray(
-			[
-				$mdgriffith$elm_ui$Element$Font$color(
-				A3($mdgriffith$elm_ui$Element$rgb255, 255, 255, 255))
-			]),
-		$mdgriffith$elm_ui$Element$text(
-			$author$project$Main$colorRecordAsString(myColorRecord)));
-}();
 var $mdgriffith$elm_ui$Internal$Model$FocusStyleOption = function (a) {
 	return {$: 'FocusStyleOption', a: a};
 };
@@ -14331,14 +14414,13 @@ var $author$project$Main$menuBar = A2(
 					])
 			}),
 			$mdgriffith$elm_ui$Element$Font$size(15),
-			$mdgriffith$elm_ui$Element$Font$color(
-			A3($mdgriffith$elm_ui$Element$rgb, 1, 1, 1))
+			$mdgriffith$elm_ui$Element$Font$color($author$project$Colors$white)
 		]),
 	A2(
 		$elm$core$List$map,
 		$author$project$Main$menuBarItem,
 		_List_fromArray(
-			['File', 'Edit', 'View'])));
+			['File', 'Edit', 'View', 'Import/Export', 'Help'])));
 var $author$project$Main$view = function (model) {
 	return A3(
 		$mdgriffith$elm_ui$Element$layoutWith,
@@ -14364,7 +14446,6 @@ var $author$project$Main$view = function (model) {
 				]),
 			_List_fromArray(
 				[
-					$author$project$Main$colorTest,
 					$author$project$Main$menuBar,
 					$author$project$Main$body(model)
 				])));

@@ -1,10 +1,10 @@
-module Main exposing ( main)
+module Main exposing (main)
 
 import Browser
 import ColorRecord exposing (ColorRecord)
 import Colors exposing (..)
 import Conversions exposing (dropperStringToColorRecord)
-import Element exposing (Element, alignTop, centerX, centerY, fill, focusStyle, height, layoutWith, maximum, minimum, mouseOver, padding, paddingXY, px, rgb, rgb255, spacing, text, width)
+import Element exposing (Element, alignTop, centerX, centerY, fill, focusStyle, height, layoutWith, maximum, minimum, mouseOver, padding, paddingXY, px, rgb, rgb255, rotate, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -37,7 +37,7 @@ view model =
             , height fill
             , spacing 2
             ]
-            [  menuBar
+            [ menuBar
             , body model
             ]
 
@@ -50,8 +50,6 @@ colorRecordAsString x =
         ++ String.fromInt x.green
         ++ " Blue: "
         ++ String.fromInt x.blue
-
-
 
 
 body : Model -> Element Msg
@@ -88,57 +86,106 @@ rightColumn =
             ]
           <|
             text "Color Variants"
-        , Element.el
-            [ width fill
-            , Background.color <| rgb255 0 37 57
-            , height fill
-            , paddingXY 25 10
+        , Element.row [width fill]
+            [ luminationScale
+            , saturationScale
             ]
-          <|
-            Element.column
-                [ padding 15
-                , Border.rounded 15
-                , Font.color white
-                , Font.bold
-                , spacing 15
-                , Background.color <| rgb255 0 85 128
-                , borderShadow
-                ]
-                [ Element.el
-                    [ centerX
-                    ]
-                  <|
-                    text "Light to Dark"
-                , Element.column
-                    [ spacing 5
-                    , alignTop
-                    , centerX
-                    ]
-                  <|
-                    List.map (\x -> sampleColorBlock <| hslToRgb 200 1 x) <|
-                        [ 1
-                        , 0.95
-                        , 0.9
-                        , 0.85
-                        , 0.8
-                        , 0.75
-                        , 0.7
-                        , 0.65
-                        , 0.6
-                        , 0.55
-                        , 0.5
-                        , 0.45
-                        , 0.4
-                        , 0.35
-                        , 0.3
-                        , 0.25
-                        , 0.2
-                        , 0.15
-                        , 0.1
-                        , 0
-                        ]
-                ]
         ]
+
+
+luminationScale =
+    Element.el
+        [  Background.color <| rgb255 0 37 57
+        , height fill
+        , paddingXY 25 10
+        ]
+    <|
+        Element.row
+            [ padding 15
+            , Border.rounded 15
+            , Font.color white
+            , Font.bold
+            , spacing 10
+            -- , Background.color <| rgb255 0 85 128
+            , borderShadow
+            ]
+            [ Element.column
+                [ spacing 5
+                , alignTop
+                , centerX
+                ]
+              <|
+                List.map (\x -> sampleColorBlock <| hslToRgb 200 1 x) <|
+                    [ 1
+                    , 0.95
+                    , 0.9
+                    , 0.85
+                    , 0.8
+                    , 0.75
+                    , 0.7
+                    , 0.65
+                    , 0.6
+                    , 0.55
+                    , 0.5
+                    , 0.45
+                    , 0.4
+                    , 0.35
+                    , 0.3
+                    , 0.25
+                    , 0.2
+                    , 0.15
+                    , 0.1
+                    , 0
+                    ]
+            ]
+
+
+saturationScale =
+    Element.el
+        [ width fill
+        , Background.color <| rgb255 0 37 57
+        , height fill
+        , paddingXY 25 10
+        ]
+    <|
+        Element.row
+            [ padding 15
+            , Border.rounded 15
+            , Font.color white
+            , Font.bold
+            , spacing 10
+            , Background.color <| rgb255 0 85 128
+            , borderShadow
+            ]
+            [ Element.column
+                [ spacing 5
+                , alignTop
+                , centerX
+                ]
+              <|
+                List.map (\x -> sampleColorBlock <| hslToRgb 200 x 1) <|
+                    [ 1
+                    , 0.95
+                    , 0.9
+                    , 0.85
+                    , 0.8
+                    , 0.75
+                    , 0.7
+                    , 0.65
+                    , 0.6
+                    , 0.55
+                    , 0.5
+                    , 0.45
+                    , 0.4
+                    , 0.35
+                    , 0.3
+                    , 0.25
+                    , 0.2
+                    , 0.15
+                    , 0.1
+                    , 0
+                    ]
+            ]
 
 
 hslToRgb : Int -> Float -> Float -> ColorRecord
@@ -200,8 +247,8 @@ sampleColorBlock : ColorRecord -> Element msg
 sampleColorBlock color =
     Element.el
         [ Background.color <| rgb255 color.red color.green color.blue
-        , width <| px 75
-        , height <| px 30
+        , width <| px 32
+        , height <| px 32
         , Border.width 1
         , Border.color black
         ]
@@ -240,6 +287,8 @@ menuBar =
             [ "File"
             , "Edit"
             , "View"
+            , "Import/Export"
+            , "Help"
             ]
 
 
