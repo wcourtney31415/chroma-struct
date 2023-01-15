@@ -1,17 +1,3 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Main</title>
-  <style>body { padding: 0; margin: 0; }</style>
-</head>
-
-<body>
-
-<pre id="elm"></pre>
-
-<script>
-try {
 (function(scope){
 'use strict';
 
@@ -13992,7 +13978,6 @@ var $author$project$Main$luminationScale = A2(
 	$mdgriffith$elm_ui$Element$el,
 	_List_fromArray(
 		[
-			$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
 			$mdgriffith$elm_ui$Element$Background$color(
 			A3($mdgriffith$elm_ui$Element$rgb255, 0, 37, 57)),
 			$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
@@ -14007,8 +13992,6 @@ var $author$project$Main$luminationScale = A2(
 				$mdgriffith$elm_ui$Element$Font$color($author$project$Colors$white),
 				$mdgriffith$elm_ui$Element$Font$bold,
 				$mdgriffith$elm_ui$Element$spacing(10),
-				$mdgriffith$elm_ui$Element$Background$color(
-				A3($mdgriffith$elm_ui$Element$rgb255, 0, 85, 128)),
 				$author$project$GlobalAttributes$borderShadow
 			]),
 		_List_fromArray(
@@ -14098,7 +14081,10 @@ var $author$project$Main$rightColumn = A2(
 			$mdgriffith$elm_ui$Element$text('Color Variants')),
 			A2(
 			$mdgriffith$elm_ui$Element$row,
-			_List_Nil,
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+				]),
 			_List_fromArray(
 				[$author$project$Main$luminationScale, $author$project$Main$saturationScale]))
 		]));
@@ -14454,21 +14440,3 @@ var $author$project$Main$main = $elm$browser$Browser$element(
 	{init: $author$project$Main$init, subscriptions: $author$project$Subscriptions$subscriptions, update: $author$project$Update$update, view: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main(
 	$elm$json$Json$Decode$succeed(_Utils_Tuple0))(0)}});}(this));
-
-  var app = Elm.Main.init({ node: document.getElementById("elm") });
-}
-catch (e)
-{
-  // display initialization errors (e.g. bad flags, infinite recursion)
-  var header = document.createElement("h1");
-  header.style.fontFamily = "monospace";
-  header.innerText = "Initialization Error";
-  var pre = document.getElementById("elm");
-  document.body.insertBefore(header, pre);
-  pre.innerText = e;
-  throw e;
-}
-</script>
-
-</body>
-</html>
