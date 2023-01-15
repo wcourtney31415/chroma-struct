@@ -18,7 +18,8 @@
     "url": "https://github.com/wcourtney31415/chroma-struct/issues"
   },
   "homepage": "https://github.com/wcourtney31415/chroma-struct#readme",
-  "dependencies": {
-    "elm-review": "^2.9.1"
+  "devDependencies": {
+    "elm": "^0.19.1-5",
+    "elm-analyse": "^0.16.5"
   }
 }
