@@ -20,6 +20,5 @@
   "homepage": "https://github.com/wcourtney31415/chroma-struct#readme",
   "devDependencies": {
     "elm": "^0.19.1-5",
-    "elm-analyse": "^0.16.5"
   }
 }
