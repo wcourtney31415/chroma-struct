@@ -5,7 +5,8 @@
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "live": "npx elm-live@latest src/Main.elm -o --dir=public -- --output=public/elm.js"
+    "live": "npx elm-live@latest src/Main.elm -o --dir=public -- --output=public/elm.js",
+    "analyse": "npx elm-analyse@latest"
   },
   "repository": {
     "type": "git",
@@ -16,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/wcourtney31415/chroma-struct/issues"
   },
-  "homepage": "https://github.com/wcourtney31415/chroma-struct#readme"
+  "homepage": "https://github.com/wcourtney31415/chroma-struct#readme",
+  "dependencies": {
+    "elm-review": "^2.9.1"
+  }
 }
