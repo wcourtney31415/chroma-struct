@@ -1,4 +1,4 @@
-module HSLSliderPanel exposing (hslSliderPanel)
+module HSVSliderPanel exposing (hsvSliderPanel)
 
 -- import Element exposing (centerX, fill, focused, padding, px, rgb, rgb255, spacing, text, width)
 
@@ -17,8 +17,8 @@ import GlobalAttributes exposing (..)
 --This is the panel containing the red green and blue slider groups
 
 
-hslSliderPanel : ColorRecord -> Element.Element Msg
-hslSliderPanel selectedColor =
+hsvSliderPanel : ColorRecord -> Element.Element Msg
+hsvSliderPanel selectedColor =
     Element.el
         [ Background.color <| rgb255 0 85 128
         , padding 15
@@ -34,7 +34,7 @@ hslSliderPanel selectedColor =
             ]
             [ hueSlideGroup selectedColor
             , saturationSlideGroup selectedColor
-            , luminationSlideGroup selectedColor
+            , valueSlideGroup selectedColor
             ]
 
 
@@ -64,7 +64,7 @@ sliderComponent colorFocus selectedColor =
 
                 Blue ->
                     { colorComponent = selectedColor.blue
-                    , colorText = "Lumination"
+                    , colorText = "Value"
                     , updateColorComponent = \inputBoxString -> { selectedColor | blue = inputValueToInt inputBoxString }
                     }
     in
@@ -109,8 +109,8 @@ saturationSlideGroup selectedColor =
     sliderComponent Green selectedColor
 
 
-luminationSlideGroup : ColorRecord -> Element.Element Msg
-luminationSlideGroup selectedColor =
+valueSlideGroup : ColorRecord -> Element.Element Msg
+valueSlideGroup selectedColor =
     sliderComponent Blue selectedColor
 
 
