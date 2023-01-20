@@ -1,9 +1,9 @@
 module Update exposing (update)
 
+import Conversions exposing (dropperStringToColorRecord)
 import Messages exposing (Msg(..))
 import Model exposing (Model)
 import Ports exposing (sendData)
-import Conversions exposing (dropperStringToColorRecord)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -20,6 +20,10 @@ update msg model =
 
         ChangeColor myColor ->
             ( { model | selectedColor = myColor }, Cmd.none )
+
+        -- eventually we need to convert this to RGB
+        ChangeHSV _ ->
+            ( model, Cmd.none )
 
         RemoveColor index ->
             ( { model | palette = removeElement model.palette index }, Cmd.none )

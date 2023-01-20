@@ -1,23 +1,22 @@
 module HSVSliderPanel exposing (hsvSliderPanel)
 
--- import Element exposing (centerX, fill, focused, padding, px, rgb, rgb255, spacing, text, width)
-
-import ColorRecord exposing (ColorRecord)
+import ColorRecord exposing (HSVColorRecord)
 import Colors exposing (..)
 import Element exposing (..)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
+import GlobalAttributes exposing (..)
 import Html.Attributes exposing (selected)
 import Messages exposing (Msg(..))
-import GlobalAttributes exposing (..)
+
 
 
 --This is the panel containing the red green and blue slider groups
 
 
-hsvSliderPanel : ColorRecord -> Element.Element Msg
+hsvSliderPanel : HSVColorRecord -> Element.Element Msg
 hsvSliderPanel selectedColor =
     Element.el
         [ Background.color <| rgb255 0 85 128
@@ -42,30 +41,30 @@ hsvSliderPanel selectedColor =
 --This is the group containing the textbox, the label and the slider
 
 
-sliderComponent : FocusColor -> ColorRecord -> Element Msg
+sliderComponent : FocusColor -> HSVColorRecord -> Element Msg
 sliderComponent colorFocus selectedColor =
     let
-        inputValueToInt y =
-            Maybe.withDefault 0 <| String.toInt y
+        inputValueToFloat y =
+            Maybe.withDefault 0 <| String.toFloat y
 
         conditionalData =
             case colorFocus of
                 Red ->
-                    { colorComponent = selectedColor.red
+                    { colorComponent = selectedColor.hue
                     , colorText = "Hue"
-                    , updateColorComponent = \inputBoxString -> { selectedColor | red = inputValueToInt inputBoxString }
+                    , updateColorComponent = \inputBoxString -> { selectedColor | hue = inputValueToFloat inputBoxString }
                     }
 
                 Green ->
-                    { colorComponent = selectedColor.green
+                    { colorComponent = selectedColor.saturation
                     , colorText = "Saturation"
-                    , updateColorComponent = \inputBoxString -> { selectedColor | green = inputValueToInt inputBoxString }
+                    , updateColorComponent = \inputBoxString -> { selectedColor | saturation = inputValueToFloat inputBoxString }
                     }
 
                 Blue ->
-                    { colorComponent = selectedColor.blue
+                    { colorComponent = selectedColor.value
                     , colorText = "Value"
-                    , updateColorComponent = \inputBoxString -> { selectedColor | blue = inputValueToInt inputBoxString }
+                    , updateColorComponent = \inputBoxString -> { selectedColor | value = inputValueToFloat inputBoxString }
                     }
     in
     Element.column [ width fill ]
@@ -90,26 +89,26 @@ sliderComponent colorFocus selectedColor =
                 , width <| maximum 55 <| fill
                 ]
                 { label = Input.labelHidden ""
-                , onChange = \newValue -> ChangeColor <| conditionalData.updateColorComponent newValue
+                , onChange = \newValue -> ChangeHSV <| conditionalData.updateColorComponent newValue
                 , placeholder = Just <| Input.placeholder [] <| text ""
-                , text = String.fromInt conditionalData.colorComponent
+                , text = String.fromFloat conditionalData.colorComponent
                 }
             , colorSlider colorFocus selectedColor
             ]
         ]
 
 
-hueSlideGroup : ColorRecord -> Element.Element Msg
+hueSlideGroup : HSVColorRecord -> Element.Element Msg
 hueSlideGroup selectedColor =
     sliderComponent Red selectedColor
 
 
-saturationSlideGroup : ColorRecord -> Element.Element Msg
+saturationSlideGroup : HSVColorRecord -> Element.Element Msg
 saturationSlideGroup selectedColor =
     sliderComponent Green selectedColor
 
 
-valueSlideGroup : ColorRecord -> Element.Element Msg
+valueSlideGroup : HSVColorRecord -> Element.Element Msg
 valueSlideGroup selectedColor =
     sliderComponent Blue selectedColor
 
@@ -124,33 +123,33 @@ type FocusColor
 --This is the slider itself
 
 
-colorSlider : FocusColor -> ColorRecord -> Element.Element Msg
+colorSlider : FocusColor -> HSVColorRecord -> Element.Element Msg
 colorSlider focusColor selectedColor =
     let
         localData =
             case focusColor of
                 Red ->
-                    { label = "Red"
-                    , value = toFloat selectedColor.red
+                    { label = "Hue"
+                    , value = selectedColor.hue
                     , onChange =
                         \sliderValue ->
-                            ChangeColor { selectedColor | red = round sliderValue }
+                            ChangeHSV { selectedColor | hue = sliderValue }
                     }
 
                 Green ->
-                    { label = "Green"
-                    , value = toFloat selectedColor.green
+                    { label = "Saturation"
+                    , value = selectedColor.saturation
                     , onChange =
                         \sliderValue ->
-                            ChangeColor { selectedColor | green = round sliderValue }
+                            ChangeHSV { selectedColor | saturation = sliderValue }
                     }
 
                 Blue ->
-                    { label = "Blue"
-                    , value = toFloat selectedColor.blue
+                    { label = "Value"
+                    , value = selectedColor.value
                     , onChange =
                         \sliderValue ->
-                            ChangeColor { selectedColor | blue = round sliderValue }
+                            ChangeHSV { selectedColor | value = sliderValue }
                     }
     in
     Input.slider

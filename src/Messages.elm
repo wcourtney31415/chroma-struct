@@ -1,6 +1,6 @@
 module Messages exposing (Msg(..))
 
-import ColorRecord exposing (ColorRecord)
+import ColorRecord exposing (ColorRecord, HSVColorRecord)
 
 
 type Msg
@@ -8,4 +8,5 @@ type Msg
     | ReceivedDataFromJS String
     | AddColorToPalette ColorRecord
     | ChangeColor ColorRecord
+    | ChangeHSV HSVColorRecord
     | RemoveColor Int
