@@ -1,7 +1,6 @@
 module ColorList exposing (..)
 
 import Color
-import ColorRecord exposing (ColorRecord)
 import Colors exposing (..)
 import Element exposing (..)
 import Element.Background as Background

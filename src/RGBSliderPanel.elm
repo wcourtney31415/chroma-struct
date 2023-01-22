@@ -1,7 +1,6 @@
 module RGBSliderPanel exposing (rgbSliderPanel)
 
 import Color
-import ColorRecord exposing (ColorRecord)
 import Colors exposing (..)
 import Conversions exposing (rgba255ToColor)
 import Element exposing (..)

@@ -1,6 +1,6 @@
 module ScalesArea exposing (..)
 
-import ColorRecord exposing (ColorRecord)
+import Color
 import Colors exposing (..)
 import Element exposing (..)
 import Element.Background as Background
@@ -63,7 +63,7 @@ luminationScale =
                 , centerX
                 ]
               <|
-                List.map (\x -> sampleColorBlock <| hslToRgb 200 1 x) <|
+                List.map (\x -> sampleColorBlock <| hslToColor 200 1 x) <|
                     [ 1
                     , 0.95
                     , 0.9
@@ -88,65 +88,19 @@ luminationScale =
             ]
 
 
-hslToRgb : Int -> Float -> Float -> ColorRecord
-hslToRgb hue sat light =
-    let
-        h =
-            toFloat hue / 60
-
-        t2 =
-            if light <= 0.5 then
-                light * (sat + 1)
-
-            else
-                light + sat - (light * sat)
-
-        t1 =
-            light * 2 - t2
-
-        hueToRgb tOne tTwo tHue =
-            let
-                hh =
-                    if tHue < 0 then
-                        tHue + 6
-
-                    else if tHue >= 6 then
-                        tHue - 6
-
-                    else
-                        tHue
-
-                ret =
-                    if hh < 1 then
-                        (tTwo - tOne) * hh + tOne
-
-                    else if hh < 3 then
-                        tTwo
-
-                    else if hh < 4 then
-                        (tTwo - tOne) * (4 - hh) + tOne
-
-                    else
-                        tOne
-            in
-            ret
-
-        r =
-            hueToRgb t1 t2 (h + 2) * 255
-
-        g =
-            hueToRgb t1 t2 h * 255
-
-        b =
-            hueToRgb t1 t2 (h - 2) * 255
-    in
-    { red = round r, green = round g, blue = round b }
+hslToColor : Int -> Float -> Float -> Color.Color
+hslToColor hue sat light =
+    Color.fromHsl { hue = toFloat hue, saturation = sat, lightness = light }
 
 
-sampleColorBlock : ColorRecord -> Element msg
+sampleColorBlock : Color.Color -> Element msg
 sampleColorBlock color =
+    let
+        rgba255 =
+            Color.toRgba255 color
+    in
     Element.el
-        [ Background.color <| rgb255 color.red color.green color.blue
+        [ Background.color <| rgb255 rgba255.red rgba255.green rgba255.blue
         , width <| px 32
         , height <| px 32
         , Border.width 1
@@ -180,7 +134,7 @@ saturationScale =
                 , centerX
                 ]
               <|
-                List.map (\x -> sampleColorBlock <| hslToRgb 200 x 1) <|
+                List.map (\x -> sampleColorBlock <| hslToColor 200 x 1) <|
                     [ 1
                     , 0.95
                     , 0.9
