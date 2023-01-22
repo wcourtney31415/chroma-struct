@@ -1,6 +1,6 @@
 module Menubar exposing (..)
 
-import Colors exposing (..)
+import Color.Colors exposing (..)
 import Element exposing (..)
 import Element.Background as Background
 import Element.Font as Font

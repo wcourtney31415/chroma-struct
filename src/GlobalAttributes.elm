@@ -1,6 +1,6 @@
 module GlobalAttributes exposing (..)
 
-import Colors
+import Color.Colors
 import Element exposing (mouseOver, rgb255)
 import Element.Background as Background
 import Element.Border as Border
@@ -20,7 +20,7 @@ borderShadow : Element.Attr decorative msg
 borderShadow =
     Border.shadow
         { offset = ( 4, 2 )
-        , color = Colors.black
+        , color = Color.Colors.black
         , size = 1
         , blur = 10
         }

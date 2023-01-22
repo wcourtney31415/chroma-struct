@@ -2,7 +2,7 @@ module RGBSliderPanel exposing (rgbSliderPanel)
 
 import Color
 import Color.Types exposing (RawColor)
-import Colors exposing (..)
+import Color.Colors exposing (..)
 import Conversions exposing (rgba255ToColor)
 import Element exposing (..)
 import Element.Background as Background

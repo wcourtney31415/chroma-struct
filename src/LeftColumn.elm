@@ -2,7 +2,7 @@ module LeftColumn exposing (leftColumn)
 
 import Color
 import Color.Types exposing (RawColor)
-import Colors exposing (..)
+import Color.Colors exposing (..)
 import Element exposing (centerX, centerY, fill, height, padding, paddingXY, px, rgb255, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border

@@ -1,8 +1,8 @@
 module ColorList exposing (..)
 
 import Color
+import Color.Colors exposing (..)
 import Color.Types exposing (RawColor)
-import Colors exposing (..)
 import Element exposing (..)
 import Element.Background as Background
 import Element.Border as Border

@@ -1,4 +1,4 @@
-module Colors exposing (..)
+module Color.Colors exposing (..)
 
 import Color.Types exposing (ElementColor)
 import Element

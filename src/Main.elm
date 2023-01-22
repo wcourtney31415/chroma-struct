@@ -2,8 +2,8 @@ module Main exposing (main)
 
 import Browser
 import Color
+import Color.Colors exposing (..)
 import ColorList exposing (..)
-import Colors exposing (..)
 import Element exposing (Element, fill, focusStyle, height, layoutWith, rgb255, spacing, width)
 import Element.Background as Background
 import GlobalAttributes exposing (..)
