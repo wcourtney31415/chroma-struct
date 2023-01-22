@@ -12,11 +12,11 @@ open =
 
 subscribe : (RawColor -> msg) -> Sub msg
 subscribe toMsg =
-    Ports.onJsEyeDropperResult (toMsg << convertEyeDropperString)
+    Ports.onJsEyeDropperResult (toMsg << eyeDropperStringToColor)
 
 
-convertEyeDropperString : String -> RawColor
-convertEyeDropperString str =
+eyeDropperStringToColor : String -> RawColor
+eyeDropperStringToColor str =
     if String.startsWith "rgb(" str then
         rgbToColor str
 
