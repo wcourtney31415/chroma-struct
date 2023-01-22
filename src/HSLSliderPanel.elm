@@ -2,7 +2,7 @@ module HSLSliderPanel exposing (hslSliderPanel)
 
 import Color
 import Colors exposing (..)
-import Conversions exposing (colorToRgba255, rgba255ToColor)
+import Conversions exposing (rgba255ToColor)
 import Element exposing (..)
 import Element.Background as Background
 import Element.Border as Border
@@ -45,7 +45,7 @@ sliderComponent : FocusColor -> Color.Color -> Element Msg
 sliderComponent colorFocus selectedColor =
     let
         rgba255 =
-            colorToRgba255 selectedColor
+            Color.toRgba255 selectedColor
 
         inputValueToInt y =
             Maybe.withDefault 0 <| String.toInt y

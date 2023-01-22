@@ -1,4 +1,4 @@
-module Conversions exposing (colorToRgba255, dropperStringToColorRecord, rgba255ToColor)
+module Conversions exposing (dropperStringToColorRecord, rgba255ToColor)
 
 import Array
 import Color exposing (Color)
@@ -114,11 +114,6 @@ rgbToColor rgb =
         , blue = blue
         , alpha = 255
         }
-
-
-colorToRgba255 : Color -> Rgba255Record
-colorToRgba255 =
-    Color.toRgba255
 
 
 rgba255ToColor : Rgba255Record -> Color
