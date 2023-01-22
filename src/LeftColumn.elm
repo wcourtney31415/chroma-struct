@@ -1,6 +1,7 @@
 module LeftColumn exposing (leftColumn)
 
 import ColorRecord exposing (ColorRecord)
+import Colors exposing (..)
 import Element exposing (centerX, centerY, fill, height, padding, paddingXY, px, rgb, rgb255, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
@@ -11,7 +12,6 @@ import HSVSliderPanel exposing (hsvSliderPanel)
 import Messages exposing (Msg(..))
 import Model exposing (Model)
 import RGBSliderPanel exposing (rgbSliderPanel)
-import Colors exposing (..)
 
 
 leftColumn : Model -> ColorRecord -> Element.Element Msg
@@ -38,7 +38,7 @@ leftColumn model color =
             [ colorSelectDisplay color
             , addColorButton model "Dropper Tool"
             , addColorButton model "Add to Palette"
-            , hsvSliderPanel {hue=0, saturation=0, value=0}
+            , hsvSliderPanel model.selectedColor
             , rgbSliderPanel model.selectedColor
             ]
         ]

@@ -1,15 +1,14 @@
 module HSVSliderPanel exposing (hsvSliderPanel)
 
-import ColorRecord exposing (HSVColorRecord)
+import ColorRecord exposing (ColorRecord, HSVColorRecord)
 import Colors exposing (..)
-import Conversions exposing (hsvToRgb)
+import Conversions exposing (hsvToRgb, rgbToHsv)
 import Element exposing (..)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
 import GlobalAttributes exposing (..)
-import Html.Attributes exposing (selected)
 import Messages exposing (Msg(..))
 
 
@@ -17,7 +16,7 @@ import Messages exposing (Msg(..))
 --This is the panel containing the red green and blue slider groups
 
 
-hsvSliderPanel : HSVColorRecord -> Element.Element Msg
+hsvSliderPanel : ColorRecord -> Element.Element Msg
 hsvSliderPanel selectedColor =
     Element.el
         [ Background.color <| rgb255 0 85 128
@@ -32,9 +31,9 @@ hsvSliderPanel selectedColor =
             [ width fill
             , spacing 5
             ]
-            [ hueSlideGroup selectedColor
-            , saturationSlideGroup selectedColor
-            , valueSlideGroup selectedColor
+            [ hueSlideGroup <| rgbToHsv selectedColor
+            , saturationSlideGroup <| rgbToHsv selectedColor
+            , valueSlideGroup <| rgbToHsv selectedColor
             ]
 
 
