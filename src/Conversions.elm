@@ -1,7 +1,8 @@
-module Conversions exposing (dropperStringToColorRecord)
+module Conversions exposing (dropperStringToColorRecord, hsvToRgb)
 
 import Array
-import ColorRecord exposing (ColorRecord)
+import ColorRecord exposing (ColorRecord, HSVColorRecord)
+import String exposing (toInt)
 
 
 dropperStringToColorRecord : String -> ColorRecord
@@ -108,6 +109,14 @@ rgbToColor rgb =
     { red = red
     , green = green
     , blue = blue
+    }
+
+
+hsvToRgb : HSVColorRecord -> ColorRecord
+hsvToRgb { hue, saturation, value } =
+    { red = round hue
+    , green = round saturation
+    , blue = round value
     }
 
 

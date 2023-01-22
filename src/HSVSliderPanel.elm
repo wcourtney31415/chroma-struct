@@ -2,6 +2,7 @@ module HSVSliderPanel exposing (hsvSliderPanel)
 
 import ColorRecord exposing (HSVColorRecord)
 import Colors exposing (..)
+import Conversions exposing (hsvToRgb)
 import Element exposing (..)
 import Element.Background as Background
 import Element.Border as Border
@@ -89,7 +90,7 @@ sliderComponent colorFocus selectedColor =
                 , width <| maximum 55 <| fill
                 ]
                 { label = Input.labelHidden ""
-                , onChange = \newValue -> ChangeHSV <| conditionalData.updateColorComponent newValue
+                , onChange = \newValue -> ChangeColor <| hsvToRgb <| conditionalData.updateColorComponent newValue
                 , placeholder = Just <| Input.placeholder [] <| text ""
                 , text = String.fromFloat conditionalData.colorComponent
                 }
@@ -133,7 +134,7 @@ colorSlider focusColor selectedColor =
                     , value = selectedColor.hue
                     , onChange =
                         \sliderValue ->
-                            ChangeHSV { selectedColor | hue = sliderValue }
+                            ChangeColor <| hsvToRgb { selectedColor | hue = sliderValue }
                     }
 
                 Green ->
@@ -141,7 +142,7 @@ colorSlider focusColor selectedColor =
                     , value = selectedColor.saturation
                     , onChange =
                         \sliderValue ->
-                            ChangeHSV { selectedColor | saturation = sliderValue }
+                            ChangeColor <| hsvToRgb { selectedColor | saturation = sliderValue }
                     }
 
                 Blue ->
@@ -149,7 +150,7 @@ colorSlider focusColor selectedColor =
                     , value = selectedColor.value
                     , onChange =
                         \sliderValue ->
-                            ChangeHSV { selectedColor | value = sliderValue }
+                            ChangeColor <| hsvToRgb { selectedColor | value = sliderValue }
                     }
     in
     Input.slider
