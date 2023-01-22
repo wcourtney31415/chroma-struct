@@ -1,10 +1,11 @@
-module Conversions exposing (dropperStringToColorRecord)
+module Conversions exposing (colorToRgba255, dropperStringToColorRecord, rgba255ToColor)
 
 import Array
-import ColorRecord exposing (ColorRecord)
+import Color exposing (Color)
+import ColorRecord exposing (Rgba255Record)
 
 
-dropperStringToColorRecord : String -> ColorRecord
+dropperStringToColorRecord : String -> Color
 dropperStringToColorRecord str =
     if String.startsWith "rgb(" str then
         rgbToColor str
@@ -13,7 +14,7 @@ dropperStringToColorRecord str =
         hexToColor str
 
 
-hexToColor : String -> ColorRecord
+hexToColor : String -> Color
 hexToColor hex =
     let
         characterToHex char =
@@ -75,13 +76,15 @@ hexToColor hex =
                 * 16
                 + bb
     in
-    { red = myRed
-    , green = myGreen
-    , blue = myBlue
-    }
+    rgba255ToColor
+        { red = myRed
+        , green = myGreen
+        , blue = myBlue
+        , alpha = 255
+        }
 
 
-rgbToColor : String -> ColorRecord
+rgbToColor : String -> Color
 rgbToColor rgb =
     let
         commaDelimitedList =
@@ -105,10 +108,23 @@ rgbToColor rgb =
         blue =
             getAtIndex 2 rgbArray
     in
-    { red = red
-    , green = green
-    , blue = blue
-    }
+    rgba255ToColor
+        { red = red
+        , green = green
+        , blue = blue
+        , alpha = 255
+        }
+
+
+colorToRgba255 : Color -> Rgba255Record
+colorToRgba255 =
+    Color.toRgba255
+
+
+rgba255ToColor : Rgba255Record -> Color
+rgba255ToColor { red, green, blue, alpha } =
+    Color.fromRgb255 { red = red, green = green, blue = blue }
+        |> Color.setAlpha (toFloat (alpha * 255))
 
 
 

@@ -1,5 +1,6 @@
 module ColorList exposing (..)
 
+import Color
 import ColorRecord exposing (ColorRecord)
 import Colors exposing (..)
 import Element exposing (..)
@@ -11,7 +12,7 @@ import GlobalAttributes exposing (..)
 import Messages exposing (Msg(..))
 
 
-colorList : List ColorRecord -> Element Msg
+colorList : List Color.Color -> Element Msg
 colorList palette =
     Element.column
         [ height fill
@@ -42,8 +43,12 @@ colorList palette =
         ]
 
 
-colorListItem : ( Int, ColorRecord ) -> Element Msg
-colorListItem ( index, cRecord ) =
+colorListItem : ( Int, Color.Color ) -> Element Msg
+colorListItem ( index, color ) =
+    let
+        cRecord =
+            Color.toRgba255 color
+    in
     Element.row
         [ centerX
         , width fill

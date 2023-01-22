@@ -1,7 +1,8 @@
 module HSLSliderPanel exposing (hslSliderPanel)
 
-import ColorRecord exposing (ColorRecord)
+import Color
 import Colors exposing (..)
+import Conversions exposing (colorToRgba255, rgba255ToColor)
 import Element exposing (..)
 import Element.Background as Background
 import Element.Border as Border
@@ -15,7 +16,7 @@ import Messages exposing (Msg(..))
 --This is the panel containing the red green and blue slider groups
 
 
-hslSliderPanel : ColorRecord -> Element.Element Msg
+hslSliderPanel : Color.Color -> Element.Element Msg
 hslSliderPanel selectedColor =
     Element.el
         [ Background.color <| rgb255 0 85 128
@@ -40,30 +41,33 @@ hslSliderPanel selectedColor =
 --This is the group containing the textbox, the label and the slider
 
 
-sliderComponent : FocusColor -> ColorRecord -> Element Msg
+sliderComponent : FocusColor -> Color.Color -> Element Msg
 sliderComponent colorFocus selectedColor =
     let
+        rgba255 =
+            colorToRgba255 selectedColor
+
         inputValueToInt y =
             Maybe.withDefault 0 <| String.toInt y
 
         conditionalData =
             case colorFocus of
                 Red ->
-                    { colorComponent = selectedColor.red
+                    { colorComponent = rgba255.red
                     , colorText = "Hue"
-                    , updateColorComponent = \inputBoxString -> { selectedColor | red = inputValueToInt inputBoxString }
+                    , updateColorComponent = \inputBoxString -> { rgba255 | red = inputValueToInt inputBoxString }
                     }
 
                 Green ->
-                    { colorComponent = selectedColor.green
+                    { colorComponent = rgba255.green
                     , colorText = "Saturation"
-                    , updateColorComponent = \inputBoxString -> { selectedColor | green = inputValueToInt inputBoxString }
+                    , updateColorComponent = \inputBoxString -> { rgba255 | green = inputValueToInt inputBoxString }
                     }
 
                 Blue ->
-                    { colorComponent = selectedColor.blue
+                    { colorComponent = rgba255.blue
                     , colorText = "Lumination"
-                    , updateColorComponent = \inputBoxString -> { selectedColor | blue = inputValueToInt inputBoxString }
+                    , updateColorComponent = \inputBoxString -> { rgba255 | blue = inputValueToInt inputBoxString }
                     }
     in
     Element.column [ width fill ]
@@ -88,7 +92,7 @@ sliderComponent colorFocus selectedColor =
                 , width <| maximum 55 <| fill
                 ]
                 { label = Input.labelHidden ""
-                , onChange = \newValue -> ChangeColor <| conditionalData.updateColorComponent newValue
+                , onChange = \newValue -> ChangeColor <| rgba255ToColor <| conditionalData.updateColorComponent newValue
                 , placeholder = Just <| Input.placeholder [] <| text ""
                 , text = String.fromInt conditionalData.colorComponent
                 }
@@ -97,17 +101,17 @@ sliderComponent colorFocus selectedColor =
         ]
 
 
-hueSlideGroup : ColorRecord -> Element.Element Msg
+hueSlideGroup : Color.Color -> Element.Element Msg
 hueSlideGroup selectedColor =
     sliderComponent Red selectedColor
 
 
-saturationSlideGroup : ColorRecord -> Element.Element Msg
+saturationSlideGroup : Color.Color -> Element.Element Msg
 saturationSlideGroup selectedColor =
     sliderComponent Green selectedColor
 
 
-luminationSlideGroup : ColorRecord -> Element.Element Msg
+luminationSlideGroup : Color.Color -> Element.Element Msg
 luminationSlideGroup selectedColor =
     sliderComponent Blue selectedColor
 
@@ -122,33 +126,36 @@ type FocusColor
 --This is the slider itself
 
 
-colorSlider : FocusColor -> ColorRecord -> Element.Element Msg
+colorSlider : FocusColor -> Color.Color -> Element.Element Msg
 colorSlider focusColor selectedColor =
     let
+        rgba255 =
+            Color.toRgba255 selectedColor
+
         localData =
             case focusColor of
                 Red ->
                     { label = "Red"
-                    , value = toFloat selectedColor.red
+                    , value = toFloat rgba255.red
                     , onChange =
                         \sliderValue ->
-                            ChangeColor { selectedColor | red = round sliderValue }
+                            ChangeColor <| rgba255ToColor { rgba255 | red = round sliderValue }
                     }
 
                 Green ->
                     { label = "Green"
-                    , value = toFloat selectedColor.green
+                    , value = toFloat rgba255.green
                     , onChange =
                         \sliderValue ->
-                            ChangeColor { selectedColor | green = round sliderValue }
+                            ChangeColor <| rgba255ToColor { rgba255 | green = round sliderValue }
                     }
 
                 Blue ->
                     { label = "Blue"
-                    , value = toFloat selectedColor.blue
+                    , value = toFloat rgba255.blue
                     , onChange =
                         \sliderValue ->
-                            ChangeColor { selectedColor | blue = round sliderValue }
+                            ChangeColor <| rgba255ToColor { rgba255 | blue = round sliderValue }
                     }
     in
     Input.slider

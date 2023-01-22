@@ -1,6 +1,7 @@
 module Main exposing (main)
 
 import Browser
+import Color
 import ColorList exposing (..)
 import Colors exposing (..)
 import Element exposing (Element, fill, focusStyle, height, layoutWith, rgb255, spacing, width)
@@ -54,7 +55,7 @@ body model =
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( { selectedColor = { red = 0, green = 255, blue = 0 }
+    ( { selectedColor = Color.fromRgb255 { red = 0, green = 255, blue = 0 }
       , palette =
             []
       }

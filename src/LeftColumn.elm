@@ -1,6 +1,6 @@
 module LeftColumn exposing (leftColumn)
 
-import ColorRecord exposing (ColorRecord)
+import Color
 import Colors exposing (..)
 import Element exposing (centerX, centerY, fill, height, padding, paddingXY, px, rgb255, spacing, text, width)
 import Element.Background as Background
@@ -14,7 +14,7 @@ import Model exposing (Model)
 import RGBSliderPanel exposing (rgbSliderPanel)
 
 
-leftColumn : Model -> ColorRecord -> Element.Element Msg
+leftColumn : Model -> Color.Color -> Element.Element Msg
 leftColumn model color =
     Element.column
         [ height fill
@@ -76,25 +76,28 @@ addColorButton model myText =
         }
 
 
-colorSelectDisplay : ColorRecord -> Element.Element Msg
+colorSelectDisplay : Color.Color -> Element.Element Msg
 colorSelectDisplay color =
     let
+        rgba255 =
+            Color.toRgba255 color
+
         squareSize =
             256
 
         bkgColor =
             rgb255
-                color.red
-                color.green
-                color.blue
+                rgba255.red
+                rgba255.green
+                rgba255.blue
 
         myRgb =
             "rgb255 "
-                ++ String.fromInt color.red
+                ++ String.fromInt rgba255.red
                 ++ " "
-                ++ String.fromInt color.green
+                ++ String.fromInt rgba255.green
                 ++ " "
-                ++ String.fromInt color.blue
+                ++ String.fromInt rgba255.blue
                 ++ " "
     in
     Input.button

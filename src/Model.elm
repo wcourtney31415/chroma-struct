@@ -1,9 +1,9 @@
 module Model exposing (Model)
 
-import ColorRecord exposing (ColorRecord)
+import Color exposing (Color)
 
 
 type alias Model =
-    { selectedColor : ColorRecord
-    , palette : List ColorRecord
+    { selectedColor : Color
+    , palette : List Color
     }
