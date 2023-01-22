@@ -2,14 +2,9 @@ module Main exposing (main)
 
 import Browser
 import ColorList exposing (..)
-import ColorRecord exposing (ColorRecord)
 import Colors exposing (..)
-import Conversions exposing (dropperStringToColorRecord)
-import Element exposing (Element, alignTop, centerX, centerY, fill, focusStyle, height, layoutWith, maximum, minimum, mouseOver, padding, paddingXY, px, rgb, rgb255, rotate, spacing, text, width)
+import Element exposing (Element, fill, focusStyle, height, layoutWith, rgb255, spacing, width)
 import Element.Background as Background
-import Element.Border as Border
-import Element.Font as Font
-import Element.Input as Input
 import GlobalAttributes exposing (..)
 import Html exposing (Html)
 import LeftColumn exposing (leftColumn)
