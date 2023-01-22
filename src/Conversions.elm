@@ -3,6 +3,7 @@ module Conversions exposing (dropperStringToColorRecord)
 import Array
 import ColorRecord exposing (ColorRecord)
 
+
 dropperStringToColorRecord : String -> ColorRecord
 dropperStringToColorRecord str =
     if String.startsWith "rgb(" str then
@@ -110,13 +111,13 @@ rgbToColor rgb =
     }
 
 
+
 -- convertRgbToHsv : (Int, Int, Int) -> (Float, Float, Float)
 -- convertRgbToHsv (r, g, b) =
 --   let
 --     rprime = toFloat r / 255
 --     gprime = toFloat g / 255
 --     bprime = toFloat b / 255
-
 --     h =
 --       if rprime >= gprime && rprime >= bprime then
 --         60 * ((gprime - bprime) / (rprime - min gprime bprime))
@@ -125,9 +126,7 @@ rgbToColor rgb =
 --       else
 --         60 * (4 + (rprime - gprime) / (bprime - min rprime gprime))
 --       |> toDegrees
-
 --     s = 1 - (3 / (rprime + gprime + bprime)) * min rprime gprime bprime
-
 --     v = max rprime gprime bprime
 --   in
 --     (h, s, v)

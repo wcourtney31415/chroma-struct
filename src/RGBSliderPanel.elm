@@ -1,7 +1,5 @@
 module RGBSliderPanel exposing (rgbSliderPanel)
 
--- import Element exposing (centerX, fill, focused, padding, px, rgb, rgb255, spacing, text, width)
-
 import ColorRecord exposing (ColorRecord)
 import Colors exposing (..)
 import Element exposing (..)
@@ -9,10 +7,9 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
-import Html.Attributes exposing (selected)
-import Messages exposing (Msg(..))
-import Element.Border exposing (shadow)
 import GlobalAttributes exposing (..)
+import Messages exposing (Msg(..))
+
 
 
 --This is the panel containing the red green and blue slider groups

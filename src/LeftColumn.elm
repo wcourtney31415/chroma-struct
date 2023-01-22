@@ -1,7 +1,8 @@
 module LeftColumn exposing (leftColumn)
 
 import ColorRecord exposing (ColorRecord)
-import Element exposing (centerX, centerY, fill, height, padding, paddingXY, px, rgb, rgb255, spacing, text, width)
+import Colors exposing (..)
+import Element exposing (centerX, centerY, fill, height, padding, paddingXY, px, rgb255, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -11,7 +12,6 @@ import HSLSliderPanel exposing (hslSliderPanel)
 import Messages exposing (Msg(..))
 import Model exposing (Model)
 import RGBSliderPanel exposing (rgbSliderPanel)
-import Colors exposing (..)
 
 
 leftColumn : Model -> ColorRecord -> Element.Element Msg

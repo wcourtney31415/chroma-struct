@@ -1,9 +1,9 @@
 module Update exposing (update)
 
+import Conversions exposing (dropperStringToColorRecord)
 import Messages exposing (Msg(..))
 import Model exposing (Model)
 import Ports exposing (sendData)
-import Conversions exposing (dropperStringToColorRecord)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
