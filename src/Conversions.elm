@@ -120,24 +120,3 @@ rgba255ToColor : Rgba255Record -> Color
 rgba255ToColor { red, green, blue, alpha } =
     Color.fromRgb255 { red = red, green = green, blue = blue }
         |> Color.setAlpha (toFloat (alpha * 255))
-
-
-
--- convertRgbToHsv : (Int, Int, Int) -> (Float, Float, Float)
--- convertRgbToHsv (r, g, b) =
---   let
---     rprime = toFloat r / 255
---     gprime = toFloat g / 255
---     bprime = toFloat b / 255
---     h =
---       if rprime >= gprime && rprime >= bprime then
---         60 * ((gprime - bprime) / (rprime - min gprime bprime))
---       else if gprime >= rprime && gprime >= bprime then
---         60 * (2 + (bprime - rprime) / (gprime - min rprime bprime))
---       else
---         60 * (4 + (rprime - gprime) / (bprime - min rprime gprime))
---       |> toDegrees
---     s = 1 - (3 / (rprime + gprime + bprime)) * min rprime gprime bprime
---     v = max rprime gprime bprime
---   in
---     (h, s, v)
