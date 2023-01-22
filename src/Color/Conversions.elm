@@ -1,9 +1,8 @@
-module Color.Conversions exposing (dropperStringToColorRecord, rgba255ToColor)
+module Color.Conversions exposing (..)
 
 import Array
 import Color
-import Color.Types exposing (RawColor)
-import Color.Types exposing (Rgba255Color)
+import Color.Types exposing (RawColor, Rgba255Color)
 
 
 dropperStringToColorRecord : String -> RawColor

@@ -1,16 +1,16 @@
 module Update exposing (update)
 
 import Color.Conversions exposing (dropperStringToColorRecord)
+import Color.Dropper
 import Messages exposing (Msg(..))
 import Model exposing (Model)
-import Ports exposing (sendData)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         SendDataToJS ->
-            ( model, sendData "Hello JavaScript!" )
+            ( model, Color.Dropper.open )
 
         ReceivedDataFromJS data ->
             ( { model | selectedColor = dropperStringToColorRecord data }, Cmd.none )
