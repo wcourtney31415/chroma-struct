@@ -1,6 +1,7 @@
 module RGBSliderPanel exposing (rgbSliderPanel)
 
 import Color
+import Color.Types exposing (RawColor)
 import Colors exposing (..)
 import Conversions exposing (rgba255ToColor)
 import Element exposing (..)
@@ -16,7 +17,7 @@ import Messages exposing (Msg(..))
 --This is the panel containing the red green and blue slider groups
 
 
-rgbSliderPanel : Color.Color -> Element.Element Msg
+rgbSliderPanel : RawColor -> Element.Element Msg
 rgbSliderPanel selectedColor =
     Element.el
         [ Background.color <| rgb255 0 85 128
@@ -41,7 +42,7 @@ rgbSliderPanel selectedColor =
 --This is the group containing the textbox, the label and the slider
 
 
-sliderComponent : FocusColor -> Color.Color -> Element Msg
+sliderComponent : FocusColor -> RawColor -> Element Msg
 sliderComponent colorFocus selectedColor =
     let
         rgba255 =
@@ -101,17 +102,17 @@ sliderComponent colorFocus selectedColor =
         ]
 
 
-redSlideGroup : Color.Color -> Element.Element Msg
+redSlideGroup : RawColor -> Element.Element Msg
 redSlideGroup selectedColor =
     sliderComponent Red selectedColor
 
 
-greenSlideGroup : Color.Color -> Element.Element Msg
+greenSlideGroup : RawColor -> Element.Element Msg
 greenSlideGroup selectedColor =
     sliderComponent Green selectedColor
 
 
-blueSlideGroup : Color.Color -> Element.Element Msg
+blueSlideGroup : RawColor -> Element.Element Msg
 blueSlideGroup selectedColor =
     sliderComponent Blue selectedColor
 
@@ -126,7 +127,7 @@ type FocusColor
 --This is the slider itself
 
 
-colorSlider : FocusColor -> Color.Color -> Element.Element Msg
+colorSlider : FocusColor -> RawColor -> Element.Element Msg
 colorSlider focusColor selectedColor =
     let
         rgba255 =

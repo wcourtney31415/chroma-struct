@@ -1,11 +1,12 @@
 module Conversions exposing (dropperStringToColorRecord, rgba255ToColor)
 
 import Array
-import Color exposing (Color)
-import ColorRecord exposing (Rgba255Record)
+import Color
+import Color.Types exposing (RawColor)
+import Color.Types exposing (Rgba255Color)
 
 
-dropperStringToColorRecord : String -> Color
+dropperStringToColorRecord : String -> RawColor
 dropperStringToColorRecord str =
     if String.startsWith "rgb(" str then
         rgbToColor str
@@ -14,7 +15,7 @@ dropperStringToColorRecord str =
         hexToColor str
 
 
-hexToColor : String -> Color
+hexToColor : String -> RawColor
 hexToColor hex =
     let
         characterToHex char =
@@ -84,7 +85,7 @@ hexToColor hex =
         }
 
 
-rgbToColor : String -> Color
+rgbToColor : String -> RawColor
 rgbToColor rgb =
     let
         commaDelimitedList =
@@ -116,7 +117,7 @@ rgbToColor rgb =
         }
 
 
-rgba255ToColor : Rgba255Record -> Color
+rgba255ToColor : Rgba255Color -> RawColor
 rgba255ToColor { red, green, blue, alpha } =
     Color.fromRgb255 { red = red, green = green, blue = blue }
         |> Color.setAlpha (toFloat (alpha * 255))

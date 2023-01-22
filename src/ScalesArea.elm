@@ -1,6 +1,7 @@
 module ScalesArea exposing (..)
 
 import Color
+import Color.Types exposing (RawColor)
 import Colors exposing (..)
 import Element exposing (..)
 import Element.Background as Background
@@ -88,12 +89,12 @@ luminationScale =
             ]
 
 
-hslToColor : Int -> Float -> Float -> Color.Color
+hslToColor : Int -> Float -> Float -> RawColor
 hslToColor hue sat light =
     Color.fromHsl { hue = toFloat hue, saturation = sat, lightness = light }
 
 
-sampleColorBlock : Color.Color -> Element msg
+sampleColorBlock : RawColor -> Element msg
 sampleColorBlock color =
     let
         rgba255 =

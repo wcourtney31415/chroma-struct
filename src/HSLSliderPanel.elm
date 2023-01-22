@@ -1,6 +1,7 @@
 module HSLSliderPanel exposing (hslSliderPanel)
 
 import Color
+import Color.Types exposing (RawColor)
 import Colors exposing (..)
 import Conversions exposing (rgba255ToColor)
 import Element exposing (..)
@@ -16,7 +17,7 @@ import Messages exposing (Msg(..))
 --This is the panel containing the red green and blue slider groups
 
 
-hslSliderPanel : Color.Color -> Element.Element Msg
+hslSliderPanel : RawColor -> Element.Element Msg
 hslSliderPanel selectedColor =
     Element.el
         [ Background.color <| rgb255 0 85 128
@@ -41,7 +42,7 @@ hslSliderPanel selectedColor =
 --This is the group containing the textbox, the label and the slider
 
 
-sliderComponent : FocusColor -> Color.Color -> Element Msg
+sliderComponent : FocusColor -> RawColor -> Element Msg
 sliderComponent colorFocus selectedColor =
     let
         rgba255 =
@@ -101,17 +102,17 @@ sliderComponent colorFocus selectedColor =
         ]
 
 
-hueSlideGroup : Color.Color -> Element.Element Msg
+hueSlideGroup : RawColor -> Element.Element Msg
 hueSlideGroup selectedColor =
     sliderComponent Red selectedColor
 
 
-saturationSlideGroup : Color.Color -> Element.Element Msg
+saturationSlideGroup : RawColor -> Element.Element Msg
 saturationSlideGroup selectedColor =
     sliderComponent Green selectedColor
 
 
-luminationSlideGroup : Color.Color -> Element.Element Msg
+luminationSlideGroup : RawColor -> Element.Element Msg
 luminationSlideGroup selectedColor =
     sliderComponent Blue selectedColor
 
@@ -126,7 +127,7 @@ type FocusColor
 --This is the slider itself
 
 
-colorSlider : FocusColor -> Color.Color -> Element.Element Msg
+colorSlider : FocusColor -> RawColor -> Element.Element Msg
 colorSlider focusColor selectedColor =
     let
         rgba255 =

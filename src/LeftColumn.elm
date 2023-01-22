@@ -1,6 +1,7 @@
 module LeftColumn exposing (leftColumn)
 
 import Color
+import Color.Types exposing (RawColor)
 import Colors exposing (..)
 import Element exposing (centerX, centerY, fill, height, padding, paddingXY, px, rgb255, spacing, text, width)
 import Element.Background as Background
@@ -14,7 +15,7 @@ import Model exposing (Model)
 import RGBSliderPanel exposing (rgbSliderPanel)
 
 
-leftColumn : Model -> Color.Color -> Element.Element Msg
+leftColumn : Model -> RawColor -> Element.Element Msg
 leftColumn model color =
     Element.column
         [ height fill
@@ -76,7 +77,7 @@ addColorButton model myText =
         }
 
 
-colorSelectDisplay : Color.Color -> Element.Element Msg
+colorSelectDisplay : RawColor -> Element.Element Msg
 colorSelectDisplay color =
     let
         rgba255 =

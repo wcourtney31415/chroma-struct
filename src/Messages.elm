@@ -1,11 +1,11 @@
 module Messages exposing (Msg(..))
 
-import Color exposing (Color)
+import Color.Types exposing (RawColor)
 
 
 type Msg
     = SendDataToJS
     | ReceivedDataFromJS String
-    | AddColorToPalette Color
-    | ChangeColor Color
+    | AddColorToPalette RawColor
+    | ChangeColor RawColor
     | RemoveColor Int

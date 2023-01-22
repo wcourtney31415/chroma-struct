@@ -1,9 +1,9 @@
 module Model exposing (Model)
 
-import Color exposing (Color)
+import Color.Types exposing (RawColor)
 
 
 type alias Model =
-    { selectedColor : Color
-    , palette : List Color
+    { selectedColor : RawColor
+    , palette : List RawColor
     }

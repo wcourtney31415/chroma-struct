@@ -1,18 +1,19 @@
 module Colors exposing (..)
 
+import Color.Types exposing (ElementColor)
 import Element
 
 
-grey : Int -> Element.Color
+grey : Int -> ElementColor
 grey x =
     Element.rgb255 x x x
 
 
-black : Element.Color
+black : ElementColor
 black =
     grey 0
 
 
-white : Element.Color
+white : ElementColor
 white =
     grey 255
