@@ -39,6 +39,7 @@ rightColumn =
         ]
 
 
+luminationScale : Element msg
 luminationScale =
     Element.el
         [ Background.color <| rgb255 0 37 57
@@ -155,6 +156,7 @@ sampleColorBlock color =
         text " "
 
 
+saturationScale : Element msg
 saturationScale =
     Element.el
         [ width fill
