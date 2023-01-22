@@ -1,4 +1,4 @@
-module Conversions exposing (dropperStringToColorRecord, rgba255ToColor)
+module Color.Conversions exposing (dropperStringToColorRecord, rgba255ToColor)
 
 import Array
 import Color

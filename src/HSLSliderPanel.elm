@@ -3,7 +3,7 @@ module HSLSliderPanel exposing (hslSliderPanel)
 import Color
 import Color.Types exposing (RawColor)
 import Color.Colors exposing (..)
-import Conversions exposing (rgba255ToColor)
+import Color.Conversions exposing (rgba255ToColor)
 import Element exposing (..)
 import Element.Background as Background
 import Element.Border as Border
