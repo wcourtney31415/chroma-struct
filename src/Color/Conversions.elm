@@ -2,7 +2,7 @@ module Color.Conversions exposing (..)
 
 import Array
 import Color
-import Color.Types exposing (RawColor, Rgba255Color)
+import Color.Types exposing (HslaFloatColor, RawColor, Rgba255Color)
 
 
 dropperStringToColorRecord : String -> RawColor
@@ -120,3 +120,13 @@ rgba255ToColor : Rgba255Color -> RawColor
 rgba255ToColor { red, green, blue, alpha } =
     Color.fromRgb255 { red = red, green = green, blue = blue }
         |> Color.setAlpha (toFloat (alpha * 255))
+
+
+hslaToColor : HslaFloatColor -> RawColor
+hslaToColor { hue, saturation, lightness, alpha } =
+    Color.fromHsla
+        { hue = hue
+        , saturation = saturation
+        , lightness = lightness
+        , alpha = alpha
+        }

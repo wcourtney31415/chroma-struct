@@ -1,6 +1,5 @@
 module RGBSliderPanel exposing (panel)
 
--- import GlobalAttributes exposing (..)
 
 import Color
 import Color.Colors exposing (white)

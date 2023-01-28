@@ -39,3 +39,12 @@ type alias RgbaFloatColor =
     , blue : Float
     , alpha : Float
     }
+
+{-| A Color represented as a record that represents the HSLA values as floats from 0-1 and hue to be from 0-360.
+-}
+type alias HslaFloatColor =
+    { hue : Float
+    , saturation : Float
+    , lightness : Float
+    , alpha : Float
+    }

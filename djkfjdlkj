@@ -1,0 +1,391 @@
+[1mdiff --git a/src/Color/Conversions.elm b/src/Color/Conversions.elm[m
+[1mindex 181c57c..63c3a71 100755[m
+[1m--- a/src/Color/Conversions.elm[m
+[1m+++ b/src/Color/Conversions.elm[m
+[36m@@ -2,7 +2,7 @@[m [mmodule Color.Conversions exposing (..)[m
+ [m
+ import Array[m
+ import Color[m
+[31m-import Color.Types exposing (RawColor, Rgba255Color)[m
+[32m+[m[32mimport Color.Types exposing (HslaFloatColor, RawColor, Rgba255Color)[m
+ [m
+ [m
+ dropperStringToColorRecord : String -> RawColor[m
+[36m@@ -120,3 +120,13 @@[m [mrgba255ToColor : Rgba255Color -> RawColor[m
+ rgba255ToColor { red, green, blue, alpha } =[m
+     Color.fromRgb255 { red = red, green = green, blue = blue }[m
+         |> Color.setAlpha (toFloat (alpha * 255))[m
+[32m+[m
+[32m+[m
+[32m+[m[32mhslaToColor : HslaFloatColor -> RawColor[m
+[32m+[m[32mhslaToColor { hue, saturation, lightness, alpha } =[m
+[32m+[m[32m    Color.fromHsla[m
+[32m+[m[32m        { hue = hue[m
+[32m+[m[32m        , saturation = saturation[m
+[32m+[m[32m        , lightness = lightness[m
+[32m+[m[32m        , alpha = alpha[m
+[32m+[m[32m        }[m
+[1mdiff --git a/src/Color/Types.elm b/src/Color/Types.elm[m
+[1mindex 576b608..eb550f7 100644[m
+[1m--- a/src/Color/Types.elm[m
+[1m+++ b/src/Color/Types.elm[m
+[36m@@ -39,3 +39,12 @@[m [mtype alias RgbaFloatColor =[m
+     , blue : Float[m
+     , alpha : Float[m
+     }[m
+[32m+[m
+[32m+[m[32m{-| A Color represented as a record that represents the HSLA values as floats from 0-1 and hue to be from 0-360.[m
+[32m+[m[32m-}[m
+[32m+[m[32mtype alias HslaFloatColor =[m
+[32m+[m[32m    { hue : Float[m
+[32m+[m[32m    , saturation : Float[m
+[32m+[m[32m    , lightness : Float[m
+[32m+[m[32m    , alpha : Float[m
+[32m+[m[32m    }[m
+[1mdiff --git a/src/HSLSliderPanel.elm b/src/HSLSliderPanel.elm[m
+[1mindex ae10ae7..4204a39 100755[m
+[1m--- a/src/HSLSliderPanel.elm[m
+[1m+++ b/src/HSLSliderPanel.elm[m
+[36m@@ -1,24 +1,44 @@[m
+[31m-module HSLSliderPanel exposing (hslSliderPanel)[m
+[32m+[m[32mmodule HSLSliderPanel exposing (..)[m
+ [m
+ import Color[m
+[32m+[m[32mimport Color.Colors exposing (white)[m
+[32m+[m[32mimport Color.Conversions exposing (hslaToColor)[m
+ import Color.Types exposing (RawColor)[m
+[31m-import Color.Colors exposing (..)[m
+[31m-import Color.Conversions exposing (rgba255ToColor)[m
+[31m-import Element exposing (..)[m
+[32m+[m[32mimport Element[m
+[32m+[m[32m    exposing[m
+[32m+[m[32m        ( Element[m
+[32m+[m[32m        , centerX[m
+[32m+[m[32m        , fill[m
+[32m+[m[32m        , maximum[m
+[32m+[m[32m        , padding[m
+[32m+[m[32m        , paddingEach[m
+[32m+[m[32m        , px[m
+[32m+[m[32m        , rgb255[m
+[32m+[m[32m        , spacing[m
+[32m+[m[32m        , text[m
+[32m+[m[32m        , width[m
+[32m+[m[32m        )[m
+ import Element.Background as Background[m
+ import Element.Border as Border[m
+ import Element.Font as Font[m
+ import Element.Input as Input[m
+[31m-import GlobalAttributes exposing (..)[m
+[32m+[m[32mimport GlobalAttributes exposing (borderShadow)[m
+ import Messages exposing (Msg(..))[m
+ [m
+ [m
+[31m-[m
+[31m---This is the panel containing the red green and blue slider groups[m
+[32m+[m[32mtype alias InputRowData =[m
+[32m+[m[32m    { currentValue : Int[m
+[32m+[m[32m    , label : String[m
+[32m+[m[32m    , textOnChange : String -> Msg[m
+[32m+[m[32m    , sliderOnChange : Float -> Msg[m
+[32m+[m[32m    , range : ( Int, Int )[m
+[32m+[m[32m    }[m
+ [m
+ [m
+[31m-hslSliderPanel : RawColor -> Element.Element Msg[m
+[31m-hslSliderPanel selectedColor =[m
+[32m+[m[32m{-| This is the panel containing the red green and blue slider groups[m
+[32m+[m[32m-}[m
+[32m+[m[32mpanel : RawColor -> Element.Element Msg[m
+[32m+[m[32mpanel selectedColor =[m
+     Element.el[m
+         [ Background.color <| rgb255 0 85 128[m
+         , padding 15[m
+[36m@@ -28,50 +48,81 @@[m [mhslSliderPanel selectedColor =[m
+         , centerX[m
+         ][m
+     <|[m
+[32m+[m[32m        let[m
+[32m+[m[32m            hsla =[m
+[32m+[m[32m                Color.toHsla selectedColor[m
+[32m+[m[32m        in[m
+         Element.column[m
+             [ width fill[m
+             , spacing 5[m
+             ][m
+[31m-            [ hueSlideGroup selectedColor[m
+[31m-            , saturationSlideGroup selectedColor[m
+[31m-            , luminationSlideGroup selectedColor[m
+[32m+[m[32m            [ hueInputRow hsla[m
+[32m+[m[32m            , saturationInputRow hsla[m
+[32m+[m[32m            , luminationInputRow hsla[m
+             ][m
+ [m
+ [m
+[31m-[m
+[31m---This is the group containing the textbox, the label and the slider[m
+[32m+[m[32mhueInputRow : Color.Types.HslaFloatColor -> Element.Element Msg[m
+[32m+[m[32mhueInputRow hsla =[m
+[32m+[m[32m    inputRow[m
+[32m+[m[32m        { currentValue = round hsla.hue[m
+[32m+[m[32m        , label = "Hue"[m
+[32m+[m[32m        , textOnChange =[m
+[32m+[m[32m            \newValue ->[m
+[32m+[m[32m                { hsla | hue = inputValueToFloat newValue }[m
+[32m+[m[32m                    |> hslaToColor[m
+[32m+[m[32m                    |> ChangeColor[m
+[32m+[m[32m        , sliderOnChange =[m
+[32m+[m[32m            \newSliderValue ->[m
+[32m+[m[32m                { hsla | hue = newSliderValue }[m
+[32m+[m[32m                    |> hslaToColor[m
+[32m+[m[32m                    |> ChangeColor[m
+[32m+[m[32m        , range = (0, 360)[m
+[32m+[m[32m        }[m
+ [m
+ [m
+[31m-sliderComponent : FocusColor -> RawColor -> Element Msg[m
+[31m-sliderComponent colorFocus selectedColor =[m
+[31m-    let[m
+[31m-        rgba255 =[m
+[31m-            Color.toRgba255 selectedColor[m
+[32m+[m[32msaturationInputRow : Color.Types.HslaFloatColor -> Element.Element Msg[m
+[32m+[m[32msaturationInputRow hsla =[m
+[32m+[m[32m    inputRow[m
+[32m+[m[32m        { currentValue = round <| 100 * hsla.saturation[m
+[32m+[m[32m        , label = "Saturation"[m
+[32m+[m[32m        , textOnChange =[m
+[32m+[m[32m            \newValue ->[m
+[32m+[m[32m                { hsla | saturation = (inputValueToFloat newValue) / 100 }[m
+[32m+[m[32m                    |> hslaToColor[m
+[32m+[m[32m                    |> ChangeColor[m
+[32m+[m[32m        , sliderOnChange =[m
+[32m+[m[32m            \newSliderValue ->[m
+[32m+[m[32m                { hsla | saturation = newSliderValue / 100 }[m
+[32m+[m[32m                    |> hslaToColor[m
+[32m+[m[32m                    |> ChangeColor[m
+[32m+[m[32m        , range = ( 0, 100 )[m
+[32m+[m[32m        }[m
+ [m
+[31m-        inputValueToInt y =[m
+[31m-            Maybe.withDefault 0 <| String.toInt y[m
+ [m
+[31m-        conditionalData =[m
+[31m-            case colorFocus of[m
+[31m-                Red ->[m
+[31m-                    { colorComponent = rgba255.red[m
+[31m-                    , colorText = "Hue"[m
+[31m-                    , updateColorComponent = \inputBoxString -> { rgba255 | red = inputValueToInt inputBoxString }[m
+[31m-                    }[m
+[32m+[m[32mluminationInputRow : Color.Types.HslaFloatColor -> Element.Element Msg[m
+[32m+[m[32mluminationInputRow hsla =[m
+[32m+[m[32m    inputRow[m
+[32m+[m[32m        { currentValue = round <| 100 * hsla.lightness[m
+[32m+[m[32m        , label = "Lumination"[m
+[32m+[m[32m        , textOnChange =[m
+[32m+[m[32m            \newValue ->[m
+[32m+[m[32m                { hsla | lightness = (inputValueToFloat newValue) / 100 }[m
+[32m+[m[32m                    |> hslaToColor[m
+[32m+[m[32m                    |> ChangeColor[m
+[32m+[m[32m        , sliderOnChange =[m
+[32m+[m[32m            \newSliderValue ->[m
+[32m+[m[32m                { hsla | lightness = newSliderValue / 100 }[m
+[32m+[m[32m                    |> hslaToColor[m
+[32m+[m[32m                    |> ChangeColor[m
+[32m+[m[32m        , range = ( 0, 100 )[m
+[32m+[m[32m        }[m
+ [m
+[31m-                Green ->[m
+[31m-                    { colorComponent = rgba255.green[m
+[31m-                    , colorText = "Saturation"[m
+[31m-                    , updateColorComponent = \inputBoxString -> { rgba255 | green = inputValueToInt inputBoxString }[m
+[31m-                    }[m
+ [m
+[31m-                Blue ->[m
+[31m-                    { colorComponent = rgba255.blue[m
+[31m-                    , colorText = "Lumination"[m
+[31m-                    , updateColorComponent = \inputBoxString -> { rgba255 | blue = inputValueToInt inputBoxString }[m
+[31m-                    }[m
+[31m-    in[m
+[31m-    Element.column [ width fill ][m
+[32m+[m[32minputRow : InputRowData -> Element Msg[m
+[32m+[m[32minputRow localData =[m
+[32m+[m[32m    Element.column[m
+[32m+[m[32m        [ width fill ][m
+         [ Element.el[m
+             [ paddingEach[m
+                 { top = 0[m
+[36m@@ -81,7 +132,7 @@[m [msliderComponent colorFocus selectedColor =[m
+                 }[m
+             ][m
+           <|[m
+[31m-            text conditionalData.colorText[m
+[32m+[m[32m            text localData.label[m
+         , Element.row[m
+             [ spacing 10[m
+             , width fill[m
+[36m@@ -93,99 +144,39 @@[m [msliderComponent colorFocus selectedColor =[m
+                 , width <| maximum 55 <| fill[m
+                 ][m
+                 { label = Input.labelHidden ""[m
+[31m-                , onChange = \newValue -> ChangeColor <| rgba255ToColor <| conditionalData.updateColorComponent newValue[m
+[32m+[m[32m                , onChange = localData.textOnChange[m
+                 , placeholder = Just <| Input.placeholder [] <| text ""[m
+[31m-                , text = String.fromInt conditionalData.colorComponent[m
+[32m+[m[32m                , text = String.fromInt localData.currentValue[m
+[32m+[m[32m                }[m
+[32m+[m[32m            , Input.slider[m
+[32m+[m[32m                [ Element.height <| Element.px 30[m
+[32m+[m[32m                , width fill[m
+[32m+[m[32m                , Element.behindContent <|[m
+[32m+[m[32m                    Element.el[m
+[32m+[m[32m                        [ Element.height (Element.px 2)[m
+[32m+[m[32m                        , Element.centerY[m
+[32m+[m[32m                        , Background.color white[m
+[32m+[m[32m                        , Border.rounded 2[m
+[32m+[m[32m                        , width fill[m
+[32m+[m[32m                        ][m
+[32m+[m[32m                        Element.none[m
+[32m+[m[32m                ][m
+[32m+[m[32m                { onChange = localData.sliderOnChange[m
+[32m+[m[32m                , label = Input.labelHidden ""[m
+[32m+[m[32m                , min = toFloat <| Tuple.first localData.range[m
+[32m+[m[32m                , max = toFloat <| Tuple.second localData.range[m
+[32m+[m[32m                , step = Nothing[m
+[32m+[m[32m                , value = toFloat localData.currentValue[m
+[32m+[m[32m                , thumb = Input.defaultThumb[m
+                 }[m
+[31m-            , colorSlider colorFocus selectedColor[m
+             ][m
+         ][m
+ [m
+ [m
+[31m-hueSlideGroup : RawColor -> Element.Element Msg[m
+[31m-hueSlideGroup selectedColor =[m
+[31m-    sliderComponent Red selectedColor[m
+[31m-[m
+[31m-[m
+[31m-saturationSlideGroup : RawColor -> Element.Element Msg[m
+[31m-saturationSlideGroup selectedColor =[m
+[31m-    sliderComponent Green selectedColor[m
+[31m-[m
+[31m-[m
+[31m-luminationSlideGroup : RawColor -> Element.Element Msg[m
+[31m-luminationSlideGroup selectedColor =[m
+[31m-    sliderComponent Blue selectedColor[m
+[31m-[m
+[31m-[m
+[31m-type FocusColor[m
+[31m-    = Red[m
+[31m-    | Green[m
+[31m-    | Blue[m
+[31m-[m
+[32m+[m[32minputValueToInt : String -> Int[m
+[32m+[m[32minputValueToInt =[m
+[32m+[m[32m    Maybe.withDefault 0 << String.toInt[m
+ [m
+ [m
+[31m---This is the slider itself[m
+[31m-[m
+[31m-[m
+[31m-colorSlider : FocusColor -> RawColor -> Element.Element Msg[m
+[31m-colorSlider focusColor selectedColor =[m
+[31m-    let[m
+[31m-        rgba255 =[m
+[31m-            Color.toRgba255 selectedColor[m
+[31m-[m
+[31m-        localData =[m
+[31m-            case focusColor of[m
+[31m-                Red ->[m
+[31m-                    { label = "Red"[m
+[31m-                    , value = toFloat rgba255.red[m
+[31m-                    , onChange =[m
+[31m-                        \sliderValue ->[m
+[31m-                            ChangeColor <| rgba255ToColor { rgba255 | red = round sliderValue }[m
+[31m-                    }[m
+[31m-[m
+[31m-                Green ->[m
+[31m-                    { label = "Green"[m
+[31m-                    , value = toFloat rgba255.green[m
+[31m-                    , onChange =[m
+[31m-                        \sliderValue ->[m
+[31m-                            ChangeColor <| rgba255ToColor { rgba255 | green = round sliderValue }[m
+[31m-                    }[m
+[31m-[m
+[31m-                Blue ->[m
+[31m-                    { label = "Blue"[m
+[31m-                    , value = toFloat rgba255.blue[m
+[31m-                    , onChange =[m
+[31m-                        \sliderValue ->[m
+[31m-                            ChangeColor <| rgba255ToColor { rgba255 | blue = round sliderValue }[m
+[31m-                    }[m
+[31m-    in[m
+[31m-    Input.slider[m
+[31m-        [ Element.height (Element.px 30)[m
+[31m-        , width fill[m
+[31m-        , sliderBar[m
+[31m-        ][m
+[31m-        { onChange = localData.onChange[m
+[31m-        , label = Input.labelHidden ""[m
+[31m-        , min = 0[m
+[31m-        , max = 255[m
+[31m-        , step = Nothing[m
+[31m-        , value = localData.value[m
+[31m-        , thumb = Input.defaultThumb[m
+[31m-        }[m
+[31m-[m
+[31m-[m
+[31m-[m
+[31m---This is the background bar to the slider[m
+[31m-[m
+[31m-[m
+[31m-sliderBar : Element.Attribute msg[m
+[31m-sliderBar =[m
+[31m-    Element.behindContent <|[m
+[31m-        Element.el[m
+[31m-            [ Element.height (Element.px 2)[m
+[31m-            , Element.centerY[m
+[31m-            , Background.color white[m
+[31m-            , Border.rounded 2[m
+[31m-            , width fill[m
+[31m-            ][m
+[31m-            Element.none[m
+[32m+[m[32minputValueToFloat =[m
+[32m+[m[32m    Maybe.withDefault 0 << String.toFloat[m
+[1mdiff --git a/src/LeftColumn.elm b/src/LeftColumn.elm[m
+[1mindex 56e26af..82a1ba8 100755[m
+[1m--- a/src/LeftColumn.elm[m
+[1m+++ b/src/LeftColumn.elm[m
+[36m@@ -9,10 +9,10 @@[m [mimport Element.Border as Border[m
+ import Element.Font as Font[m
+ import Element.Input as Input[m
+ import GlobalAttributes exposing (..)[m
+[31m-import HSLSliderPanel exposing (hslSliderPanel)[m
+[32m+[m[32mimport HSLSliderPanel[m
+ import Messages exposing (Msg(..))[m
+ import Model exposing (Model)[m
+[31m-import RGBSliderPanel exposing (panel)[m
+[32m+[m[32mimport RGBSliderPanel[m
+ [m
+ [m
+ leftColumn : Model -> RawColor -> Element.Element Msg[m
+[36m@@ -39,8 +39,8 @@[m [mleftColumn model color =[m
+             [ colorSelectDisplay color[m
+             , addColorButton model "Dropper Tool"[m
+             , addColorButton model "Add to Palette"[m
+[31m-            , hslSliderPanel model.selectedColor[m
+[31m-            , panel model.selectedColor[m
+[32m+[m[32m            , HSLSliderPanel.panel model.selectedColor[m
+[32m+[m[32m            , RGBSliderPanel.panel model.selectedColor[m
+             ][m
+         ][m
+ [m
+[1mdiff --git a/src/RGBSliderPanel.elm b/src/RGBSliderPanel.elm[m
+[1mindex b78dc02..34232f4 100755[m
+[1m--- a/src/RGBSliderPanel.elm[m
+[1m+++ b/src/RGBSliderPanel.elm[m
+[36m@@ -1,6 +1,5 @@[m
+ module RGBSliderPanel exposing (panel)[m
+ [m
+[31m--- import GlobalAttributes exposing (..)[m
+ [m
+ import Color[m
+ import Color.Colors exposing (white)[m

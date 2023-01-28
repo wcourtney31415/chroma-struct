@@ -9,10 +9,10 @@ import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
 import GlobalAttributes exposing (..)
-import HSLSliderPanel exposing (hslSliderPanel)
+import HSLSliderPanel
 import Messages exposing (Msg(..))
 import Model exposing (Model)
-import RGBSliderPanel exposing (panel)
+import RGBSliderPanel
 
 
 leftColumn : Model -> RawColor -> Element.Element Msg
@@ -39,8 +39,8 @@ leftColumn model color =
             [ colorSelectDisplay color
             , addColorButton model "Dropper Tool"
             , addColorButton model "Add to Palette"
-            , hslSliderPanel model.selectedColor
-            , panel model.selectedColor
+            , HSLSliderPanel.panel model.selectedColor
+            , RGBSliderPanel.panel model.selectedColor
             ]
         ]
 
