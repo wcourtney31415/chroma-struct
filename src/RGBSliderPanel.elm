@@ -1,24 +1,45 @@
-module RGBSliderPanel exposing (rgbSliderPanel)
+module RGBSliderPanel exposing (panel)
+
+-- import GlobalAttributes exposing (..)
 
 import Color
-import Color.Types exposing (RawColor)
-import Color.Colors exposing (..)
+import Color.Colors exposing (white)
 import Color.Conversions exposing (rgba255ToColor)
-import Element exposing (..)
+import Color.Types exposing (RawColor)
+import Element
+    exposing
+        ( Element
+        , centerX
+        , fill
+        , maximum
+        , padding
+        , paddingEach
+        , px
+        , rgb255
+        , spacing
+        , text
+        , width
+        )
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
-import GlobalAttributes exposing (..)
+import GlobalAttributes exposing (borderShadow)
 import Messages exposing (Msg(..))
 
 
+type alias InputRowData =
+    { currentValue : Int
+    , label : String
+    , textOnChange : String -> Msg
+    , sliderOnChange : Float -> Msg
+    }
 
---This is the panel containing the red green and blue slider groups
 
-
-rgbSliderPanel : RawColor -> Element.Element Msg
-rgbSliderPanel selectedColor =
+{-| This is the panel containing the red green and blue slider groups
+-}
+panel : RawColor -> Element.Element Msg
+panel selectedColor =
     Element.el
         [ Background.color <| rgb255 0 85 128
         , padding 15
@@ -28,50 +49,78 @@ rgbSliderPanel selectedColor =
         , centerX
         ]
     <|
+        let
+            rgba255 =
+                Color.toRgba255 selectedColor
+        in
         Element.column
             [ width fill
             , spacing 5
             ]
-            [ redSlideGroup selectedColor
-            , greenSlideGroup selectedColor
-            , blueSlideGroup selectedColor
+            [ redInputRow rgba255
+            , greenInputRow rgba255
+            , blueInputRow rgba255
             ]
 
 
+redInputRow : Color.Types.Rgba255Color -> Element.Element Msg
+redInputRow rgba255 =
+    inputRow
+        { currentValue = rgba255.red
+        , label = "Red"
+        , textOnChange =
+            \newValue ->
+                { rgba255 | red = inputValueToInt newValue }
+                    |> rgba255ToColor
+                    |> ChangeColor
+        , sliderOnChange =
+            \newSliderValue ->
+                { rgba255 | red = round newSliderValue }
+                    |> rgba255ToColor
+                    |> ChangeColor
+        }
 
---This is the group containing the textbox, the label and the slider
+
+greenInputRow : Color.Types.Rgba255Color -> Element.Element Msg
+greenInputRow rgba255 =
+    inputRow
+        { currentValue = rgba255.green
+        , label = "Green"
+        , textOnChange =
+            \newValue ->
+                { rgba255 | green = inputValueToInt newValue }
+                    |> rgba255ToColor
+                    |> ChangeColor
+        , sliderOnChange =
+            \newSliderValue ->
+                { rgba255 | green = round newSliderValue }
+                    |> rgba255ToColor
+                    |> ChangeColor
+        }
 
 
-sliderComponent : FocusColor -> RawColor -> Element Msg
-sliderComponent colorFocus selectedColor =
-    let
-        rgba255 =
-            Color.toRgba255 selectedColor
+blueInputRow : Color.Types.Rgba255Color -> Element.Element Msg
+blueInputRow rgba255 =
+    inputRow
+        { currentValue = rgba255.blue
+        , label = "Blue"
+        , textOnChange =
+            \newValue ->
+                { rgba255 | blue = inputValueToInt newValue }
+                    |> rgba255ToColor
+                    |> ChangeColor
+        , sliderOnChange =
+            \newSliderValue ->
+                { rgba255 | blue = round newSliderValue }
+                    |> rgba255ToColor
+                    |> ChangeColor
+        }
 
-        inputValueToInt y =
-            Maybe.withDefault 0 <| String.toInt y
 
-        conditionalData =
-            case colorFocus of
-                Red ->
-                    { colorComponent = rgba255.red
-                    , colorText = "Red"
-                    , updateColorComponent = \inputBoxString -> { rgba255 | red = inputValueToInt inputBoxString }
-                    }
-
-                Green ->
-                    { colorComponent = rgba255.green
-                    , colorText = "Green"
-                    , updateColorComponent = \inputBoxString -> { rgba255 | green = inputValueToInt inputBoxString }
-                    }
-
-                Blue ->
-                    { colorComponent = rgba255.blue
-                    , colorText = "Blue"
-                    , updateColorComponent = \inputBoxString -> { rgba255 | blue = inputValueToInt inputBoxString }
-                    }
-    in
-    Element.column [ width fill ]
+inputRow : InputRowData -> Element Msg
+inputRow localData =
+    Element.column
+        [ width fill ]
         [ Element.el
             [ paddingEach
                 { top = 0
@@ -81,7 +130,7 @@ sliderComponent colorFocus selectedColor =
                 }
             ]
           <|
-            text conditionalData.colorText
+            text localData.label
         , Element.row
             [ spacing 10
             , width fill
@@ -90,102 +139,38 @@ sliderComponent colorFocus selectedColor =
                 [ Font.color white
                 , Background.color <| rgb255 0 51 77
                 , padding 5
-                , width (fill |> maximum 55)
+                , width <| maximum 55 <| fill
                 ]
                 { label = Input.labelHidden ""
-                , onChange = \newValue -> ChangeColor <| rgba255ToColor <| conditionalData.updateColorComponent newValue
+                , onChange = localData.textOnChange
                 , placeholder = Just <| Input.placeholder [] <| text ""
-                , text = String.fromInt conditionalData.colorComponent
+                , text = String.fromInt localData.currentValue
                 }
-            , colorSlider colorFocus selectedColor
+            , Input.slider
+                [ Element.height <| Element.px 30
+                , width fill
+                , Element.behindContent <|
+                    Element.el
+                        [ Element.height (Element.px 2)
+                        , Element.centerY
+                        , Background.color white
+                        , Border.rounded 2
+                        , width fill
+                        ]
+                        Element.none
+                ]
+                { onChange = localData.sliderOnChange
+                , label = Input.labelHidden ""
+                , min = 0
+                , max = 255
+                , step = Nothing
+                , value = toFloat localData.currentValue
+                , thumb = Input.defaultThumb
+                }
             ]
         ]
 
 
-redSlideGroup : RawColor -> Element.Element Msg
-redSlideGroup selectedColor =
-    sliderComponent Red selectedColor
-
-
-greenSlideGroup : RawColor -> Element.Element Msg
-greenSlideGroup selectedColor =
-    sliderComponent Green selectedColor
-
-
-blueSlideGroup : RawColor -> Element.Element Msg
-blueSlideGroup selectedColor =
-    sliderComponent Blue selectedColor
-
-
-type FocusColor
-    = Red
-    | Green
-    | Blue
-
-
-
---This is the slider itself
-
-
-colorSlider : FocusColor -> RawColor -> Element.Element Msg
-colorSlider focusColor selectedColor =
-    let
-        rgba255 =
-            Color.toRgba255 selectedColor
-
-        localData =
-            case focusColor of
-                Red ->
-                    { label = "Red"
-                    , value = toFloat rgba255.red
-                    , onChange =
-                        \sliderValue ->
-                            ChangeColor <| rgba255ToColor { rgba255 | red = round sliderValue }
-                    }
-
-                Green ->
-                    { label = "Green"
-                    , value = toFloat rgba255.green
-                    , onChange =
-                        \sliderValue ->
-                            ChangeColor <| rgba255ToColor { rgba255 | green = round sliderValue }
-                    }
-
-                Blue ->
-                    { label = "Blue"
-                    , value = toFloat rgba255.blue
-                    , onChange =
-                        \sliderValue ->
-                            ChangeColor <| rgba255ToColor { rgba255 | blue = round sliderValue }
-                    }
-    in
-    Input.slider
-        [ Element.height (Element.px 30)
-        , width fill
-        , sliderBar
-        ]
-        { onChange = localData.onChange
-        , label = Input.labelHidden ""
-        , min = 0
-        , max = 255
-        , step = Nothing
-        , value = localData.value
-        , thumb = Input.defaultThumb
-        }
-
-
-
---This is the background bar to the slider
-
-
-sliderBar : Element.Attribute msg
-sliderBar =
-    Element.behindContent <|
-        Element.el
-            [ Element.height (Element.px 2)
-            , Element.centerY
-            , Background.color white
-            , Border.rounded 2
-            , width fill
-            ]
-            Element.none
+inputValueToInt : String -> Int
+inputValueToInt =
+    Maybe.withDefault 0 << String.toInt

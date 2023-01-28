@@ -12,7 +12,7 @@ import GlobalAttributes exposing (..)
 import HSLSliderPanel exposing (hslSliderPanel)
 import Messages exposing (Msg(..))
 import Model exposing (Model)
-import RGBSliderPanel exposing (rgbSliderPanel)
+import RGBSliderPanel exposing (panel)
 
 
 leftColumn : Model -> RawColor -> Element.Element Msg
@@ -40,7 +40,7 @@ leftColumn model color =
             , addColorButton model "Dropper Tool"
             , addColorButton model "Add to Palette"
             , hslSliderPanel model.selectedColor
-            , rgbSliderPanel model.selectedColor
+            , panel model.selectedColor
             ]
         ]
 
