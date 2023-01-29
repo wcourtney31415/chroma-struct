@@ -4,7 +4,7 @@ import Browser
 import Color
 import Color.Colors exposing (..)
 import ColorList exposing (..)
-import Element exposing (Element, fill, focusStyle, height, layoutWith, rgb255, spacing, width)
+import Element exposing (Element, fill, focusStyle, height, layoutWith, paddingEach, rgb255, spacing, width)
 import Element.Background as Background
 import GlobalAttributes exposing (..)
 import Html exposing (Html)
@@ -46,6 +46,12 @@ body model =
     Element.row
         [ height fill
         , width fill
+        , paddingEach
+            { top = 0
+            , bottom = 20
+            , right = 0
+            , left = 0
+            }
         ]
         [ leftColumn model model.selectedColor
         , colorList model.palette

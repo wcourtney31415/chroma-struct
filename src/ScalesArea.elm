@@ -27,14 +27,20 @@ rightColumn selectedColor =
             }
         ]
         [ Element.el
-            [ centerX
-            , padding 6
+            [  padding 6
             , Font.size 16
+            , Background.color <| rgb255 0 50 77
+            , width fill
             ]
           <|
-            text "Color Variants"
+            Element.el [ centerX ] <|
+                text "Color Variants"
         , Element.row
-            [ padding 20, spacing 20 ]
+            [ paddingXY 20 10
+            , spacing 20
+            , Background.color <| rgb255 0 30 46
+            , width fill
+            ]
             [ hueScale selectedColor
             , saturationScale selectedColor
             , luminationScale selectedColor
@@ -56,11 +62,11 @@ luminationScale selectedColor =
     Element.column
         [ spacing 5
         , alignTop
-        , centerX
+        -- , centerX
         , padding 15
         , Border.rounded 15
         , Font.color white
-        , Background.color <| rgb255 0 85 128
+        , Background.color <| rgb255 0 50 77
         , Font.bold
         , spacing 10
         , borderShadow
@@ -84,10 +90,9 @@ hueScale selectedColor =
     Element.column
         [ spacing 5
         , alignTop
-        , centerX
         , padding 15
         , Border.rounded 15
-        , Background.color <| rgb255 0 85 128
+        , Background.color <| rgb255 0 50 77
         , Font.color white
         , Font.bold
         , spacing 10
@@ -122,20 +127,20 @@ sampleColorBlock color =
         , Border.width 1
         , Border.color black
         ]
-    {label = text "", onPress = Just <| ChangeColor color }
+        { label = text "", onPress = Just <| ChangeColor color }
 
 
 saturationScale selectedColor =
     Element.column
         [ spacing 5
         , alignTop
-        , centerX
+        -- , centerX
         , padding 15
         , Border.rounded 15
         , Font.color white
         , Font.bold
         , spacing 10
-        , Background.color <| rgb255 0 85 128
+        , Background.color <| rgb255 0 50 77
         , borderShadow
         ]
     <|
