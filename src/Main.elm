@@ -49,7 +49,7 @@ body model =
         ]
         [ leftColumn model model.selectedColor
         , colorList model.palette
-        , rightColumn
+        , rightColumn model.selectedColor
         ]
 
 

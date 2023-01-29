@@ -1,8 +1,8 @@
 module ScalesArea exposing (..)
 
 import Color
-import Color.Types exposing (RawColor)
 import Color.Colors exposing (..)
+import Color.Types exposing (RawColor)
 import Element exposing (..)
 import Element.Background as Background
 import Element.Border as Border
@@ -11,8 +11,7 @@ import GlobalAttributes exposing (..)
 import Messages exposing (Msg(..))
 
 
-rightColumn : Element msg
-rightColumn =
+rightColumn selectedColor =
     Element.column
         [ height fill
         , Background.color <| rgb255 0 50 77
@@ -33,60 +32,75 @@ rightColumn =
             ]
           <|
             text "Color Variants"
-        , Element.row [ width fill ]
-            [ luminationScale
-            , saturationScale
+        , Element.row
+            [ padding 20, spacing 20 ]
+            [ hueScale selectedColor
+            , saturationScale selectedColor
+            , luminationScale selectedColor
             ]
         ]
 
 
-luminationScale : Element msg
-luminationScale =
-    Element.el
-        [ Background.color <| rgb255 0 37 57
-        , height fill
-        , paddingXY 25 10
+luminationScale selectedColor =
+    let
+        hslColor =
+            Color.toHsla selectedColor
+
+        hue =
+            hslColor.hue |> round
+
+        sat =
+            hslColor.saturation
+    in
+    Element.column
+        [ spacing 5
+        , alignTop
+        , centerX
+        , padding 15
+        , Border.rounded 15
+        , Font.color white
+        , Background.color <| rgb255 0 85 128
+        , Font.bold
+        , spacing 10
+        , borderShadow
         ]
     <|
-        Element.row
-            [ padding 15
-            , Border.rounded 15
-            , Font.color white
-            , Font.bold
-            , spacing 10
+        List.map (\x -> sampleColorBlock <| hslToColor hue sat (x / 100)) <|
+            makeListOfNumbers 0 100 5
 
-            -- , Background.color <| rgb255 0 85 128
-            , borderShadow
-            ]
-            [ Element.column
-                [ spacing 5
-                , alignTop
-                , centerX
-                ]
-              <|
-                List.map (\x -> sampleColorBlock <| hslToColor 200 1 x) <|
-                    [ 1
-                    , 0.95
-                    , 0.9
-                    , 0.85
-                    , 0.8
-                    , 0.75
-                    , 0.7
-                    , 0.65
-                    , 0.6
-                    , 0.55
-                    , 0.5
-                    , 0.45
-                    , 0.4
-                    , 0.35
-                    , 0.3
-                    , 0.25
-                    , 0.2
-                    , 0.15
-                    , 0.1
-                    , 0
-                    ]
-            ]
+
+hueScale selectedColor =
+    let
+        hslColor =
+            Color.toHsla selectedColor
+
+        lumination =
+            hslColor.lightness
+
+        sat =
+            hslColor.saturation
+    in
+    Element.column
+        [ spacing 5
+        , alignTop
+        , centerX
+        , padding 15
+        , Border.rounded 15
+        , Background.color <| rgb255 0 85 128
+        , Font.color white
+        , Font.bold
+        , spacing 10
+        , borderShadow
+        ]
+    <|
+        List.map (\x -> sampleColorBlock <| hslToColor (round x) sat lumination) <|
+            makeListOfNumbers 0 360 18
+
+
+makeListOfNumbers min max steps =
+    List.map (\y -> toFloat y) <|
+        List.filter (\y -> modBy steps y == 0) <|
+            List.range min max
 
 
 hslToColor : Int -> Float -> Float -> RawColor
@@ -111,50 +125,19 @@ sampleColorBlock color =
         text " "
 
 
-saturationScale : Element msg
-saturationScale =
-    Element.el
-        [ width fill
-        , Background.color <| rgb255 0 37 57
-        , height fill
-        , paddingXY 25 10
+saturationScale selectedColor =
+    Element.column
+        [ spacing 5
+        , alignTop
+        , centerX
+        , padding 15
+        , Border.rounded 15
+        , Font.color white
+        , Font.bold
+        , spacing 10
+        , Background.color <| rgb255 0 85 128
+        , borderShadow
         ]
     <|
-        Element.row
-            [ padding 15
-            , Border.rounded 15
-            , Font.color white
-            , Font.bold
-            , spacing 10
-            , Background.color <| rgb255 0 85 128
-            , borderShadow
-            ]
-            [ Element.column
-                [ spacing 5
-                , alignTop
-                , centerX
-                ]
-              <|
-                List.map (\x -> sampleColorBlock <| hslToColor 200 x 1) <|
-                    [ 1
-                    , 0.95
-                    , 0.9
-                    , 0.85
-                    , 0.8
-                    , 0.75
-                    , 0.7
-                    , 0.65
-                    , 0.6
-                    , 0.55
-                    , 0.5
-                    , 0.45
-                    , 0.4
-                    , 0.35
-                    , 0.3
-                    , 0.25
-                    , 0.2
-                    , 0.15
-                    , 0.1
-                    , 0
-                    ]
-            ]
+        List.map (\x -> sampleColorBlock <| hslToColor (Color.toHsla selectedColor |> .hue |> round) (x / 100) (Color.toHsla selectedColor |> .lightness)) <|
+            makeListOfNumbers 0 100 5
