@@ -1,9 +1,11 @@
 module LeftColumn exposing (leftColumn)
 
+-- import Element exposing (centerX, centerY, fill, height, padding, paddingXY, px, rgb255, spacing, text, width)
+
 import Color
-import Color.Types exposing (RawColor)
 import Color.Colors exposing (..)
-import Element exposing (centerX, centerY, fill, height, padding, paddingXY, px, rgb255, spacing, text, width)
+import Color.Types exposing (RawColor)
+import Element exposing (..)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -36,27 +38,34 @@ leftColumn model color =
             , Background.color <| rgb255 0 37 57
             , spacing 12
             ]
-            [ colorSelectDisplay color
-            , addColorButton model "Dropper Tool"
-            , addColorButton model "Add to Palette"
+            [ Element.row [ spacing 5, centerX, width fill ]
+                [ colorSelectDisplay color
+                , Element.column [ width fill, spacing 3 ]
+                    [ makeButton "Dropper Tool" SendDataToJS
+                    , makeButton "Add to Palette" (AddColorToPalette model.selectedColor)
+                    ]
+                ]
             , HSLSliderPanel.panel model.selectedColor
             , RGBSliderPanel.panel model.selectedColor
             ]
         ]
 
 
-addColorButton : Model -> String -> Element.Element Msg
-addColorButton model myText =
+
+-- makeButton : RawColor -> String -> Element.Element Msg
+
+
+makeButton myText myMessage =
     Input.button
-        [ centerX
+        [ alignLeft
         , hoverHighlight
         ]
-        { onPress = Just <| AddColorToPalette model.selectedColor
+        { onPress = Just myMessage
         , label =
             Element.el
                 [ Background.color <| rgb255 0 133 204
                 , Font.color <| white
-                , width <| px 256
+                , width <| px 128
                 , Font.size 15
                 , Font.bold
                 , centerX
@@ -84,7 +93,7 @@ colorSelectDisplay color =
             Color.toRgba255 color
 
         squareSize =
-            256
+            64
 
         bkgColor =
             rgb255
@@ -103,9 +112,14 @@ colorSelectDisplay color =
     in
     Input.button
         [ Background.color bkgColor
-        , width <| px squareSize
+
+        -- , width <| px squareSize
+        , width fill
         , borderShadow
-        , height <| px squareSize
+        , alignTop
+        , height fill
+
+        -- , height <| px squareSize
         ]
         { label =
             Element.el
@@ -114,6 +128,8 @@ colorSelectDisplay color =
                 ]
             <|
                 text <|
-                    myRgb
+                    ""
+
+        -- myRgb
         , onPress = Maybe.Just SendDataToJS
         }
