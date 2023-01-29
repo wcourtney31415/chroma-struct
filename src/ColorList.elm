@@ -55,17 +55,20 @@ colorListItem ( index, color ) =
         , Border.widthXY 0 1
         , Border.color black
         ]
-        [ Element.el
+        [ Input.button
             [ Background.color <|
                 rgb255
                     cRecord.red
                     cRecord.green
                     cRecord.blue
             , width <| px 32
+            , Border.width 1
+            , Border.color black
             , height fill
             ]
-          <|
-            text ""
+            { label = text ""
+            , onPress = Just <| ChangeColor color
+            }
         , Element.el
             [ Font.color white
             , Background.color <| rgb255 0 133 204
