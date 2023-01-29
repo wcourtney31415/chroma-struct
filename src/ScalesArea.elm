@@ -7,6 +7,7 @@ import Element exposing (..)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
+import Element.Input as Input
 import GlobalAttributes exposing (..)
 import Messages exposing (Msg(..))
 
@@ -108,21 +109,20 @@ hslToColor hue sat light =
     Color.fromHsl { hue = toFloat hue, saturation = sat, lightness = light }
 
 
-sampleColorBlock : RawColor -> Element msg
+sampleColorBlock : RawColor -> Element Msg
 sampleColorBlock color =
     let
         rgba255 =
             Color.toRgba255 color
     in
-    Element.el
+    Input.button
         [ Background.color <| rgb255 rgba255.red rgba255.green rgba255.blue
         , width <| px 32
         , height <| px 32
         , Border.width 1
         , Border.color black
         ]
-    <|
-        text " "
+    {label = text "", onPress = Just <| ChangeColor color }
 
 
 saturationScale selectedColor =
